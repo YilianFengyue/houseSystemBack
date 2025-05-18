@@ -21,31 +21,6 @@ class Comment(Base):
     at: Mapped[Optional[int]] = mapped_column(Integer, comment='@哪条留言，前端显示为@谁，选填')
 
 
-class HouseInfo(Base):
-    __tablename__ = 'house_info'
-
-    id: Mapped[int] = mapped_column(INTEGER, primary_key=True)
-    title: Mapped[Optional[str]] = mapped_column(String(100), comment='标题，如：整租·锦源小区 2室1厅 南')
-    region: Mapped[Optional[str]] = mapped_column(String(50), comment='区，如：雨花')
-    block: Mapped[Optional[str]] = mapped_column(String(50), comment='街道，如：树木岭')
-    community: Mapped[Optional[str]] = mapped_column(String(100), comment='小区，如：锦源小区')
-    area: Mapped[Optional[float]] = mapped_column(Float, comment='面积，单位㎡')
-    direction: Mapped[Optional[str]] = mapped_column(String(20), comment='朝向，如：南')
-    rooms: Mapped[Optional[str]] = mapped_column(String(20), comment='几室几厅，如：2室1厅1卫')
-    price: Mapped[Optional[int]] = mapped_column(Integer, comment='价格，单位：元/月')
-    rent_type: Mapped[Optional[str]] = mapped_column(String(20), comment='租赁方式，如：整租、合租')
-    decoration: Mapped[Optional[str]] = mapped_column(String(20), comment='装修情况，如：精装')
-    subway: Mapped[Optional[int]] = mapped_column(TINYINT(1), server_default=text("'0'"), comment='是否近地铁')
-    available: Mapped[Optional[int]] = mapped_column(TINYINT(1), server_default=text("'1'"), comment='是否随时看房')
-    tag_new: Mapped[Optional[int]] = mapped_column(TINYINT(1), server_default=text("'0'"), comment='是否新上')
-    image_url: Mapped[Optional[str]] = mapped_column(String(255), comment='房源图片')
-    publish_time: Mapped[Optional[datetime.date]] = mapped_column(Date, comment='发布时间，如：2天前')
-    page_views: Mapped[Optional[str]] = mapped_column(String(255), comment='浏览量')
-    landlord: Mapped[Optional[str]] = mapped_column(String(255), comment='房东')
-    phone_num: Mapped[Optional[str]] = mapped_column(String(100), comment='房东电话')
-    house_num: Mapped[Optional[int]] = mapped_column(Integer, comment='房源编号')
-
-
 class UserInfo(Base):
     __tablename__ = 'user_info'
 
