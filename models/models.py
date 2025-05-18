@@ -1,6 +1,5 @@
 from typing import Optional
-
-from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Table, text
+from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Text, Boolean, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 import datetime
@@ -58,3 +57,17 @@ class UserInfo(Base):
     seen_id: Mapped[Optional[str]] = mapped_column(String(255))
     collect_id: Mapped[Optional[str]] = mapped_column(String(255))
     identityCard: Mapped[Optional[str]] = mapped_column(String(255))
+
+
+class RepairComplaint(Base):
+    __tablename__ = 'repair_complaint'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    report_reason: Mapped[str] = mapped_column(String(255), comment='申报类型：repair(维修)或complaint(投诉)')
+    house_address: Mapped[Optional[str]] = mapped_column(String(255), comment='房屋地址')
+    repair_type: Mapped[Optional[str]] = mapped_column(String(255), comment='维修类型')
+    repair_description: Mapped[Optional[str]] = mapped_column(String(255), comment='维修描述')
+    complaint_content: Mapped[Optional[str]] = mapped_column(String(255), comment='投诉内容')
+    complaint_person: Mapped[Optional[str]] = mapped_column(String(255), comment='投诉对象')
+    agreed_terms: Mapped[bool] = mapped_column(String(255), comment='是否同意条款')
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=text('CURRENT_TIMESTAMP'), comment='创建时间')
