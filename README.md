@@ -25,4 +25,95 @@
 ### 附录：
 
 ### API文档
-Test1
+
+#### 用户相关接口
+
+##### 1. 用户注册
+- **路径**: POST /api/user/users
+- **参数**:
+  ```json
+  {
+    "username": "string",
+    "password": "string", 
+    "identification": "string",
+    "phone": "string"
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 201,
+    "msg": "用户注册成功"
+  }
+  ```
+- **错误响应**:
+  ```json
+  {
+    "code": 400,
+    "msg": "用户已存在"
+  }
+  ```
+
+##### 2. 用户登录
+- **路径**: POST /api/user/auth/login
+- **参数**:
+  ```json
+  {
+    "username": "string",
+    "password": "string"
+  }
+  ```
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "登录成功",
+    "data": {
+      "id": "number",
+      "username": "string",
+      "password": "string",
+      "identification": "string",
+      "phone": "string"
+    },
+    "token": "string"
+  }
+  ```
+- **错误响应**:
+  ```json
+  {
+    "code": 401,
+    "msg": "用户名或密码错误"
+  }
+  ```
+
+##### 3. 获取所有用户
+- **路径**: GET /api/user/users
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": [
+      {
+        "id": "number",
+        "username": "string",
+        "password": "string"
+      }
+    ]
+  }
+  ```
+
+##### 4. 获取用户资料
+- **路径**: GET /api/user/profile
+- **需要认证**: 是 (需要token)
+- **成功响应**:
+  ```json
+  {
+    "code": 200,
+    "msg": "获取成功",
+    "data": {
+      "id": "number",
+      "username": "string"
+    }
+  }
+  ```
