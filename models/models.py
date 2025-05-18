@@ -58,3 +58,28 @@ class UserInfo(Base):
     seen_id: Mapped[Optional[str]] = mapped_column(String(255))
     collect_id: Mapped[Optional[str]] = mapped_column(String(255))
     identityCard: Mapped[Optional[str]] = mapped_column(String(255))
+
+class Appointment(Base):
+    __tablename__ = 'appointment'
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, comment='预约id')
+    username: Mapped[Optional[str]] = mapped_column(String(255))
+    property: Mapped[Optional[str]] = mapped_column(String(255))
+    time: Mapped[datetime.datetime] = mapped_column(DateTime, comment='预约时间')
+
+class Contract(Base):
+    __tablename__ = 'contract'
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    rentValue: Mapped[str] = mapped_column(String(255))
+    purpose: Mapped[str] = mapped_column(String(255))
+    startDate: Mapped[str] = mapped_column(DateTime)
+    endDate: Mapped[str] = mapped_column(DateTime)
+    landlordName: Mapped[str] = mapped_column(String(255))
+    landlordId: Mapped[str] = mapped_column(String(255))
+    landlordPhone: Mapped[str] = mapped_column(String(255))
+    tenantName: Mapped[str] = mapped_column(String(255))
+    tenantId: Mapped[str] = mapped_column(String(255))
+    tenantPhone: Mapped[str] = mapped_column(String(255))
+    formattedRent: Mapped[str] = mapped_column(String(255))
+    currentDate: Mapped[str] = mapped_column(DateTime)
