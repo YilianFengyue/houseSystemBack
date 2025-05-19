@@ -3,7 +3,7 @@ from typing import Optional
 from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Table, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-import datetime
+from datetime import datetime
 
 class Base(DeclarativeBase):
     pass
@@ -16,7 +16,7 @@ class Comment(Base):
     username: Mapped[str] = mapped_column(VARCHAR(255), comment='留言人名字')
     type: Mapped[int] = mapped_column(Integer, comment='留言人类型,1:租客，2:房东')
     desc: Mapped[str] = mapped_column(VARCHAR(255), comment='留言内容')
-    time: Mapped[datetime.datetime] = mapped_column(DateTime, comment='留言时间')
+    time: Mapped[datetime] = mapped_column(DateTime, comment='留言时间')
     at: Mapped[Optional[int]] = mapped_column(Integer, comment='@哪条留言，前端显示为@谁，选填')
 
 
@@ -74,7 +74,7 @@ class Appointment(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, comment='预约id')
     username: Mapped[Optional[str]] = mapped_column(String(255))
     property: Mapped[Optional[str]] = mapped_column(String(255))
-    time: Mapped[datetime.datetime] = mapped_column(DateTime, comment='预约时间')
+    time: Mapped[datetime] = mapped_column(DateTime, comment='预约时间')
 
 class Contract(Base):
     __tablename__ = 'contract'
@@ -104,7 +104,7 @@ class Repair_Complaint(Base):
     complaint_content: Mapped[Optional[str]] = mapped_column(String(255))
     complaint_person: Mapped[Optional[str]] = mapped_column(String(255))
     agreed_terms: Mapped[int] = mapped_column(Integer)
-    create_at: Mapped[datetime.datetime] = mapped_column(DateTime)
+    create_at: Mapped[datetime] = mapped_column(DateTime)
 
     def to_dict(self):
         """Convert the model instance to a dictionary."""
@@ -118,4 +118,22 @@ class Repair_Complaint(Base):
             "complaint_person": self.complaint_person,
             "agreed_terms": self.agreed_terms,
             "create_at": self.create_at.isoformat() if self.create_at else None
+        }
+
+class Message(Base):
+    __tablename__ = 'message'
+
+    message_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    content: Mapped[str] = mapped_column(String(500), comment='消息内容')
+    sender_username: Mapped[str] = mapped_column(String(50), comment='发送者用户名')
+    receiver_username: Mapped[str] = mapped_column(String(50), comment='接收者用户名')
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), comment='消息时间戳')
+
+    def to_dict(self):
+        return {
+            "message_id": self.message_id,
+            "content": self.content,
+            "sender_username": self.sender_username,
+            "receiver_username": self.receiver_username,
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         }
