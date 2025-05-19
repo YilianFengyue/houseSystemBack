@@ -1,5 +1,5 @@
 from models.models import Contract
-from extensions import db
+from exts.db import db
 from datetime import datetime
 
 def create_contracts(data):

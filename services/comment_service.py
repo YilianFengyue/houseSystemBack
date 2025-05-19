@@ -1,5 +1,5 @@
 from models.models import Comment
-from extensions import db
+from exts.db import db
 from datetime import datetime
 
 def get_comment_by_id(comment_id):

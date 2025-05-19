@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.contract_service import create_contracts
-from extensions import db
+from exts.db import db
 from datetime import datetime
 
 contract_bp = Blueprint("contract", __name__)

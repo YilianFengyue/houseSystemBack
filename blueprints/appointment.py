@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.appointment_service import create_appointments
-from extensions import db
+from exts.db import db
 from datetime import datetime
 
 appointment_bp = Blueprint("appointment", __name__)

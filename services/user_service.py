@@ -1,5 +1,5 @@
 from models.models import UserInfo
-from extensions import db
+from exts.db import db
 
 def get_user_by_username(username):
     """根据用户名查找用户(兼容别名)"""

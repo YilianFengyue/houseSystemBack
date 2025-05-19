@@ -1,5 +1,5 @@
 from models.models import Appointment
-from extensions import db
+from exts.db import db
 from datetime import datetime
 
 def create_appointments(data):

@@ -8,7 +8,6 @@ import datetime
 class Base(DeclarativeBase):
     pass
 
-
 class Comment(Base):
     __tablename__ = 'comment'
 
@@ -45,6 +44,16 @@ class HouseInfo(Base):
     phone_num: Mapped[Optional[str]] = mapped_column(String(100), comment='房东电话')
     house_num: Mapped[Optional[int]] = mapped_column(Integer, comment='房源编号')
 
+    def to_dict(self):
+        # 这个辅助方法保持不变，用于将模型对象转换为字典
+        data = {}
+        for column in self.__table__.columns:
+            value = getattr(self, column.name)
+            if isinstance(value, datetime.date):
+                data[column.name] = value.isoformat()
+            else:
+                data[column.name] = value
+        return data
 
 class UserInfo(Base):
     __tablename__ = 'user_info'
@@ -83,3 +92,30 @@ class Contract(Base):
     tenantPhone: Mapped[str] = mapped_column(String(255))
     formattedRent: Mapped[str] = mapped_column(String(255))
     currentDate: Mapped[str] = mapped_column(DateTime)
+
+class Repair_Complaint(Base):
+    __tablename__ = 'repair_complaint'
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    report_reason: Mapped[Optional[str]] = mapped_column(String(255))
+    house_address: Mapped[Optional[str]] = mapped_column(String(255))
+    repair_type: Mapped[Optional[str]] = mapped_column(String(255))
+    repair_description: Mapped[Optional[str]] = mapped_column(String(255))
+    complaint_content: Mapped[Optional[str]] = mapped_column(String(255))
+    complaint_person: Mapped[Optional[str]] = mapped_column(String(255))
+    agreed_terms: Mapped[int] = mapped_column(Integer)
+    create_at: Mapped[datetime.datetime] = mapped_column(DateTime)
+
+    def to_dict(self):
+        """Convert the model instance to a dictionary."""
+        return {
+            "id": self.id,
+            "report_reason": self.report_reason,
+            "house_address": self.house_address,
+            "repair_type": self.repair_type,
+            "repair_description": self.repair_description,
+            "complaint_content": self.complaint_content,
+            "complaint_person": self.complaint_person,
+            "agreed_terms": self.agreed_terms,
+            "create_at": self.create_at.isoformat() if self.create_at else None
+        }

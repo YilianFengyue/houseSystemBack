@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.models import HouseInfo, Comment
 from services.comment_service import get_comment_by_house_id, get_comment_by_id, create_comment
-from extensions import db
+from exts.db import db
 comment_bp = Blueprint("comment", __name__)
 
 # 根据房源id获取评论
