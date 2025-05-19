@@ -117,3 +117,67 @@
     }
   }
   ```
+
+```
+houseSystemBack
+├─ .idea
+│  ├─ houseSystemBack.iml
+│  ├─ inspectionProfiles
+│  │  ├─ profiles_settings.xml
+│  │  └─ Project_Default.xml
+│  ├─ misc.xml
+│  ├─ modules.xml
+│  ├─ vcs.xml
+│  └─ workspace.xml
+├─ blueprints
+│  ├─ houseinfo.py
+│  ├─ user.py
+│  ├─ __init__.py
+│  └─ __pycache__
+│     ├─ houseinfo.cpython-311.pyc
+│     ├─ houseinfo.cpython-312.pyc
+│     ├─ user.cpython-311.pyc
+│     ├─ __init__.cpython-311.pyc
+│     └─ __init__.cpython-312.pyc
+├─ config.py
+├─ decorators.py
+├─ exts
+│  ├─ db.py
+│  ├─ __init__.py
+│  └─ __pycache__
+│     ├─ db.cpython-311.pyc
+│     ├─ db.cpython-312.pyc
+│     ├─ __init__.cpython-311.pyc
+│     └─ __init__.cpython-312.pyc
+├─ flaskhousesystem.sql
+├─ models
+│  ├─ house_model.py
+│  ├─ models.py
+│  ├─ __init__.py
+│  └─ __pycache__
+│     ├─ house_model.cpython-311.pyc
+│     ├─ house_model.cpython-312.pyc
+│     ├─ models.cpython-311.pyc
+│     ├─ __init__.cpython-311.pyc
+│     └─ __init__.cpython-312.pyc
+├─ README.md
+├─ requirements.txt
+├─ run.py
+├─ services
+│  ├─ user_service.py
+│  ├─ __init__..py
+│  └─ __pycache__
+│     └─ user_service.cpython-311.pyc
+├─ utils
+│  ├─ response_utils.py
+│  ├─ __init__.py
+│  └─ __pycache__
+│     ├─ response_utils.cpython-311.pyc
+│     ├─ response_utils.cpython-312.pyc
+│     ├─ __init__.cpython-311.pyc
+│     └─ __init__.cpython-312.pyc
+└─ __pycache__
+   ├─ config.cpython-311.pyc
+   └─ config.cpython-312.pyc
+
+```
