@@ -1,12 +1,12 @@
 from typing import Optional
-from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Text, Boolean, text
+
+from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Table, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 import datetime
 
 class Base(DeclarativeBase):
     pass
-
 
 class Comment(Base):
     __tablename__ = 'comment'
@@ -44,6 +44,16 @@ class HouseInfo(Base):
     phone_num: Mapped[Optional[str]] = mapped_column(String(100), comment='房东电话')
     house_num: Mapped[Optional[int]] = mapped_column(Integer, comment='房源编号')
 
+    def to_dict(self):
+        # 这个辅助方法保持不变，用于将模型对象转换为字典
+        data = {}
+        for column in self.__table__.columns:
+            value = getattr(self, column.name)
+            if isinstance(value, datetime.date):
+                data[column.name] = value.isoformat()
+            else:
+                data[column.name] = value
+        return data
 
 class UserInfo(Base):
     __tablename__ = 'user_info'
@@ -58,16 +68,54 @@ class UserInfo(Base):
     collect_id: Mapped[Optional[str]] = mapped_column(String(255))
     identityCard: Mapped[Optional[str]] = mapped_column(String(255))
 
+class Appointment(Base):
+    __tablename__ = 'appointment'
 
-class RepairComplaint(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, comment='预约id')
+    username: Mapped[Optional[str]] = mapped_column(String(255))
+    property: Mapped[Optional[str]] = mapped_column(String(255))
+    time: Mapped[datetime.datetime] = mapped_column(DateTime, comment='预约时间')
+
+class Contract(Base):
+    __tablename__ = 'contract'
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    rentValue: Mapped[str] = mapped_column(String(255))
+    purpose: Mapped[str] = mapped_column(String(255))
+    startDate: Mapped[str] = mapped_column(DateTime)
+    endDate: Mapped[str] = mapped_column(DateTime)
+    landlordName: Mapped[str] = mapped_column(String(255))
+    landlordId: Mapped[str] = mapped_column(String(255))
+    landlordPhone: Mapped[str] = mapped_column(String(255))
+    tenantName: Mapped[str] = mapped_column(String(255))
+    tenantId: Mapped[str] = mapped_column(String(255))
+    tenantPhone: Mapped[str] = mapped_column(String(255))
+    formattedRent: Mapped[str] = mapped_column(String(255))
+    currentDate: Mapped[str] = mapped_column(DateTime)
+
+class Repair_Complaint(Base):
     __tablename__ = 'repair_complaint'
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    report_reason: Mapped[str] = mapped_column(String(255), comment='申报类型：repair(维修)或complaint(投诉)')
-    house_address: Mapped[Optional[str]] = mapped_column(String(255), comment='房屋地址')
-    repair_type: Mapped[Optional[str]] = mapped_column(String(255), comment='维修类型')
-    repair_description: Mapped[Optional[str]] = mapped_column(String(255), comment='维修描述')
-    complaint_content: Mapped[Optional[str]] = mapped_column(String(255), comment='投诉内容')
-    complaint_person: Mapped[Optional[str]] = mapped_column(String(255), comment='投诉对象')
-    agreed_terms: Mapped[bool] = mapped_column(String(255), comment='是否同意条款')
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=text('CURRENT_TIMESTAMP'), comment='创建时间')
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    report_reason: Mapped[Optional[str]] = mapped_column(String(255))
+    house_address: Mapped[Optional[str]] = mapped_column(String(255))
+    repair_type: Mapped[Optional[str]] = mapped_column(String(255))
+    repair_description: Mapped[Optional[str]] = mapped_column(String(255))
+    complaint_content: Mapped[Optional[str]] = mapped_column(String(255))
+    complaint_person: Mapped[Optional[str]] = mapped_column(String(255))
+    agreed_terms: Mapped[int] = mapped_column(Integer)
+    create_at: Mapped[datetime.datetime] = mapped_column(DateTime)
+
+    def to_dict(self):
+        """Convert the model instance to a dictionary."""
+        return {
+            "id": self.id,
+            "report_reason": self.report_reason,
+            "house_address": self.house_address,
+            "repair_type": self.repair_type,
+            "repair_description": self.repair_description,
+            "complaint_content": self.complaint_content,
+            "complaint_person": self.complaint_person,
+            "agreed_terms": self.agreed_terms,
+            "create_at": self.create_at.isoformat() if self.create_at else None
+        }
