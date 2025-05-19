@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/.venv1" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 virtualenv at C:\Users\yinbo\Desktop\软件工程基础\houseSystemBack\flask_env" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (houseSystemBack) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
