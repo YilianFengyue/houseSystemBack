@@ -20,11 +20,21 @@ def get_housenums():
     house_total_num=HouseInfo.query.count()
     return success_response(house_total_num)
 
-#热点房源
+#1.2热点房源
 @house_info_bp.route('/hotLists', methods=['GET'])
 def get_hotlists():
-    house_new_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
-    return success_response( [a.to_dict() for a in house_new_List])
+    house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
+
+    return success_response( [a.to_dict() for a in house_hot_List])
+#1.3最新房源
+@house_info_bp.route('/newLists', methods=['GET'])
+def get_newlists():
+    house_info_num=HouseInfo.query.count()
+    #获取前六条数据
+    house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(6).all()
+    return success_response([a.to_dict() for a in house_new_list])
+
+
 # 1. 新增房源信息 (对应房东发布房源)
 @house_info_bp.route('/', methods=['POST'])
 def add_house_info():
