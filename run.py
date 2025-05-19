@@ -9,6 +9,7 @@ from blueprints.contract import contract_bp
 from blueprints.appointment import appointment_bp
 from blueprints.houseinfo import house_info_bp
 from blueprints.repair_complaint import repair_bp
+from blueprints.message_bp import message_bp
 
 #初始化app
 app = Flask(__name__)
@@ -23,6 +24,7 @@ app.register_blueprint(appointment_bp)
 app.register_blueprint(contract_bp)
 app.register_blueprint(repair_bp)
 
+app.register_blueprint(message_bp)
 @app.route('/')
 def index():
     first_info = HouseInfo.query.first()

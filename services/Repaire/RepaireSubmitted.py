@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 import json
 from datetime import datetime
-from models.models import RepairComplaint  # 导入模型
+from models.models import Repair_Complaint  # 导入模型
 from extensions import db # 导入数据库实例
 
 repairesubmit_bp=Blueprint('repairesubmit', __name__)
@@ -64,7 +64,7 @@ def handle_repair_request():
             return jsonify({'error': '必须同意条款才能提交'}), 400
 
         # 创建新记录并保存到数据库
-        new_record = RepairComplaint(
+        new_record = Repair_Complaint(
             report_reason=data['report_reason'],
             house_address=data.get('house_address', ''),
             repair_type=data.get('repair_type'),
