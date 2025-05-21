@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import Column, Date, DateTime, Float, Integer, String, Table, text
+from sqlalchemy import Date, DateTime, Float, Integer, String, text
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from datetime import datetime
@@ -153,6 +153,7 @@ class Message(Base):
     sender_username: Mapped[str] = mapped_column(String(50), comment='发送者用户名')
     receiver_username: Mapped[str] = mapped_column(String(50), comment='接收者用户名')
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), comment='消息时间戳')
+    channel_id: Mapped[int] = mapped_column(Integer)
 
     def to_dict(self):
         return {
@@ -160,5 +161,22 @@ class Message(Base):
             "content": self.content,
             "sender_username": self.sender_username,
             "receiver_username": self.receiver_username,
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "channel_id": self.channel_id
+        }
+
+class Channel(Base):
+    __tablename__ = 'channel'
+
+    channel_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    tenant_username: Mapped[str] = mapped_column(String(50), comment='租客用户名')
+    landlord_username: Mapped[str] = mapped_column(String(50), comment='房东用户名')
+    timestamp: Mapped[datetime] = mapped_column(DateTime)
+
+    def to_dict(self):
+        return {
+            "channel_id": self.channel_id,
+            "tenant_username": self.tenant_username,
+            "landlord_username": self.landlord_username,
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         }

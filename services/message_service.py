@@ -6,6 +6,24 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def create_message(content, sender_username, receiver_username, channel_id):
+    """创建新消息"""
+    try:
+        message = Message(
+            content=content,
+            sender_username=sender_username,
+            receiver_username=receiver_username,
+            channel_id=channel_id
+        )
+        db.session.add(message)
+        db.session.commit()
+        return message
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"创建消息失败: {str(e)}")
+        raise
+
+# 其他函数保持不变
 def get_messages_by_sender(sender_username):
     """根据发送者用户名获取消息"""
     try:
@@ -31,18 +49,12 @@ def get_messages_between_users(user1, user2):
         logger.error(f"获取{user1}和{user2}之间的消息失败: {str(e)}")
         raise
 
-def create_message(content, sender_username, receiver_username):
-    """创建新消息"""
+def get_messages_by_channel(channel_id):
+    """根据channel_id获取消息"""
     try:
-        message = Message(
-            content=content,
-            sender_username=sender_username,
-            receiver_username=receiver_username
-        )
-        db.session.add(message)
-        db.session.commit()
-        return message
+        return db.session.query(Message).filter_by(channel_id=channel_id)\
+                          .order_by(Message.timestamp.asc())\
+                          .all()
     except Exception as e:
-        db.session.rollback()
-        logger.error(f"创建消息失败: {str(e)}")
+        logger.error(f"获取channel_id为{channel_id}的消息失败: {str(e)}")
         raise

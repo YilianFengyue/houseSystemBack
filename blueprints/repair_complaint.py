@@ -32,8 +32,6 @@ def create_repaire():
     if not data.get("complaint_content"):
         data["complaint_content"] = " "
 
-    print(data)
-
     # 检查必要的字段是否存在
     required_fields = ["report_reason", "house_address", "repair_type", "agreed_terms"]
     for field in required_fields:

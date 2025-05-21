@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 21/05/2025 19:21:18
+ Date: 21/05/2025 20:18:02
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `appointment`  (
   `property` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` datetime NOT NULL COMMENT '预约时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of appointment
@@ -38,6 +38,26 @@ INSERT INTO `appointment` VALUES (4, 'aaaa', '万科魅力之城武广新城', '
 INSERT INTO `appointment` VALUES (5, 'aaaa', '万科魅力之城武广新城', '2025-05-21 16:00:00');
 INSERT INTO `appointment` VALUES (6, 'aaaa', '万科魅力之城武广新城', '2025-05-20 16:00:00');
 INSERT INTO `appointment` VALUES (7, 'aaaa', '万科魅力之城武广新城', '2025-05-30 16:00:00');
+INSERT INTO `appointment` VALUES (8, 'aaaa', '万科魅力之城武广新城', '2025-05-23 16:00:00');
+INSERT INTO `appointment` VALUES (9, 'aaaa', '万科魅力之城武广新城', '2025-05-30 16:00:00');
+INSERT INTO `appointment` VALUES (10, 'aaaa', '万科魅力之城武广新城', '2025-05-27 16:00:00');
+
+-- ----------------------------
+-- Table structure for channel
+-- ----------------------------
+DROP TABLE IF EXISTS `channel`;
+CREATE TABLE `channel`  (
+  `channel_id` int NOT NULL AUTO_INCREMENT,
+  `tenant_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '租客用户名',
+  `landlord_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '房东用户名',
+  `timestamp` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`channel_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of channel
+-- ----------------------------
+INSERT INTO `channel` VALUES (1, 'Andy', 'Lu', '2025-05-21 19:25:54');
 
 -- ----------------------------
 -- Table structure for comment
@@ -203,7 +223,7 @@ CREATE TABLE `contract`  (
   `formattedRent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `currentDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contract
@@ -212,6 +232,8 @@ INSERT INTO `contract` VALUES (3, '10251', '办公', '2025-04-30 16:00:00', '202
 INSERT INTO `contract` VALUES (4, '10251', '仓储', '2025-05-02 16:00:00', '2025-05-28 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-19 00:00:00');
 INSERT INTO `contract` VALUES (5, '10251', '仓储', '2025-05-21 16:00:00', '2025-05-30 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-21 00:00:00');
 INSERT INTO `contract` VALUES (6, '10251', '办公', '2025-04-30 16:00:00', '2025-05-30 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-21 00:00:00');
+INSERT INTO `contract` VALUES (7, '10251', '仓储', '2025-05-23 16:00:00', '2025-05-24 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-21 00:00:00');
+INSERT INTO `contract` VALUES (8, '10251', '居住', '2025-05-31 16:00:00', '2025-06-29 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-21 00:00:00');
 
 -- ----------------------------
 -- Table structure for house_info
@@ -263,22 +285,24 @@ CREATE TABLE `message`  (
   `sender_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发送者用户名',
   `receiver_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '接收者用户名',
   `timestamp` datetime NULL DEFAULT NULL COMMENT '消息时间戳',
+  `channel_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`message_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES (1, 'manba out', 'Andy', 'LU', '2025-05-19 16:08:26');
-INSERT INTO `message` VALUES (2, 'what can i say', 'Andy', 'LU', '2025-05-19 16:10:02');
-INSERT INTO `message` VALUES (3, 'kobe brant', 'Andy', 'LU', '2025-05-19 16:35:40');
-INSERT INTO `message` VALUES (4, 'man', 'Andy', 'LU', '2025-05-19 16:43:08');
-INSERT INTO `message` VALUES (5, 'hahahaha', 'Andy', 'LU', '2025-05-19 16:43:08');
-INSERT INTO `message` VALUES (6, 'hahahahahaha', 'Andy', 'LU', '2025-05-21 16:29:32');
-INSERT INTO `message` VALUES (7, 'manba in', 'Andy', 'LU', '2025-05-21 19:08:20');
-INSERT INTO `message` VALUES (8, 'manba out', 'Andy', 'LU', '2025-05-21 19:08:20');
-INSERT INTO `message` VALUES (9, '你是谁?', 'Andy', 'LU', '2025-05-21 19:08:20');
-INSERT INTO `message` VALUES (10, '我是乃龙', 'Andy', 'LU', '2025-05-21 19:15:39');
+INSERT INTO `message` VALUES (1, 'manba out', 'Andy', 'LU', '2025-05-19 16:08:26', 1);
+INSERT INTO `message` VALUES (2, 'what can i say', 'Andy', 'LU', '2025-05-19 16:10:02', 1);
+INSERT INTO `message` VALUES (3, 'kobe brant', 'Andy', 'LU', '2025-05-19 16:35:40', 1);
+INSERT INTO `message` VALUES (4, 'man', 'Andy', 'LU', '2025-05-19 16:43:08', 1);
+INSERT INTO `message` VALUES (5, 'hahahaha', 'Andy', 'LU', '2025-05-19 16:43:08', 1);
+INSERT INTO `message` VALUES (6, 'hahahahahaha', 'Andy', 'LU', '2025-05-21 16:29:32', 1);
+INSERT INTO `message` VALUES (7, 'manba in', 'Andy', 'LU', '2025-05-21 19:08:20', 1);
+INSERT INTO `message` VALUES (8, 'manba out', 'Andy', 'LU', '2025-05-21 19:08:20', 1);
+INSERT INTO `message` VALUES (9, '你是谁?', 'Andy', 'LU', '2025-05-21 19:08:20', 1);
+INSERT INTO `message` VALUES (10, '我是乃龙', 'Andy', 'LU', '2025-05-21 19:15:39', 1);
+INSERT INTO `message` VALUES (11, '我会喷火，你会吗', 'Andy', 'LU', '2025-05-21 19:56:29', 1);
 
 -- ----------------------------
 -- Table structure for repair_complaint
@@ -295,7 +319,7 @@ CREATE TABLE `repair_complaint`  (
   `agreed_terms` int NULL DEFAULT NULL,
   `create_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_complaint
@@ -314,6 +338,9 @@ INSERT INTO `repair_complaint` VALUES (11, 'repair', '12525', '网络维修', ' 
 INSERT INTO `repair_complaint` VALUES (12, 'repair', '12525', '网络维修', ' ', ' ', '', 1, '2025-05-19 11:30:44');
 INSERT INTO `repair_complaint` VALUES (13, 'repair', '1111', '设备维修', ' ', ' ', '', 1, '2025-05-19 11:31:29');
 INSERT INTO `repair_complaint` VALUES (14, 'repair', 'sss', '设备维修', ' ', ' ', '', 1, '2025-05-21 16:30:54');
+INSERT INTO `repair_complaint` VALUES (15, 'repair', '12舍525', '网络维修', ' ', ' ', '', 1, '2025-05-21 19:29:09');
+INSERT INTO `repair_complaint` VALUES (16, 'complaint', '', NULL, ' ', '你是一个一个', '王万古', 1, '2025-05-21 19:58:29');
+INSERT INTO `repair_complaint` VALUES (17, 'repair', '你是一个一个', '水电维修', ' ', ' ', '', 1, '2025-05-21 20:11:33');
 
 -- ----------------------------
 -- Table structure for user_info

@@ -3,8 +3,10 @@ from flask import Blueprint, request, jsonify
 from services.message_service import (
     get_messages_by_sender,
     get_messages_between_users,
-    create_message
+    create_message,
+    get_messages_by_channel,
 )
+from services.channel_service import get_channel
 import logging
 from functools import wraps
 from utils.response_utils import success_response, error_response
@@ -20,6 +22,13 @@ def handle_errors(f):
     def wrapper(*args, **kwargs):
         try:
             return f(*args, **kwargs)
+        except ValueError as e:
+            logger.exception("输入参数错误")
+            return jsonify({
+                "status": "error",
+                "message": "输入参数错误",
+                "detail": str(e)
+            }), 400
         except Exception as e:
             logger.exception("服务器内部错误")
             return jsonify({
@@ -42,7 +51,8 @@ def get_messages():
     if sender:
         messages = get_messages_by_sender(sender)
     elif user1 and user2:
-        messages = get_messages_between_users(user1, user2)
+        channel = get_channel(user1, user2)
+        messages = get_messages_by_channel(channel.channel_id)
     else:
         return jsonify({
             "status": "error",
@@ -72,11 +82,16 @@ def post_message():
             "message": f"缺少必要字段，需要: {', '.join(required_fields)}"
         }), 400
 
+    sender = data['sender_username']
+    receiver = data['receiver_username']
+    channel = get_channel(sender, receiver)
+
     # 创建新消息
     new_message = create_message(
         content=data['content'],
-        sender_username=data['sender_username'],
-        receiver_username=data['receiver_username']
+        sender_username=sender,
+        receiver_username=receiver,
+        channel_id=channel.channel_id
     )
 
     # 广播消息给所有连接的客户端
@@ -102,10 +117,12 @@ def handle_send_message(data):
     content = data.get('content')
 
     if sender and receiver and content:
+        channel = get_channel(sender, receiver)
         new_message = create_message(
             content=content,
             sender_username=sender,
-            receiver_username=receiver
+            receiver_username=receiver,
+            channel_id=channel.channel_id
         )
         # 广播消息给所有连接的客户端
         socketio.emit('new_message', new_message.to_dict())
