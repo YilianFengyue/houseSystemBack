@@ -1,11 +1,13 @@
 from flask import Blueprint, request, jsonify
 from services.contract_service import create_contracts
 from exts.db import db
+from utils.response_utils import success_response, error_response
 from datetime import datetime
 
 contract_bp = Blueprint("contract", __name__)
 
 # 新增合同
+# 后期还需修改
 @contract_bp.route("/contracts", methods=["POST"])
 def create_contract():
     data = request.json
@@ -25,26 +27,8 @@ def create_contract():
         # 创建新合同
         new_contract = create_contracts(data)
 
-        return jsonify({
-            "message": "合同提交成功",
-            "data": {
-                "rentValue": new_contract.rentValue,
-                "purpose": new_contract.purpose,
-                "startDate": new_contract.startDate,
-                "endDate": new_contract.endDate,
-                "landlordName": new_contract.landlordName,
-                "landlordId": new_contract.landlordId,
-                "landlordPhone": new_contract.landlordPhone,
-                "tenantName": new_contract.tenantName,
-                "tenantId": new_contract.tenantId,
-                "tenantPhone": new_contract.tenantPhone,
-                "formattedRent": new_contract.formattedRent,
-                "currentDate": new_contract.currentDate
-            }
-        }), 201
-
+        return success_response(data=new_contract.to_dict(), message="合同提交成功", code=201)
 
     except Exception as e:
         db.session.rollback()
-        print(f"具体错误信息: {str(e)}")
-        return jsonify({"message": f"提交合同失败: {str(e)}"}), 500
+        return error_response(message=f"提交合同失败: {str(e)}", code=500)

@@ -76,6 +76,14 @@ class Appointment(Base):
     property: Mapped[Optional[str]] = mapped_column(String(255))
     time: Mapped[datetime] = mapped_column(DateTime, comment='预约时间')
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "property": self.property,
+            "time": self.time.strftime("%Y-%m-%d %H:%M:%S") if self.time else None
+        }
+
 class Contract(Base):
     __tablename__ = 'contract'
 
@@ -92,6 +100,23 @@ class Contract(Base):
     tenantPhone: Mapped[str] = mapped_column(String(255))
     formattedRent: Mapped[str] = mapped_column(String(255))
     currentDate: Mapped[str] = mapped_column(DateTime)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "rentValue": self.rentValue,
+            "purpose": self.purpose,
+            "startDate": self.startDate.strftime("%Y-%m-%d") if self.startDate else None,
+            "endDate": self.endDate.strftime("%Y-%m-%d") if self.endDate else None,
+            "landlordName": self.landlordName,
+            "landlordId": self.landlordId,
+            "landlordPhone": self.landlordPhone,
+            "tenantName": self.tenantName,
+            "tenantId": self.tenantId,
+            "tenantPhone": self.tenantPhone,
+            "formattedRent": self.formattedRent,
+            "currentDate": self.currentDate.strftime("%Y-%m-%d") if self.currentDate else None
+        }
 
 class Repair_Complaint(Base):
     __tablename__ = 'repair_complaint'
