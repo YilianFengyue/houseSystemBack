@@ -1,14 +1,15 @@
+from django.template.smartif import prefix
 from flask import Blueprint, request, jsonify
 from services.message_service import (
     get_messages_by_sender,
     get_messages_between_users,
     create_message
 )
-from exts.db import db
-from datetime import datetime
 import logging
 from functools import wraps
 from utils.response_utils import success_response, error_response
+from flask import current_app
+from socketio_init import socketio
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +79,10 @@ def post_message():
         receiver_username=data['receiver_username']
     )
 
+    # 广播消息给所有连接的客户端
+    socketio = current_app.extensions['socketio']
+    socketio.emit('new_message', new_message.to_dict())
+
     return success_response(data={"message": new_message.to_dict()}, code=201)
 
 
@@ -88,3 +93,19 @@ def get_andy_messages():
     messages = get_messages_by_sender("Andy")
 
     return success_response(data={"messages": [msg.to_dict() for msg in messages]})
+
+# 监听客户端发送的消息事件
+@socketio.on('send_message')
+def handle_send_message(data):
+    sender = data.get('sender_username')
+    receiver = data.get('receiver_username')
+    content = data.get('content')
+
+    if sender and receiver and content:
+        new_message = create_message(
+            content=content,
+            sender_username=sender,
+            receiver_username=receiver
+        )
+        # 广播消息给所有连接的客户端
+        socketio.emit('new_message', new_message.to_dict())
