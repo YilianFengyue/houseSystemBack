@@ -1,82 +1,123 @@
-#
-# from datetime import datetime, timezone # 确保 timezone 也被导入
-# from flask import Flask, jsonify # request 在此函数中不需要
-# import time, base64, hmac, hashlib
-# # import oss2 # oss2 在此代码段未直接使用
-# from flask import Blueprint # request, current_app 在此代码段未直接使用
-#
-# app = Flask(__name__)
-#
-# # 确保替换为你的实际凭证和存储桶名称
-# ACCESS_KEY_ID = ""
-# ACCESS_KEY_SECRET = "q"
-# BUCKET_NAME = ""
-#
-# ENDPOINT = 'oss-cn-hangzhou.aliyuncs.com' # 根据你的 Bucket 所在地可能需要修改
-# HOST = f'https://{BUCKET_NAME}.{ENDPOINT}'
-# EXPIRE_TIME = 30  # 签名过期时间（秒）
-#
-# # 1. 定义蓝图 oss_bp，并设置了 URL 前缀 /oss
-# oss_bp = Blueprint('oss', __name__, url_prefix="/oss")
-#
-# # 2. 使用蓝图的路由装饰器 @oss_bp.route('/')
-# # 这意味着此路由的完整路径将是 /oss/ (蓝图前缀 + 路由相对路径)
-# @oss_bp.route('/', methods=['GET'])
-# def get_policy():
-#     # 确保 ACCESS_KEY_ID, ACCESS_KEY_SECRET, BUCKET_NAME 已被正确赋值
-#     if not all([ACCESS_KEY_ID, ACCESS_KEY_SECRET, BUCKET_NAME]) or \
-#        ACCESS_KEY_ID == "YOUR_ACCESS_KEY_ID": # 简单检查是否还是占位符
-#         return jsonify({"error": "Server configuration missing for OSS credentials."}), 500
-#
-#     now = int(time.time())
-#     expire_end = now + EXPIRE_TIME
-#     # expiration = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(expire_end))
-#     # OSS Policy 中 expiration 字段的格式通常是 ISO8601 UTC 时间，例如 '2025-05-19T12:00:00.000Z'
-#     # time.gmtime(expire_end) 生成的时间元组不包含毫秒，strftime 格式化后也不包含 'Z'
-#     # 更精确的格式化：
-#     dt_obj = datetime.datetime.fromtimestamp(expire_end, datetime.timezone.utc)
-#     expiration = dt_obj.isoformat(timespec='milliseconds').replace('+00:00', 'Z')
-#
-#
-#     policy_dict = {
-#         "expiration": expiration,
-#         "conditions": [
-#             ["content-length-range", 0, 1048576000],  # 例如：最大1GB，原为100MB
-#             ["starts-with", "$key", "uploads/"] # 文件将上传到 bucket 的 uploads/ 目录下
-#         ]
-#     }
-#
-#     policy = base64.b64encode(str(policy_dict).encode('utf-8')).decode('utf-8')
-#     # 阿里云OSS签名文档通常指明 policy 是 utf-8 编码后再进行 base64 编码
-#     # policy_json_str = json.dumps(policy_dict)
-#     # policy = base64.b64encode(policy_json_str.encode('utf-8')).decode('utf-8')
-#
-#
-#     signature_payload = ACCESS_KEY_SECRET.encode('utf-8')
-#     policy_to_sign = policy.encode('utf-8')
-#
-#     h = hmac.new(signature_payload, policy_to_sign, hashlib.sha1)
-#     signature = base64.b64encode(h.digest()).decode('utf-8')
-#
-#
-#     return jsonify({
-#         'accessid': ACCESS_KEY_ID,
-#         'host': HOST,
-#         'policy': policy,
-#         'signature': signature,
-#         'expire': expire_end, # 前端通常使用这个 Unix 时间戳来判断签名是否过期
-#         'dir': 'uploads/' # 告诉前端上传的目标目录
-#     })
-#
-# # 3. 将蓝图注册到 app 实例
-# # app.register_blueprint(oss_bp)
-#
-# # if __name__ == '__main__':
-# #     # 确保在运行前替换掉 YOUR_ACCESS_KEY_ID, YOUR_ACCESS_KEY_SECRET, YOUR_BUCKET_NAME
-# #     if BUCKET_NAME == "YOUR_BUCKET_NAME" or \
-# #        ACCESS_KEY_ID == "YOUR_ACCESS_KEY_ID" or \
-# #        ACCESS_KEY_SECRET == "YOUR_ACCESS_KEY_SECRET":
-# #         print("警告：请在代码中填入你的阿里云 OSS Access Key ID, Secret 和 Bucket Name！")
-# #         # exit(1) # 可以选择在此处退出，防止以无效配置启动
-# #
-# #     app.run(debug=True) # debug=True 方便开发调试
+# BluePrint/oss.py
+from flask import Blueprint, request, jsonify, current_app
+import alibabacloud_oss_v2 as oss
+from alibabacloud_oss_v2.credentials import StaticCredentialsProvider
+from werkzeug.utils import secure_filename
+import uuid
+import os
+
+from models.house_model import HouseInfo  # 确保路径正确
+from exts.db import db  # 确保路径正确
+
+oss_bp = Blueprint('oss', __name__, url_prefix='/oss')
+
+
+def allowed_file(filename):
+    """检查文件扩展名是否被允许"""
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+
+def get_oss_client():
+    """初始化并返回OSS客户端"""
+    access_key_id = current_app.config['OSS_ACCESS_KEY_ID']
+    access_key_secret = current_app.config['OSS_ACCESS_KEY_SECRET']
+    endpoint = current_app.config['OSS_ENDPOINT']
+    region = current_app.config.get('OSS_REGION')  # <--- 获取配置的REGION
+    # 调试日志：检查加载的配置值
+    current_app.logger.info(
+        f"Loaded OSS_ACCESS_KEY_ID (first 5 chars): {str(access_key_id)[:5] if access_key_id else 'Not Set'}")
+    current_app.logger.info(f"Loaded OSS_ENDPOINT: {endpoint}")
+    current_app.logger.info(f"Loaded OSS_REGION: {region}")
+    # ... (后续的配置检查和客户端初始化代码) ...
+
+    if not all([access_key_id, access_key_secret, endpoint]):
+        raise ValueError("OSS配置不完整 (ID, Secret, Endpoint 必须提供)")
+    if access_key_id == "YOUR_ACCESS_KEY_ID" or access_key_secret == "YOUR_ACCESS_KEY_SECRET":
+        current_app.logger.warning("正在使用默认的OSS占位符凭证，请配置真实的凭证！")
+
+    credentials_provider = StaticCredentialsProvider(access_key_id, access_key_secret)
+
+    cfg = oss.config.load_default()
+    cfg.credentials_provider = credentials_provider
+    cfg.endpoint = endpoint
+    # 如果您的endpoint不包含region信息，或者您想显式指定region, 可以取消注释下一行
+    cfg.region = region # 例如 'cn-hangzhou'
+
+    return oss.Client(cfg)
+
+
+@oss_bp.route('/upload_house_image/<int:house_id>', methods=['POST'])
+def upload_house_image(house_id):
+    """
+    上传房屋图片到OSS，并将URL更新到对应的房屋信息中。
+    前端应以 multipart/form-data 形式发送图片，字段名为 'image'。
+    """
+    if 'image' not in request.files:
+        return jsonify(success=False, message="请求中未找到图片文件(字段名应为'image')"), 400
+
+    file = request.files['image']
+
+    if file.filename == '':
+        return jsonify(success=False, message="未选择任何图片文件"), 400
+
+    if not allowed_file(file.filename):
+        return jsonify(success=False, message="文件类型不被允许"), 400
+
+    # 查找对应的房屋信息
+    house = db.session.get(HouseInfo, house_id)  # 使用 db.session.get 替代 query.get
+    if not house:
+        return jsonify(success=False, message=f"ID为 {house_id} 的房屋信息未找到"), 404
+
+    try:
+        client = get_oss_client()
+        bucket_name = current_app.config['OSS_BUCKET_NAME']
+
+        # 生成安全且唯一的文件名
+        s_filename = secure_filename(file.filename)
+        file_ext = os.path.splitext(s_filename)[1]
+        # 使用UUID确保文件名唯一，并组织到特定房屋ID的目录下
+        object_name = f"house_images/{house_id}/{uuid.uuid4().hex}{file_ext}"
+
+        # 上传文件
+        # file.stream 提供了文件内容的流式读取
+        result = client.put_object(oss.PutObjectRequest(
+            bucket=bucket_name,
+            key=object_name,
+            body=file.stream,  # 或者 file.read() 如果文件不大
+            headers = {"x-oss-object-acl": "public-read"}
+        ))
+
+        if result.status_code == 200:
+            # 构建图片URL
+            # 优先使用自定义CNAME域名
+            oss_cname_url = current_app.config.get('OSS_CNAME_URL')
+            if oss_cname_url:
+                # 确保CNAME URL末尾没有斜杠，object_name开头没有斜杠
+                image_url = f"{oss_cname_url.rstrip('/')}/{object_name.lstrip('/')}"
+            else:
+                # 否则使用标准的OSS域名格式
+                image_url = f"https://{bucket_name}.{current_app.config['OSS_ENDPOINT']}/{object_name}"
+
+            # 更新数据库中的图片URL
+            house.image_url = image_url
+            db.session.commit()
+
+            current_app.logger.info(
+                f"图片上传成功: {image_url}, Status: {result.status_code}, Request ID: {result.request_id}")
+            return jsonify(success=True, message="图片上传成功", image_url=image_url, house_id=house_id), 200
+        else:
+            current_app.logger.error(f"OSS上传失败: Status: {result.status_code}, Request ID: {result.request_id}")
+            return jsonify(success=False, message=f"OSS上传失败，状态码: {result.status_code}"), 500
+
+    except ValueError as ve:  # OSS配置错误
+        current_app.logger.error(f"OSS配置错误: {ve}")
+        return jsonify(success=False, message=f"服务器OSS配置错误: {ve}"), 500
+    # except oss.exceptions.ClientError as ce:  # OSS SDK客户端错误
+    #     current_app.logger.error(f"OSS客户端错误: {ce}")
+    #     return jsonify(success=False, message=f"OSS操作失败: {ce.message}"), 500
+
+    except Exception as e:
+        current_app.logger.error(f"上传图片时发生未知错误: {e}")
+        db.session.rollback()  # 如果发生错误，回滚数据库更改
+        return jsonify(success=False, message=f"服务器内部错误: {str(e)}"), 500
