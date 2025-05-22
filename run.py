@@ -17,7 +17,7 @@ from socketio_init import socketio  # 修改导入语句
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
-cors.init_app(app)
+cors.init_app(app, supports_credentials=True)
 
 app.register_blueprint(house_info_bp)
 app.register_blueprint(user_bp)

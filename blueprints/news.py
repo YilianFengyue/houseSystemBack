@@ -13,7 +13,7 @@ def get_db_session():
 
 
 # 1. 获取所有新闻，默认按发布时间降序，支持分页
-@news_bp.route('/', methods=['GET'])
+@news_bp.route('', methods=['GET'])
 def get_all_news_route():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
@@ -21,26 +21,27 @@ def get_all_news_route():
         response_data = get_all_news(page, per_page)
         if not response_data["items"] and page == 1:
             return success_response(data=response_data, message="暂无新闻", code=Code.GET_OK)
+        print(response_data["items"])
         return success_response(data=response_data, message="查询成功", code=Code.GET_OK)
     except Exception as e:
         current_app.logger.error(f"查询新闻失败: {e}")
         return error_response("查询新闻失败", code=Code.INTERNAL_SERVER_ERROR)
 
 # 2. 根据ID获取单条新闻详情
-@news_bp.route('/<int:news_id>', methods=['GET'])
-def get_news_by_id_route(news_id):
+@news_bp.route('/<int:id>', methods=['GET'])
+def get_news_by_id_route(id):
     try:
-        news = get_news_by_id(news_id)
+        news = get_news_by_id(id)
         if news:
             return success_response(data=news.to_dict(), code=Code.GET_OK)
         else:
             return error_response("新闻未找到", code=Code.NOT_FOUND)
     except Exception as e:
-        current_app.logger.error(f"查询新闻 {news_id} 失败: {e}")
+        current_app.logger.error(f"查询新闻 {id} 失败: {e}")
         return error_response("数据库错误", code=Code.INTERNAL_SERVER_ERROR)
 
 # 3. 新增新闻
-@news_bp.route('/', methods=['POST'])
+@news_bp.route('', methods=['POST'])
 def add_news_route():
     data = request.get_json()
     if not data:
@@ -57,18 +58,19 @@ def add_news_route():
     except ValueError as e:
         return error_response(str(e), code=Code.BAD_REQUEST)
     except Exception as e:
-        current_app.logger.error(f"添加新闻失败: {e}")
-        return error_response("添加新闻失败", code=Code.INTERNAL_SERVER_ERROR)
+        error_message = f"添加新闻失败: {str(e)}"
+        current_app.logger.error(error_message)
+        return error_response(error_message, code=Code.INTERNAL_SERVER_ERROR)
 
 # 4. 更新新闻
-@news_bp.route('/<int:news_id>', methods=['PUT'])
-def update_news_route(news_id):
+@news_bp.route('/<int:id>', methods=['PUT'])
+def update_news_route(id):
     data = request.get_json()
     if not data:
         return error_response("请求体不能为空", code=Code.BAD_REQUEST)
 
     try:
-        news = update_news(news_id, data)
+        news = update_news(id, data)
         if news:
             return success_response(data=news.to_dict(), message="新闻更新成功", code=Code.UPDATE_OK)
         else:
@@ -80,10 +82,10 @@ def update_news_route(news_id):
         return error_response("更新新闻失败", code=Code.INTERNAL_SERVER_ERROR)
 
 # 5. 删除新闻
-@news_bp.route('/<int:news_id>', methods=['DELETE'])
-def delete_news_route(news_id):
+@news_bp.route('/<int:id>', methods=['DELETE'])
+def delete_news_route(id):
     try:
-        if delete_news(news_id):
+        if delete_news(id):
             return success_response(message="新闻删除成功", code=Code.DELETE_OK)
         else:
             return error_response("新闻未找到", code=Code.NOT_FOUND)
