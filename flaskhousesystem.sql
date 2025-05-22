@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 22/05/2025 15:59:14
+ Date: 22/05/2025 19:08:11
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `appointment`  (
   `property` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` datetime NOT NULL COMMENT '预约时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of appointment
@@ -45,6 +45,8 @@ INSERT INTO `appointment` VALUES (11, 'aaaa', '万科魅力之城武广新城', 
 INSERT INTO `appointment` VALUES (12, 'aaaa', '万科魅力之城武广新城', '2025-05-23 16:00:00');
 INSERT INTO `appointment` VALUES (13, 'aaaa', '万科魅力之城武广新城', '2025-05-20 16:00:00');
 INSERT INTO `appointment` VALUES (14, 'aaaa', '万科魅力之城武广新城', '2025-05-05 16:00:00');
+INSERT INTO `appointment` VALUES (15, 'aaaa', '万科魅力之城武广新城', '2025-05-23 16:00:00');
+INSERT INTO `appointment` VALUES (16, 'aaaa', '万科魅力之城武广新城', '2025-05-02 16:00:00');
 
 -- ----------------------------
 -- Table structure for channel
@@ -227,7 +229,7 @@ CREATE TABLE `contract`  (
   `formattedRent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `currentDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contract
@@ -240,6 +242,7 @@ INSERT INTO `contract` VALUES (7, '10251', '仓储', '2025-05-23 16:00:00', '202
 INSERT INTO `contract` VALUES (8, '10251', '居住', '2025-05-31 16:00:00', '2025-06-29 16:00:00', '', NULL, '', '', NULL, '', '壹万零仟贰佰伍拾壹元整', '2025-05-21 00:00:00');
 INSERT INTO `contract` VALUES (9, '3200', '居住', '2025-04-30 16:00:00', '2025-06-29 16:00:00', '', NULL, '', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-21 00:00:00');
 INSERT INTO `contract` VALUES (10, '3200', '办公', '2025-05-15 16:00:00', '2025-05-21 16:00:00', '', NULL, '', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-21 00:00:00');
+INSERT INTO `contract` VALUES (11, '3200', '居住', '2025-04-30 16:00:00', '2025-05-30 16:00:00', '', NULL, '', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-22 00:00:00');
 
 -- ----------------------------
 -- Table structure for house_info
@@ -293,7 +296,7 @@ CREATE TABLE `message`  (
   `timestamp` datetime NULL DEFAULT NULL COMMENT '消息时间戳',
   `channel_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`message_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -312,6 +315,7 @@ INSERT INTO `message` VALUES (11, '我会喷火，你会吗', 'Andy', 'LU', '202
 INSERT INTO `message` VALUES (12, 'test，test', 'Andy', 'LU', '2025-05-21 20:20:00', 1);
 INSERT INTO `message` VALUES (13, 'senbai sukisi', 'Andy', 'LU', '2025-05-21 21:21:33', 1);
 INSERT INTO `message` VALUES (14, '你是一个一个一个', 'Andy', 'LU', '2025-05-21 21:21:33', 1);
+INSERT INTO `message` VALUES (15, '我会喷火，你会吗', 'Andy', 'LU', '2025-05-22 16:25:07', 1);
 
 -- ----------------------------
 -- Table structure for news
@@ -323,11 +327,27 @@ CREATE TABLE `news`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `publish_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of news
 -- ----------------------------
+INSERT INTO `news` VALUES (1, '111', '222', '2025-05-11 17:25:39');
+INSERT INTO `news` VALUES (2, '112233', '332211', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (3, '114514', '1919810', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (4, '1111111111', '111111111111', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (5, '333333333333', '111111111111', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (6, '2', '2', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (7, '11', '1111', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (8, '2', '21', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (9, '3', '3', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (12, '3', '3455', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (15, '12345', '12345', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (18, '震惊', '中南大学', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (22, '12345', '12345', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (23, '12345', '4444', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (24, '111111', '55555555555', '2025-05-22 00:00:00');
+INSERT INTO `news` VALUES (25, '111111', '你好啊,我是奶龙', '2025-05-22 00:00:00');
 
 -- ----------------------------
 -- Table structure for repair_complaint
@@ -344,7 +364,7 @@ CREATE TABLE `repair_complaint`  (
   `agreed_terms` int NULL DEFAULT NULL,
   `create_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_complaint
@@ -368,6 +388,8 @@ INSERT INTO `repair_complaint` VALUES (16, 'complaint', '', NULL, ' ', '你是�
 INSERT INTO `repair_complaint` VALUES (17, 'repair', '你是一个一个', '水电维修', ' ', ' ', '', 1, '2025-05-21 20:11:33');
 INSERT INTO `repair_complaint` VALUES (18, 'repair', '111111111111111111111', '水电维修', ' ', ' ', '', 1, '2025-05-21 21:11:42');
 INSERT INTO `repair_complaint` VALUES (19, 'repair', '校本部12舍', '网络维修', ' ', ' ', '', 1, '2025-05-21 21:24:23');
+INSERT INTO `repair_complaint` VALUES (20, 'repair', '112233', '设备维修', ' ', ' ', '', 1, '2025-05-22 16:25:50');
+INSERT INTO `repair_complaint` VALUES (21, 'complaint', '', NULL, ' ', '112233', '李茜', 1, '2025-05-22 17:33:33');
 
 -- ----------------------------
 -- Table structure for user_info
