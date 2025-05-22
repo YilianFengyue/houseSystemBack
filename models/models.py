@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy import Date, DateTime, Float, Integer, String, text
-from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR
+from sqlalchemy.dialects.mysql import INTEGER, TINYINT, VARCHAR, TEXT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from datetime import datetime
 
@@ -179,4 +179,20 @@ class Channel(Base):
             "tenant_username": self.tenant_username,
             "landlord_username": self.landlord_username,
             "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+class News(Base):
+    __tablename__ = 'news'
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    content: Mapped[text] = mapped_column(TEXT, nullable=False)
+    publish_time: Mapped[datetime] = mapped_column(DateTime)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "content": self.content,
+            "publish_time": self.publish_time.isoformat() if self.publish_time else None,
         }
