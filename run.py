@@ -7,7 +7,7 @@ from blueprints.houseinfo import house_info_bp
 from blueprints.user import user_bp
 from models.house_model import HouseInfo # <--- 正确的模型导入路径
 
-# from blueprints.oss import oss_bp
+from blueprints.oss import oss_bp
 #初始化app
 app = Flask(__name__)
 app.config.from_object(Config)
