@@ -33,3 +33,4 @@ class UserInfo(Base):
     seen_id: Mapped[Optional[str]] = mapped_column(String(255))
     collect_id: Mapped[Optional[str]] = mapped_column(String(255))
     identityCard: Mapped[Optional[str]] = mapped_column(String(255))
+    status: Mapped[int] = mapped_column(TINYINT, default=1, comment='0:admin, 1:tenant, 2:landlord')

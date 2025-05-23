@@ -8,12 +8,9 @@ import datetime
 
 from exts import db
 
-class HouseInfo(db.Model): # <--- 修改这里，继承自 db.Model
+class HouseInfo(db.Model): 
     __tablename__ = 'house_info'
 
-    # 注意：在使用 Flask-SQLAlchemy 时，通常 INTEGER, Float 等类型会直接从 sqlalchemy 导入
-    # sqlalchemy.dialects.mysql.INTEGER 也可以用于主键，如果需要 MySQL 特定的 INTEGER 属性
-    # 这里我保留了您原始模型中的类型选择，但做了些许澄清
 
     id: Mapped[int] = mapped_column(MYSQL_INTEGER, primary_key=True, autoincrement=True) # autoincrement=True 是 Integer 主键的默认行为
     title: Mapped[Optional[str]] = mapped_column(VARCHAR(100), comment='标题，如：整租·锦源小区 2室1厅 南')

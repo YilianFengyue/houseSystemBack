@@ -2,20 +2,22 @@
 from flask import Flask
 
 from config import Config
-from exts.db import db
+from exts import db, mail
 from blueprints.houseinfo import house_info_bp
-
+from blueprints.user import user_bp
 from models.house_model import HouseInfo # <--- 正确的模型导入路径
-from flask_cors import CORS
 
-# from blueprints.oss import oss_bp
+from blueprints.oss import oss_bp
 #初始化app
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
-CORS(app)
+mail.init_app(app)
+
 app.register_blueprint(house_info_bp)
+app.register_blueprint(user_bp)
 # app.register_blueprint(oss_bp)
+
 @app.route('/')
 def index():
     try:
