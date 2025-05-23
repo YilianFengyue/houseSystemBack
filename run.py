@@ -20,9 +20,16 @@ app.register_blueprint(user_bp)
 
 @app.route('/')
 def index():
-    first_info = HouseInfo.query.first()
-    if first_info:
-        print("yes")
-    return "OK~"
+    try:
+        # 确保在应用上下文中执行数据库查询
+        with app.app_context():
+            first_info = db.session.query(HouseInfo).first()  # 或者 HouseInfo.query.first() 如果你习惯旧版
+        if first_info:
+            print("数据库连接成功，并能查询到HouseInfo数据。")
+        else:
+            print("数据库连接成功，但HouseInfo表中无数据。")
+    except Exception as e:
+        print(f"数据库连接或查询失败: {e}")
+    return "OK~ Backend is running."
 if __name__ == "__main__":
     app.run(debug=True)
