@@ -37,7 +37,7 @@ def get_newlists():
 
 
 # 1. 新增房源信息 (对应房东发布房源)
-@house_info_bp.route('/', methods=['POST'])
+@house_info_bp.route('', methods=['POST'])
 def add_house_info():
     data = request.get_json()
     if not data:
