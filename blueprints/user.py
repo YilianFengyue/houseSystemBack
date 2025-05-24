@@ -1,175 +1,76 @@
-from flask import Blueprint, request, jsonify
-from services.user_service import (
-    create_user, get_user_by_username, get_all_users, get_user_by_id,
-    generate_verification_code, send_verification_email, verify_code,
-    update_verification_code, get_user_status, get_user_info,
-    update_user_info, delete_user_account, reset_password
-)
-from utils.jwt_utils import generate_token
-from utils.jwt_utils import login_required
-from exts import db
+import jwt
+import datetime
+from flask import Blueprint, request, current_app, g # 引入 g
+from sqlalchemy.exc import IntegrityError
+from services.user_service import get_user_by_id, get_user_by_username, get_all_users, get_user_by_id, get_user_by_phone
 from models.models import UserInfo
+from exts import db
+from utils.response_utils import success_response, error_response, Code
+from decorators.decorators import token_required
 
-user_bp = Blueprint("user", __name__)
+user = Blueprint("user", __name__, url_prefix="/user")
 
-
-# 用户注册，POST /users
-@user_bp.route("/users", methods=["POST"])
+@user.route("/register", methods=["POST"])
 def register():
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-    identification = data.get("identification")
-    phone = data.get("phone")
+    phone = request.form.get('phone')
+    password = request.form.get('password')
 
-    if get_user_by_username(username):
-        return jsonify({"code": 400, "msg": "用户已存在"}), 400
+    if not phone or not password:
+        # 修正点：使用 message 参数，并传入正确的 Code
+        return error_response(code=Code.BAD_REQUEST, message="手机号和密码不能为空")
 
-    create_user(username, password,identification,phone)
-    return jsonify({"code": 201, "msg": "用户注册成功"}), 201
+    if UserInfo.query.filter_by(phone=phone).first():
+        # 修正点：使用 message 参数
+        return error_response(code=Code.GET_ERR, message="注册失败，该手机号已被注册")
 
-
-# 用户登录，POST /auth/login
-@user_bp.route("/auth/login", methods=["POST"])
-def login():
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-
-    user = get_user_by_username(username)
-    if user and user.password == password:
-        token = generate_token(user.id, user.username)
-        return jsonify({"code": 200,
-                        "msg": "登录成功",
-                        "data": {"id": user.id, "username": user.username,"password": user.password,"identification":user.identification, "phone":user.phone},
-                        "token": token
-                        })
-
-    return jsonify({"code": 401, "msg": "用户名或密码错误"}), 401
-
-#获取所有用户
-@user_bp.route("/users", methods=["GET"])
-def get_users():
-    users = get_all_users()
-    return jsonify({"code": 200,
-                    "msg": "获取成功",
-                    "data": [{"id": user.id, "username": user.username, "password": user.password} for user in users]})
-
-@user_bp.route("/users/<int:user_id>/status", methods=["GET"])
-def get_status(user_id):
-    status = get_user_status(user_id)
-    if status is None:
-        return jsonify({"code": 404, "msg": "用户不存在"}), 404
-    return jsonify({"code": 200,
-                    "msg": "获取成功",
-                    "data": {"status": status}})
-
-@user_bp.route("/profile", methods=["GET"])
-@login_required
-def profile():
-    user_info = request.user  # 从 token 中解出的信息
-    return jsonify({
-        "code": 200,
-        "msg": "获取成功",
-        "data": user_info
-    })
-
-@user_bp.route("/userInfo", methods=["GET"])
-@login_required
-def get_full_user_info():
-    """获取用户完整信息"""
-    username = request.user.get("username")
-    user = get_user_info(username)
-    if not user:
-        return jsonify({"code": 404, "msg": "用户不存在"}), 404
-    return jsonify({
-        "code": 200,
-        "msg": "获取成功",
-        "data": {
-            "id": user.id,
-            "username": user.name,
-            "email": user.email,
-            "phone": user.phone,
-            "addr": user.addr,
-            "status": user.status
-        }
-    })
-
-@user_bp.route("/", methods=["PUT"])
-@login_required
-def update_account():
-    """更新用户账户信息"""
-    user_id = request.user.get("id")
-    data = request.json
-    if not update_user_info(user_id, **data):
-        return jsonify({"code": 400, "msg": "更新失败"}), 400
-    return jsonify({"code": 200, "msg": "更新成功"})
-
-@user_bp.route("/<int:user_id>", methods=["DELETE"])
-@login_required
-def delete_account(user_id):
-    """删除用户账户"""
-    if not delete_user_account(user_id):
-        return jsonify({"code": 400, "msg": "删除失败"}), 400
-    return jsonify({"code": 200, "msg": "删除成功"})
-
-@user_bp.route("/reset-password", methods=["PUT"])
-@login_required
-def reset_user_password():
-    """重置用户密码"""
-    username = request.user.get("username")
-    if not reset_password(username):
-        return jsonify({"code": 400, "msg": "重置失败"}), 400
-    return jsonify({"code": 200, "msg": "重置成功"})
-
-@user_bp.route("/auth/send_code", methods=["POST"])
-def send_code():
-    """发送验证码"""
-    email = request.json.get("email")
-    if not email:
-        return jsonify({"code": 400, "msg": "邮箱不能为空"}), 400
-    
-    # 生成验证码
-    code = generate_verification_code()
-    
-    # 更新验证码信息
-    if not update_verification_code(email, code):
-        return jsonify({"code": 400, "msg": "邮箱未注册"}), 400
-    
-    # 发送邮件
     try:
-        send_verification_email(email, code)
-        return jsonify({"code": 200, "msg": "验证码发送成功"})
+        new_user = UserInfo(phone=phone)
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+        # 修正点：使用 message 参数
+        return success_response(code=Code.SAVE_OK, message="注册成功！") # 这里 data 为 None，会自动省略
+    except IntegrityError:
+        db.session.rollback()
+        # 修正点：使用 message 参数
+        return error_response(code=Code.UPDATE_ERR, message="数据库唯一性约束冲突，该手机号可能已被注册")
     except Exception as e:
-        return jsonify({"code": 500, "msg": "验证码发送失败"}), 500
+        db.session.rollback()
+        current_app.logger.error(f"Register error: {e}")
+        # 修正点：使用 message 参数
+        return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
 
-@user_bp.route("/auth/login_with_code", methods=["POST"])
-def login_with_code():
-    """验证码登录"""
-    email = request.json.get("email")
-    code = request.json.get("code")
-    
-    if not email or not code:
-        return jsonify({"code": 400, "msg": "邮箱和验证码不能为空"}), 400
-    
-    # 验证验证码
-    if not verify_code(email, code):
-        return jsonify({"code": 401, "msg": "验证码错误或已过期"}), 401
-    
-    # 获取用户信息
-    user = db.session.query(UserInfo).filter_by(email=email).first()
-    if not user:
-        return jsonify({"code": 404, "msg": "用户不存在"}), 404
-    
-    # 生成token
-    token = generate_token(user.id, user.name)
-    return jsonify({
-        "code": 200,
-        "msg": "登录成功",
-        "data": {
-            "id": user.id,
-            "username": user.name,
-            "email": user.email
-        },
-        "token": token
-    })
+@user.route("/login", methods=["POST"])
+def login():
+    phone = request.form.get('phone')
+    password = request.form.get('password')
+    print(phone, password)
+
+    if not phone or not password:
+        return error_response(code=Code.BAD_REQUEST, message="手机号和密码不能为空")
+
+    # user_model = UserInfo.query.filter_by(phone=phone).first()
+    new_user = get_user_by_phone(phone)
+
+    if new_user:
+        token_payload = {
+            'user_id': new_user.id,
+            'phone': new_user.phone,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+        }
+        token = jwt.encode(token_payload, current_app.config['SECRET_KEY'], algorithm="HS256")
+
+        # 修正点：将 token 放入 data 字典中返回，并使用 message 参数
+        return success_response(code=Code.SAVE_OK, data={"token": token}, message="登录成功")
+        # return success_response(code=Code.SAVE_OK, message="登录成功")
+    else:
+        # 修正点：使用 message 参数
+        return error_response(code=Code.UNAUTHORIZED, message="登录失败，手机号或密码错误")
+
+
+@user.route("/userinfo", methods=["GET"])
+@token_required
+def userinfo():
+    current_user = g.user
+    # 修正点：使用 message 参数
+    return success_response(code=Code.GET_OK, data=current_user.to_dict(), message="获取用户信息成功")

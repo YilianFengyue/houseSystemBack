@@ -1,17 +1,14 @@
 # app/routes/house_info_routes.py
 from flask import Blueprint, request, current_app
-from sqlalchemy import or_
-
 from models.house_model import HouseInfo  # , SessionLocal # 如果不使用Flask-SQLAlchemy
 from utils.response_utils import success_response, error_response, Code
 from sqlalchemy.exc import SQLAlchemyError
 import datetime
-
 # 如果使用 Flask-SQLAlchemy
 from exts import db
+from services.house_info_service import get_housenum, get_house_hot_list, get_house_new_list
 
 house_info_bp = Blueprint('houseinfo', __name__,url_prefix="/houseinfo")
-
 
 def get_db_session():
 
@@ -19,21 +16,23 @@ def get_db_session():
 #1.1房源总数接口
 @house_info_bp.route('/houseNums', methods=['GET'])
 def get_housenums():
-    house_total_num=HouseInfo.query.count()
+    house_total_num=get_housenum()
     return success_response(house_total_num)
 
 #1.2热点房源
 @house_info_bp.route('/hotLists', methods=['GET'])
 def get_hotlists():
-    house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
-
+    # house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
+    house_hot_List = get_house_hot_list()
     return success_response( [a.to_dict() for a in house_hot_List])
+
 #1.3最新房源
 @house_info_bp.route('/newLists', methods=['GET'])
 def get_newlists():
-    house_info_num=HouseInfo.query.count()
+    house_info_num=get_housenum()
     #获取前六条数据
-    house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(4).all()
+    # house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(6).all()
+    house_new_list=get_house_new_list()
     return success_response([a.to_dict() for a in house_new_list])
 
 
@@ -86,7 +85,7 @@ def add_house_info():
 
 
 # 2. 查询所有房源信息 / 搜索房源 (对应房源展示首页和搜索)
-@house_info_bp.route('/', methods=['GET'])
+@house_info_bp.route('', methods=['GET'])
 def get_all_house_infos():
     session = get_db_session()
     try:
@@ -97,113 +96,40 @@ def get_all_house_infos():
         query = session.query(HouseInfo)
 
         # ----- 智能搜索/过滤条件 -----
-        # 按地区搜索 (改进以支持逗号分隔的多选 "OR" 逻辑)
-        if 'region' in request.args and request.args['region']:
-            regions_to_filter = [r.strip() for r in request.args['region'].split(',') if r.strip()]
-            if regions_to_filter:
-                region_conditions = [HouseInfo.region.ilike(f"%{r}%") for r in regions_to_filter]
-                query = query.filter(or_(*region_conditions))
-
-        if 'block' in request.args and request.args['block']:  # block 通常是单选或作为 community 搜索的一部分
+        # 按地区搜索
+        if 'region' in request.args:
+            query = query.filter(HouseInfo.region.ilike(f"%{request.args['region']}%"))
+        if 'block' in request.args:
             query = query.filter(HouseInfo.block.ilike(f"%{request.args['block']}%"))
-
-        if 'community' in request.args and request.args['community']:  # 主搜索框
-            # 如果希望 community 搜索也覆盖区域和版块，需要更复杂的 OR 逻辑
+        if 'community' in request.args:
             query = query.filter(HouseInfo.community.ilike(f"%{request.args['community']}%"))
 
-        # 按户型搜索 (改进以支持逗号分隔的多选 "OR" 逻辑)
-        if 'rooms' in request.args and request.args['rooms']:
-            # room_types = [r.strip() for r in request.args['rooms'].split(',') if r.strip()]
-            # if room_types:
-            #     room_conditions = [HouseInfo.rooms.ilike(f"%{rt}%") for rt in room_types]
-            #     query = query.filter(or_(*room_conditions))
-            # 前端传来的可能是 "一居,两居,四居+" 这样的字符串
-            raw_room_filters = [r.strip() for r in request.args['rooms'].split(',') if r.strip()]
-
-            if raw_room_filters:
-                # 用于收集所有有效的户型查询条件
-                # 例如，如果用户选了 "一居" 和 "三居"，这里会包含两个查询条件
-                # 这两个条件最终会用 OR 连接起来
-                individual_room_type_conditions = []
-
-                for room_filter_text in raw_room_filters:
-                    if room_filter_text == '一居':
-                        # 精确匹配以 "1室" 开头的房源
-                        individual_room_type_conditions.append(HouseInfo.rooms.ilike("1室%"))
-                    elif room_filter_text == '两居':
-                        individual_room_type_conditions.append(HouseInfo.rooms.ilike("2室%"))
-                    elif room_filter_text == '三居':
-                        individual_room_type_conditions.append(HouseInfo.rooms.ilike("3室%"))
-                    elif room_filter_text == '四居':
-                        individual_room_type_conditions.append(HouseInfo.rooms.ilike("4室%"))
-                    elif room_filter_text == '四居+':
-                        # "四居+" 表示4室及以上
-                        # 我们需要构建一个 OR 条件列表来匹配 "4室", "5室", ..., "9室" (或你认为合理的上限)
-                        # 假设房源不太可能超过9室，如果超过，可以调整上限
-                        # 也可以考虑更高级的查询方式，如正则表达式，但 ilike 更通用
-                        plus_conditions = []
-                        for i in range(4, 10):  # 匹配 4室, 5室, 6室, 7室, 8室, 9室
-                            plus_conditions.append(HouseInfo.rooms.ilike(f"{i}室%"))
-
-                        if plus_conditions:  # 如果生成了条件 (这里总是会的)
-                            # 将 "4室" OR "5室" OR ... 作为一个整体条件添加到列表中
-                            individual_room_type_conditions.append(or_(*plus_conditions))
-                    # else:
-                    # 如果前端可能发送数字 (如 "1", "2"), 也可以在这里处理
-                    # elif room_filter_text.isdigit():
-                    #     individual_room_type_conditions.append(HouseInfo.rooms.ilike(f"{room_filter_text}室%"))
-                    # 当前端固定发送中文描述，此else分支可以省略
-
-                if individual_room_type_conditions:
-                    # 将所有选中的户型条件用 OR 连接起来
-                    # 例如 (HouseInfo.rooms.ilike("1室%")) OR (HouseInfo.rooms.ilike("3室%"))
-                    query = query.filter(or_(*individual_room_type_conditions))
-
-        # 按朝向搜索 (新增，并支持逗号分隔的多选 "OR" 逻辑)
-        # 假设 HouseInfo 模型中有 'direction' 字段存储朝向信息
-        if 'orientation' in request.args and request.args['orientation']:
-            orientations_to_filter = [o.strip() for o in request.args['orientation'].split(',') if o.strip()]
-            if orientations_to_filter:
-                orientation_conditions = [HouseInfo.direction.ilike(f"%{o}%") for o in orientations_to_filter]
-                query = query.filter(or_(*orientation_conditions))
+        # 按户型搜索
+        if 'rooms' in request.args:
+            query = query.filter(HouseInfo.rooms.ilike(f"%{request.args['rooms']}%"))
 
         # 按价格范围
         if 'min_price' in request.args:
-            try:
-                query = query.filter(HouseInfo.price >= int(request.args['min_price']))
-            except ValueError:
-                pass  # 或者返回错误
+            query = query.filter(HouseInfo.price >= int(request.args['min_price']))
         if 'max_price' in request.args:
-            try:
-                query = query.filter(HouseInfo.price <= int(request.args['max_price']))
-            except ValueError:
-                pass  # 或者返回错误
+            query = query.filter(HouseInfo.price <= int(request.args['max_price']))
 
         # 按租赁方式
-        if 'rent_type' in request.args and request.args['rent_type']:  # Ensure not empty string
+        if 'rent_type' in request.args:
             query = query.filter(HouseInfo.rent_type == request.args['rent_type'])
 
         # 按是否近地铁 (假设 1=是, 0=否)
-        if 'subway' in request.args:  # 后端接收的是字符串 '0' 或 '1'
-            try:
-                subway_val = int(request.args['subway'])
-                if subway_val in [0, 1]:
-                    query = query.filter(HouseInfo.subway == subway_val)
-            except ValueError:
-                pass  # 或者返回错误
+        if 'subway' in request.args:
+            query = query.filter(HouseInfo.subway == (1 if request.args['subway'].lower() in ['true', '1'] else 0))
 
         # 按装修情况
-        if 'decoration' in request.args and request.args['decoration']:
+        if 'decoration' in request.args:
             query = query.filter(HouseInfo.decoration.ilike(f"%{request.args['decoration']}%"))
 
         # 按房源状态 (available)
         if 'available' in request.args:
-            try:
-                available_val = int(request.args['available'])
-                if available_val in [0, 1]:
-                    query = query.filter(HouseInfo.available == available_val)
-            except ValueError:
-                pass
+            query = query.filter(
+                HouseInfo.available == (1 if request.args['available'].lower() in ['true', '1'] else 0))
 
         # 排序 (例如按发布时间降序)
         query = query.order_by(HouseInfo.publish_time.desc(), HouseInfo.id.desc())
@@ -323,4 +249,3 @@ def upload_house_image(house_id):
     if file:
 
         return error_response("文件上传功能暂未完全实现，仅为示例接口", code=Code.INTERNAL_SERVER_ERROR)
-
