@@ -7,18 +7,21 @@ from blueprints.user import user
 from blueprints.comment import comment_bp
 from blueprints.contract import contract_bp
 from blueprints.appointment import appointment_bp
-from blueprints.houseinfo import house_info_bp, redis_store
+from blueprints.houseinfo import house_info_bp
 from blueprints.repair_complaint import repair_bp
 from blueprints.message import message_bp
 from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
 from socketio_init import socketio  # 修改导入语句
+from exts.redis import redis_store
 
 #初始化app
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 cors.init_app(app, supports_credentials=True)
+# 初始化 Redis 实例
+redis_store.init_app(app)
 
 app.register_blueprint(house_info_bp)
 app.register_blueprint(user)
@@ -30,8 +33,6 @@ app.register_blueprint(message_bp)
 app.register_blueprint(news_bp)
 app.register_blueprint(housedetail_bp)
 
-# 初始化 Redis 实例
-redis_store.init_app(app)
 # 初始化socketio
 socketio.init_app(app)
 @app.route('/')
