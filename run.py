@@ -7,7 +7,7 @@ from blueprints.user import user
 from blueprints.comment import comment_bp
 from blueprints.contract import contract_bp
 from blueprints.appointment import appointment_bp
-from blueprints.houseinfo import house_info_bp
+from blueprints.houseinfo import house_info_bp, redis_store
 from blueprints.repair_complaint import repair_bp
 from blueprints.message import message_bp
 from blueprints.news import news_bp
@@ -30,6 +30,8 @@ app.register_blueprint(message_bp)
 app.register_blueprint(news_bp)
 app.register_blueprint(housedetail_bp)
 
+# 初始化 Redis 实例
+redis_store.init_app(app)
 # 初始化socketio
 socketio.init_app(app)
 @app.route('/')

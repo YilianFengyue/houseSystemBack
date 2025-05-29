@@ -8,13 +8,16 @@ import datetime
 from exts import db
 from sqlalchemy import or_
 from services.house_info_service import get_housenum, get_house_hot_list, get_house_new_list
+from flask_redis import FlaskRedis
+import json
 
 house_info_bp = Blueprint('houseinfo', __name__,url_prefix="/houseinfo")
 
+redis_store = FlaskRedis()
 
 def get_db_session():
-
     return db.session
+
 #1.1房源总数接口
 @house_info_bp.route('/houseNums', methods=['GET'])
 def get_housenums():
@@ -25,8 +28,8 @@ def get_housenums():
 @house_info_bp.route('/hotLists', methods=['GET'])
 def get_hotlists():
     house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
-
     return success_response( [a.to_dict() for a in house_hot_List])
+
 #1.3最新房源
 @house_info_bp.route('/newLists', methods=['GET'])
 def get_newlists():
@@ -34,7 +37,6 @@ def get_newlists():
     #获取前六条数据
     house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(4).all()
     return success_response([a.to_dict() for a in house_new_list])
-
 
 # 1. 新增房源信息 (对应房东发布房源)
 @house_info_bp.route('/', methods=['POST'])
@@ -91,6 +93,21 @@ def get_all_house_infos():
     try:
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)  # 每页数量，前端可控
+
+        # 构建缓存键
+        cache_key = f'all_house_infos:{page}:{per_page}'
+        for key in request.args:
+            if key not in ['page', 'per_page']:
+                cache_key += f':{key}:{request.args[key]}'
+
+        # 检查 Redis 中是否存在缓存数据
+        cached_data = redis_store.get(cache_key)
+        if cached_data:
+            data = json.loads(cached_data)
+            return success_response(data, message="查询成功", code=Code.GET_OK)
+
+        # 不显示，证明返回了缓存中的数据
+        print("manba")
 
         # 构建查询
         query = session.query(HouseInfo)
@@ -219,6 +236,9 @@ def get_all_house_infos():
             "per_page": per_page,
             "pages": paginated_houses.pages
         }
+
+        # 将查询结果存入 Redis 缓存
+        redis_store.set(cache_key, json.dumps(response_data))
 
         if not house_list and page == 1:  # 如果第一页就没有数据
             return success_response(data=response_data, message="暂无房源信息", code=Code.GET_OK)  # 仍然是成功，只是数据为空

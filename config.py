@@ -7,3 +7,6 @@ class Config:
     SECRET_KEY = 'random_key'
     JSON_AS_ASCII = False
     STRICT_SLASH = False  # 禁止路由自动重定向
+
+    # redis配置
+    REDIS_URL = 'redis://:luyue@localhost:6379/0'
