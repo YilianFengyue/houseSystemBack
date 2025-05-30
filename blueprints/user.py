@@ -3,7 +3,6 @@ import datetime
 from flask import Blueprint, request, current_app, g # 引入 g
 from sqlalchemy.exc import IntegrityError
 from services.user_service import get_user_by_id, get_user_by_username, get_all_users, get_user_by_id, get_user_by_phone
-from models.models import UserInfo
 #UserInfo
 from models.user_model import UserModel
 from exts import db

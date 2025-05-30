@@ -1,6 +1,4 @@
 from flask import Blueprint, request, jsonify
-from models.house_model import HouseInfo
-from models.models import Comment
 from services.comment_service import get_comment_by_house_id, get_comment_by_id, create_comment
 from exts.db import db
 comment_bp = Blueprint("comment", __name__)
@@ -58,7 +56,7 @@ def get_comment_by_id(comment_id):
 
 # 创建新评论
 @comment_bp.route("/comments", methods=["POST"])
-def create_comment():
+def add():
     data = request.json
 
     # 验证必要字段

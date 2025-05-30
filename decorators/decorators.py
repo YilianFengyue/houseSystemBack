@@ -1,7 +1,7 @@
 import jwt
 from functools import wraps
 from flask import request, g, current_app
-from models.models import UserInfo
+from models.user_model import UserModel
 from utils.response_utils import error_response, Code
 from services.user_service import get_user_by_id
 

@@ -13,8 +13,9 @@ from blueprints.message import message_bp
 from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
 from blueprints.log_management import log_bp
-
 from socketio_init import socketio  # 修改导入语句
+from exts.redis import redis_store
+
 #日志处理
 import logging
 from exts.log_handlers import DatabaseLogHandler # 导入你的 handler
@@ -55,8 +56,7 @@ app.register_blueprint(news_bp)
 app.register_blueprint(housedetail_bp)
 #日志
 app.register_blueprint(log_bp)
-# 初始化 Redis 实例
-redis_store.init_app(app)
+
 # 初始化socketio
 socketio.init_app(app)
 @app.route('/')

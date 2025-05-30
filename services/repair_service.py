@@ -1,4 +1,5 @@
-from models.models import Repair_Complaint, UserInfo
+from models.models import Repair_Complaint
+from models.user_model import UserModel
 from exts.db import db
 from datetime import datetime
 
@@ -28,5 +29,5 @@ def create_repaires(data):
 
 def get_complaint_persons():
     """获取投诉对象列表(Type=2的用户)"""
-    persons = db.session.query(UserInfo).filter_by(userType=2).all()
+    persons = db.session.query(UserModel).filter_by(userType=2).all()
     return [{'id': person.id, 'name': person.name} for person in persons]

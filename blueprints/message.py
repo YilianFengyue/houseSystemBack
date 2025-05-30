@@ -47,17 +47,18 @@ def get_messages():
     sender = request.args.get('sender')
     user1 = request.args.get('user1')
     user2 = request.args.get('user2')
+    receiver = request.args.get('receiver')
 
     if sender:
-        # messages = get_messages_by_sender(sender)
-        messages = get_messages_between_users(user1, user2)
+        messages = get_messages_by_sender(sender)
+    elif receiver:
+        messages = get_messages_by_receiver(receiver)
     elif user1 and user2:
-        channel = get_channel(user1, user2)
-        messages = get_messages_by_channel(channel.channel_id)
+        messages = get_messages_between_users(user1, user2)
     else:
         return jsonify({
             "status": "error",
-            "message": "必须提供sender参数或user1和user2参数"
+            "message": "必须提供sender/receiver参数或user1和user2参数"
         }), 400
 
     return success_response(data={"messages": [msg.to_dict() for msg in messages]})
@@ -118,7 +119,7 @@ def get_sender_message(sender_username):
     messages = get_messages_by_sender(sender_username)
     return success_response(data={"messages": [msg.to_dict() for msg in messages]})
 
-@message_bp.route("/messages/<string:receiver_username>", methods=["GET"])
+@message_bp.route("/messages/receiver/<string:receiver_username>", methods=["GET"])
 @handle_errors
 def get_receiver_message(receiver_username):
     """获取任意用户发送的消息"""

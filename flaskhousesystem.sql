@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 29/05/2025 19:59:35
+ Date: 30/05/2025 22:23:17
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `appointment`  (
   `property` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `time` datetime NOT NULL COMMENT '预约时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of appointment
@@ -41,6 +41,7 @@ INSERT INTO `appointment` VALUES (6, 'aaaa', '万科魅力之城武广新城', '
 INSERT INTO `appointment` VALUES (7, 'aaaa', '万科魅力之城武广新城', '2025-05-29 16:00:00');
 INSERT INTO `appointment` VALUES (8, 'aaaa', '万科魅力之城武广新城', '2025-05-25 16:00:00');
 INSERT INTO `appointment` VALUES (9, 'aaaa', '万科魅力之城武广新城', '2025-05-01 16:00:00');
+INSERT INTO `appointment` VALUES (10, 'aaaa', '万科魅力之城武广新城', '2025-05-20 16:00:00');
 
 -- ----------------------------
 -- Table structure for channel
@@ -223,7 +224,7 @@ CREATE TABLE `contract`  (
   `formattedRent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `currentDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract
@@ -237,6 +238,10 @@ INSERT INTO `contract` VALUES (6, '3200', '居住', '2025-04-30 16:00:00', '2025
 INSERT INTO `contract` VALUES (7, '3200', '居住', '2025-05-29 16:00:00', '2025-08-14 16:00:00', '龟壳公寓', NULL, '13800005678', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-26 00:00:00');
 INSERT INTO `contract` VALUES (8, '3200', '办公', '2025-05-23 16:00:00', '2025-05-30 16:00:00', '龟壳公寓', NULL, '13800005678', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-26 00:00:00');
 INSERT INTO `contract` VALUES (9, '3200', '办公', '2025-04-30 16:00:00', '2025-05-01 16:00:00', '张先生', NULL, '13800001234', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-26 00:00:00');
+INSERT INTO `contract` VALUES (10, '3200', '居住', '2025-05-08 16:00:00', '2025-05-01 16:00:00', '丁先生', NULL, '15612340015', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-29 00:00:00');
+INSERT INTO `contract` VALUES (11, '3200', '居住', '2025-05-08 16:00:00', '2025-05-01 16:00:00', '丁先生', NULL, '15612340015', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-29 00:00:00');
+INSERT INTO `contract` VALUES (12, '3200', '居住', '2025-05-08 16:00:00', '2025-05-29 16:00:00', '张先生', NULL, '13800001234', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-29 00:00:00');
+INSERT INTO `contract` VALUES (13, '3200', '居住', '2025-05-09 16:00:00', '2025-05-23 16:00:00', '刘先生', NULL, '13612340005', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-30 00:00:00');
 
 -- ----------------------------
 -- Table structure for house_detail
@@ -293,7 +298,7 @@ CREATE TABLE `house_info`  (
 -- Records of house_info
 -- ----------------------------
 INSERT INTO `house_info` VALUES (1, '整租·锦源小区 2室1厅 南', '雨花', '树木岭', '锦源小区', 73, '南', '2室1厅1卫', 1600, '整租', '精装', 1, 1, 1, 'https://i.pinimg.com/736x/c4/3a/90/c43a90fcf336e05d7f849b527f067464.jpg', '2025-05-15', '108次浏览', '张先生', '13800001234', '10001');
-INSERT INTO `house_info` VALUES (2, '合租·泰时新雅园 4居室 南卧', '芙蓉', '晚报', '泰时新雅园', 18, '南', '4室2厅2卫', 580, '合租', '精装', 1, 1, 0, 'https://i.pinimg.com/736x/f4/2c/7b/f42c7b16d92dab70ff7af2b59d02fdb5.jpg', '2025-05-14', '89次浏览', '龟壳公寓', '13800005678', '10002');
+INSERT INTO `house_info` VALUES (2, '合租·泰时新雅园 4居室 南卧', '芙蓉', '晚报', '泰时新雅园', 18, '南', '4室2厅2卫', 580, '合租', '精装', 1, 1, 0, 'https://i.pinimg.com/736x/f4/2c/7b/f42c7b16d92dab70ff7af2b59d02fdb5.jpg', '2025-05-14', '899次浏览', '龟壳公寓', '13800005678', '10002');
 INSERT INTO `house_info` VALUES (3, '整租·星宇V立方 1室0厅 南', '天心', '金盆岭', '星宇V立方', 29.14, '南', '1室0厅1卫', 1280, '整租', '精装', 1, 1, 1, 'https://flaskhousesystem.oss-cn-hangzhou.aliyuncs.com/house_images/3/82d3513094144b92abfe5a20419d82e9.png', '2025-05-15', '72次浏览', '李女士', '13800007890', '10003');
 INSERT INTO `house_info` VALUES (4, '合租·长远华樟名府 5居室 南卧', '雨花', '尚东', '长远华樟名府', 25, '南', '5室1厅3卫', 540, '合租', '精装', 1, 1, 1, 'https://flaskhousesystem.oss-cn-hangzhou.aliyuncs.com/house_images/4/a1e68eda3df44341b55a3beea55dda84.png', '2025-05-14', '61次浏览', '包租婆宿懒公寓', '13800009876', '10004');
 INSERT INTO `house_info` VALUES (5, '整租·长大彩虹都 3室2厅 南/北', '天心', '铁道学院', '长大彩虹都', 90, '南/北', '3室2厅1卫', 1900, '整租', '精装', 1, 1, 0, 'https://flaskhousesystem.oss-cn-hangzhou.aliyuncs.com/house_images/5/f670c3336dce42a7b1a12850e4948a6f.png', '2025-05-17', '0次浏览', '房东直租', '18800000005', '10005');
@@ -330,6 +335,130 @@ INSERT INTO `house_info` VALUES (43, '整租·北辰中央公园(慧辰园) 2室
 INSERT INTO `house_info` VALUES (44, '独栋·湘江悦家 麓隐桐溪·大王山店 3号线大王山正地铁口/开业特惠95折/无中介/无服务费A 开间', NULL, NULL, NULL, 37.28, NULL, '1室0厅1卫', 1220, '整租', '精装', 1, 1, 0, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-01', '805', '湘江悦家', '19012340028', '84585');
 INSERT INTO `house_info` VALUES (45, '整租·融城花苑 3室2厅 南', '雨花', '井湾子', '融城花苑', 99, '南', '3室2厅', 1300, '整租', '精装', 0, 1, 0, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-19', '500', '赵先生', '19112340029', '1884114366576459776');
 INSERT INTO `house_info` VALUES (46, '独栋·华佑e家 万国城店 无中介费可月付 润和珠江星环马厂地铁站 万国城两室 2室2厅', NULL, NULL, '楚天世纪城', 76, NULL, '2室2厅', 2208, '整租', '精装', 1, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-19', '1150', '华佑e家', '19212340030', '92145');
+
+-- ----------------------------
+-- Table structure for log_entries
+-- ----------------------------
+DROP TABLE IF EXISTS `log_entries`;
+CREATE TABLE `log_entries`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `timestamp` datetime NULL DEFAULT NULL,
+  `level` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `module` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `func_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `line_no` int NULL DEFAULT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `traceback` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of log_entries
+-- ----------------------------
+INSERT INTO `log_entries` VALUES (1, '2025-05-09 14:29:19', '3', '4', '5', 7, '9', '0');
+INSERT INTO `log_entries` VALUES (2, '2025-05-30 06:40:50', 'WARNING', '_internal', '_log', 97, 'Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.', NULL);
+INSERT INTO `log_entries` VALUES (3, '2025-05-30 06:40:50', 'INFO', '_internal', '_log', 97, '[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m\n * Running on http://127.0.0.1:5000', NULL);
+INSERT INTO `log_entries` VALUES (4, '2025-05-30 06:40:50', 'INFO', '_internal', '_log', 97, '[33mPress CTRL+C to quit[0m', NULL);
+INSERT INTO `log_entries` VALUES (5, '2025-05-30 06:40:50', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (6, '2025-05-30 06:40:51', 'WARNING', '_internal', '_log', 97, 'Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.', NULL);
+INSERT INTO `log_entries` VALUES (7, '2025-05-30 06:40:51', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (8, '2025-05-30 06:40:51', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 126-592-097', NULL);
+INSERT INTO `log_entries` VALUES (9, '2025-05-30 06:42:05', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:42:05] \"[32mGET /admin/logs HTTP/1.1[0m\" 308 -', NULL);
+INSERT INTO `log_entries` VALUES (10, '2025-05-30 06:42:05', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:42:05] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (11, '2025-05-30 06:42:45', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:42:44] \"GET /housedetail/2 HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (12, '2025-05-30 06:43:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:43:49] \"GET /houseinfo/hotLists HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (13, '2025-05-30 06:43:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:43:49] \"GET /houseinfo/newLists HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (14, '2025-05-30 06:43:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:43:50] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (15, '2025-05-30 06:45:11', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:45:11] \"GET /houseinfo/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (16, '2025-05-30 06:45:30', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:45:29] \"GET /news HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (17, '2025-05-30 06:46:03', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:46:02] \"OPTIONS /news HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (18, '2025-05-30 06:46:03', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:46:03] \"[35m[1mPOST /news HTTP/1.1[0m\" 201 -', NULL);
+INSERT INTO `log_entries` VALUES (19, '2025-05-30 06:46:21', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:46:20] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (20, '2025-05-30 06:46:22', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:46:22] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (21, '2025-05-30 06:47:19', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:47:18] \"[32mGET /admin/logs HTTP/1.1[0m\" 308 -', NULL);
+INSERT INTO `log_entries` VALUES (22, '2025-05-30 06:47:19', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:47:18] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (23, '2025-05-30 06:53:39', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:39] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (24, '2025-05-30 06:53:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:49] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (25, '2025-05-30 06:53:51', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:51] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (26, '2025-05-30 06:53:52', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:51] \"[32mGET /admin/logs HTTP/1.1[0m\" 308 -', NULL);
+INSERT INTO `log_entries` VALUES (27, '2025-05-30 06:53:52', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:51] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (28, '2025-05-30 06:53:52', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:51] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (29, '2025-05-30 06:53:53', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:53:52] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (30, '2025-05-30 06:54:11', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:54:11] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (31, '2025-05-30 06:54:32', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:54:32] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (32, '2025-05-30 06:56:32', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:56:32] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (33, '2025-05-30 06:56:42', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:56:42] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (34, '2025-05-30 06:56:43', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:56:42] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (35, '2025-05-30 06:56:43', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:56:42] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (36, '2025-05-30 06:56:43', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:56:43] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (37, '2025-05-30 06:57:59', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:57:58] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (38, '2025-05-30 06:57:59', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:57:58] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (39, '2025-05-30 06:57:59', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:57:58] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (40, '2025-05-30 06:58:00', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 14:57:59] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (41, '2025-05-30 07:02:49', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:02:49] \"[32mGET /admin/logs HTTP/1.1[0m\" 308 -', NULL);
+INSERT INTO `log_entries` VALUES (42, '2025-05-30 07:02:49', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:02:49] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (43, '2025-05-30 07:07:48', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:07:48] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (44, '2025-05-30 07:08:11', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:10] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (45, '2025-05-30 07:08:11', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:11] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (46, '2025-05-30 07:08:12', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:11] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (47, '2025-05-30 07:08:12', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:12] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (48, '2025-05-30 07:08:22', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:22] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (49, '2025-05-30 07:08:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:50] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (50, '2025-05-30 07:08:51', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:50] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (51, '2025-05-30 07:08:51', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:50] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (52, '2025-05-30 07:08:51', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:08:51] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (53, '2025-05-30 07:09:23', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:09:23] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (54, '2025-05-30 07:09:23', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:09:23] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (55, '2025-05-30 07:09:23', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:09:23] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (56, '2025-05-30 07:09:24', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:09:24] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (57, '2025-05-30 07:10:31', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:10:30] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (58, '2025-05-30 07:10:37', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:10:37] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (59, '2025-05-30 07:16:46', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:16:45] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (60, '2025-05-30 07:16:47', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:16:47] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (61, '2025-05-30 07:16:49', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:16:48] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (62, '2025-05-30 07:18:07', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:18:07] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (63, '2025-05-30 07:18:13', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:18:12] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (64, '2025-05-30 07:28:08', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:08] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (65, '2025-05-30 07:28:09', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:08] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (66, '2025-05-30 07:28:09', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:08] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (67, '2025-05-30 07:28:09', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:09] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (68, '2025-05-30 07:28:26', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:26] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (69, '2025-05-30 07:28:29', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:29] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (70, '2025-05-30 07:28:30', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:29] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (71, '2025-05-30 07:28:30', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:29] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (72, '2025-05-30 07:28:30', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:28:30] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (73, '2025-05-30 07:30:34', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:30:33] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (74, '2025-05-30 07:37:47', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:37:46] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (75, '2025-05-30 07:37:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:37:50] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (76, '2025-05-30 07:39:32', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:39:32] \"GET /complaint-persons HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (77, '2025-05-30 07:39:33', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:39:32] \"GET /houseinfo/piedata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (78, '2025-05-30 07:39:33', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:39:32] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (79, '2025-05-30 07:39:33', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:39:33] \"GET /houseinfo/columndata HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (80, '2025-05-30 07:40:50', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:40:49] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (81, '2025-05-30 07:41:21', 'INFO', '_internal', '_log', 97, '127.0.0.1 - - [30/May/2025 15:41:21] \"GET /admin/logs/ HTTP/1.1\" 200 -', NULL);
+INSERT INTO `log_entries` VALUES (82, '2025-05-30 14:10:31', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (83, '2025-05-30 14:10:32', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (84, '2025-05-30 14:10:32', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (85, '2025-05-30 14:10:52', 'ERROR', 'houseinfo', 'get_all_house_infos', 281, '查询房源时发生未知错误: Client sent AUTH, but no password is set', NULL);
+INSERT INTO `log_entries` VALUES (86, '2025-05-30 14:12:22', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (87, '2025-05-30 14:12:23', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (88, '2025-05-30 14:12:23', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (89, '2025-05-30 14:12:37', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (90, '2025-05-30 14:12:38', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (91, '2025-05-30 14:12:38', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (92, '2025-05-30 14:12:50', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (93, '2025-05-30 14:12:51', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (94, '2025-05-30 14:12:51', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (95, '2025-05-30 14:12:55', 'ERROR', 'houseinfo', 'get_all_house_infos', 281, '查询房源时发生未知错误: Client sent AUTH, but no password is set', NULL);
+INSERT INTO `log_entries` VALUES (96, '2025-05-30 14:16:25', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (97, '2025-05-30 14:16:26', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (98, '2025-05-30 14:16:26', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (99, '2025-05-30 14:19:34', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (100, '2025-05-30 14:19:35', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (101, '2025-05-30 14:19:35', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (102, '2025-05-30 14:21:40', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (103, '2025-05-30 14:21:41', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (104, '2025-05-30 14:21:41', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
 
 -- ----------------------------
 -- Table structure for message
@@ -373,13 +502,14 @@ CREATE TABLE `news`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `publish_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of news
 -- ----------------------------
 INSERT INTO `news` VALUES (26, '震惊', '当美警遇上钓鱼佬', '2025-05-24 10:29:04');
 INSERT INTO `news` VALUES (27, '重磅消息', '中共二十大决定，坚定执行党的领导，对于……', '2025-05-24 00:00:00');
+INSERT INTO `news` VALUES (28, 'yess', '你是一个一个一个...', '2025-05-30 00:00:00');
 
 -- ----------------------------
 -- Table structure for repair_complaint
@@ -397,7 +527,7 @@ CREATE TABLE `repair_complaint`  (
   `create_at` datetime NULL DEFAULT NULL,
   `handle` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of repair_complaint
@@ -431,7 +561,6 @@ INSERT INTO `repair_complaint` VALUES (26, 'complaint', '', NULL, ' ', 'haodihen
 INSERT INTO `repair_complaint` VALUES (27, 'repair', 'eds', '设备维修', ' ', ' ', '', 1, '2025-05-26 14:52:58', NULL);
 INSERT INTO `repair_complaint` VALUES (28, 'complaint', '', NULL, ' ', '啊啊啊啊啊', '8', 1, '2025-05-26 15:21:52', NULL);
 INSERT INTO `repair_complaint` VALUES (29, 'complaint', '', NULL, ' ', '整合修bug\noss都怪你', '7', 1, '2025-05-26 16:15:49', NULL);
-INSERT INTO `repair_complaint` VALUES (30, 'complaint', '', NULL, ' ', 'man', '7', 1, '2025-05-26 16:53:22', NULL);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -450,18 +579,19 @@ CREATE TABLE `user_info`  (
   `userType` int NULL DEFAULT NULL,
   `avatarUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
 INSERT INTO `user_info` VALUES (1, 'aaaa', '12345', '2779902707@qq.com', '16608188853', '校本部', '0', '0', '11111111111111111111111111', 1, NULL);
 INSERT INTO `user_info` VALUES (3, 'Ylfmoonn', '$2b$12$.qbllCaHCKG8g9xTP29S4eVM3VReNMzzgLSNb/KNAQDoCCPORGhuS', 'lapu2023@outlook.com', '19511053623', '岳麓区', '1', '2', '41132511451411', 1, NULL);
-INSERT INTO `user_info` VALUES (4, 'Lappand', '$2b$12$bA1jsIhsQi/qTGAilYyLF.EV0v3EHkl5qcpBGxBmWJRH/LPHsUchq', NULL, '19511053624', '校本部1111', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_info` VALUES (4, 'Lappand', '$2b$12$bA1jsIhsQi/qTGAilYyLF.EV0v3EHkl5qcpBGxBmWJRH/LPHsUchq', NULL, '19511053624', '校本部1111', NULL, NULL, NULL, NULL, 'https://i.pinimg.com/736x/54/0a/89/540a89862811d8bffc763caf6829699d.jpg');
 INSERT INTO `user_info` VALUES (5, NULL, '$2b$12$BKQ4MnXq8qnvz4SownzK3uoBCdmRktRdr2BX4FlzjT/7xBjGXzyqS', NULL, '15274896231', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (6, NULL, '$2b$12$ChX6QeErNGea10kbGHpLSeOlJVX4iW2t/OxGthi3.F38IhQzBitl2', NULL, '195110536232', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (7, '陆岳', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (8, '胡琪', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (9, '梅姨', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
+INSERT INTO `user_info` VALUES (10, NULL, '$2b$12$N/yOiQTDtKMI.gzO00VoBeZjHUwI.5hZ/KzaEoLJPGEsl3CM4KLCS', NULL, '15083377951', NULL, NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

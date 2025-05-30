@@ -18,7 +18,6 @@ def get_all_news_route():
         response_data = get_all_news(page, per_page)
         if not response_data["items"] and page == 1:
             return success_response(data=response_data, message="暂无新闻", code=Code.GET_OK)
-        print(response_data["items"])
         return success_response(data=response_data, message="查询成功", code=Code.GET_OK)
     except Exception as e:
         current_app.logger.error(f"查询新闻失败: {e}")

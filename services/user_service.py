@@ -1,4 +1,4 @@
-from models.models import UserInfo
+from models.user_model import UserModel
 from exts.db import db
 
 def get_user_by_username(username):
@@ -9,7 +9,7 @@ def create_user(username=None, password=None, identification=None, phone=None, n
     """创建新用户"""
     # Maintain backward compatibility with 'name' parameter
     username = username or name
-    user = UserInfo(
+    user = UserModel(
         name=username,
         password=password,
         email=email,
@@ -23,19 +23,19 @@ def create_user(username=None, password=None, identification=None, phone=None, n
 
 def get_user_by_name(name):
     """根据用户名查找用户"""
-    return db.session.query(UserInfo).filter_by(name=name).first()
+    return db.session.query(UserModel).filter_by(name=name).first()
 
 def get_user_by_id(user_id):
     """根据ID查找用户"""
-    return db.session.get(UserInfo, user_id)
+    return db.session.get(UserModel, user_id)
 
 def get_all_users():
     """获取所有用户"""
-    return db.session.query(UserInfo).all()
+    return db.session.query(UserModel).all()
 
 def update_user(user_id, **kwargs):
     """更新用户信息"""
-    user = db.session.get(UserInfo, user_id)
+    user = db.session.get(UserModel, user_id)
     if not user:
         return None
         
@@ -48,7 +48,7 @@ def update_user(user_id, **kwargs):
 
 def delete_user(user_id):
     """删除用户"""
-    user = db.session.get(UserInfo, user_id)
+    user = db.session.get(UserModel, user_id)
     if user:
         db.session.delete(user)
         db.session.commit()
@@ -57,4 +57,4 @@ def delete_user(user_id):
 
 def get_user_by_phone(phone):
     """<UNK>"""
-    return db.session.query(UserInfo).filter_by(phone=phone).first()
+    return db.session.query(UserModel).filter_by(phone=phone).first()

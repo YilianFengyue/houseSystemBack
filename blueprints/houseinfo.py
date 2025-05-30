@@ -1,6 +1,5 @@
 # app/routes/house_info_routes.py
 from collections import defaultdict
-
 from flask import Blueprint, request, current_app
 from models.house_model import HouseInfo  # , SessionLocal # 如果不使用Flask-SQLAlchemy
 from utils.response_utils import success_response, error_response, Code

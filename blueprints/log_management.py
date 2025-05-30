@@ -6,8 +6,6 @@ from datetime import datetime, timedelta
 from sqlalchemy import func
 from utils.response_utils import success_response, error_response, Code
 
-from utils.response_utils import success_response
-
 log_bp = Blueprint('log_management', __name__, url_prefix='/admin/logs')
 
 @log_bp.route('/', methods=['GET'])
