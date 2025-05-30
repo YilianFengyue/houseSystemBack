@@ -10,12 +10,10 @@ import datetime
 from exts import db
 from sqlalchemy import or_, func
 from services.house_info_service import get_housenum, get_house_hot_list, get_house_new_list
-from flask_redis import FlaskRedis
+from exts.redis import redis_store
 import json
 import re
 house_info_bp = Blueprint('houseinfo', __name__,url_prefix="/houseinfo")
-
-redis_store = FlaskRedis()
 
 def get_db_session():
     return db.session
@@ -29,15 +27,45 @@ def get_housenums():
 #1.2热点房源
 @house_info_bp.route('/hotLists', methods=['GET'])
 def get_hotlists():
+    # 构建缓存键
+    cache_key = 'house_hot_lists'
+
+    # 检查 Redis 中是否存在缓存数据
+    cached_data = redis_store.get(cache_key)
+    if cached_data:
+        data = json.loads(cached_data)
+        return success_response(data)
+
+    # 不显示，证明返回了缓存中的数据
+    print("hotlists无缓存")
+
     house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
+    data = [a.to_dict() for a in house_hot_List]
+    # 将查询结果存入 Redis 缓存
+    redis_store.set(cache_key, json.dumps(data))
     return success_response( [a.to_dict() for a in house_hot_List])
 
 #1.3最新房源
 @house_info_bp.route('/newLists', methods=['GET'])
 def get_newlists():
+    # 构建缓存键
+    cache_key = 'house_new_lists'
+
+    # 检查 Redis 中是否存在缓存数据
+    cached_data = redis_store.get(cache_key)
+    if cached_data:
+        data = json.loads(cached_data)
+        return success_response(data)
+
+    # 不显示，证明返回了缓存中的数据
+    print("newlists无缓存")
+
     house_info_num=HouseInfo.query.count()
     #获取前六条数据
     house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(4).all()
+    data = [a.to_dict() for a in house_new_list]
+    # 将查询结果存入 Redis 缓存
+    redis_store.set(cache_key, json.dumps(data))
     return success_response([a.to_dict() for a in house_new_list])
 
 # 1. 新增房源信息 (对应房东发布房源)
@@ -109,7 +137,7 @@ def get_all_house_infos():
             return success_response(data, message="查询成功", code=Code.GET_OK)
 
         # 不显示，证明返回了缓存中的数据
-        print("manba")
+        print("houseinfo获取单页所有房源无缓存")
 
         # 构建查询
         query = session.query(HouseInfo)
@@ -260,11 +288,28 @@ def get_all_house_infos():
 def get_house_info_by_id(house_id):
     session = get_db_session()
     try:
+        # 构建缓存键
+        cache_key = f'house_info:{house_id}'
+
+        # 检查 Redis 中是否存在缓存数据
+        cached_data = redis_store.get(cache_key)
+        if cached_data:
+            data = json.loads(cached_data)
+            return success_response(data=data, message="查询成功", code=Code.GET_OK)
+
+        # 不显示，证明返回了缓存中的数据
+        print("houseinfo获取单个房源无缓存")
+
         house = session.get(HouseInfo, house_id)  # SQLAlchemy 2.0 style
         # 或者 house = session.query(HouseInfo).filter_by(id=house_id).first()
         if house:
             return success_response(data=house.to_dict(), code=Code.GET_OK)
         else:
+            # 转换为字典格式
+            house_data = house.to_dict()
+            # 将查询结果存入 Redis 缓存
+            redis_store.set(cache_key, json.dumps(house_data))
+
             return error_response("房源信息未找到", code=Code.NOT_FOUND)
     except SQLAlchemyError as e:
         current_app.logger.error(f"查询房源 {house_id} 失败: {e}")
