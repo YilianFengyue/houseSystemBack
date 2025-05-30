@@ -12,7 +12,28 @@ from blueprints.repair_complaint import repair_bp
 from blueprints.message import message_bp
 from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
+from blueprints.log_management import log_bp
+
 from socketio_init import socketio  # 修改导入语句
+#日志处理
+import logging
+from exts.log_handlers import DatabaseLogHandler # 导入你的 handler
+from models.log_model import LogEntry # 确保模型被创建
+
+def setup_logging(app_instance): # app_instance 就是你的 Flask app 对象
+    # 将 app 实例传递给 Handler
+    db_log_handler = DatabaseLogHandler(app_instance=app_instance)
+    db_log_handler.setLevel(logging.INFO)
+
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(module)s.%(funcName)s:%(lineno)d - %(message)s'
+    )
+    db_log_handler.setFormatter(formatter)
+
+    root_logger = logging.getLogger()
+
+    root_logger.addHandler(db_log_handler)
+    root_logger.setLevel(logging.INFO)
 
 #初始化app
 app = Flask(__name__)
@@ -20,6 +41,7 @@ app.config.from_object(Config)
 db.init_app(app)
 cors.init_app(app, supports_credentials=True)
 
+setup_logging(app) # 调用日志配置函数
 app.register_blueprint(house_info_bp)
 app.register_blueprint(user)
 app.register_blueprint(comment_bp)
@@ -29,7 +51,8 @@ app.register_blueprint(repair_bp)
 app.register_blueprint(message_bp)
 app.register_blueprint(news_bp)
 app.register_blueprint(housedetail_bp)
-
+#日志
+app.register_blueprint(log_bp)
 # 初始化 Redis 实例
 redis_store.init_app(app)
 # 初始化socketio
@@ -38,8 +61,10 @@ socketio.init_app(app)
 def index():
     try:
         # 确保在应用上下文中执行数据库查询
+        app.logger.info("--- 这是一条来自 INDEX 路由的测试日志 ---")  # 添加这行
         with app.app_context():
-            first_info = db.session.query(HouseInfo).first()  # 或者 HouseInfo.query.first() 如果你习惯旧版
+            first_info = db.session.query(HouseInfo).first()
+
         if first_info:
             print("数据库连接成功，并能查询到HouseInfo数据。")
         else:

@@ -1,4 +1,6 @@
 # app/routes/house_info_routes.py
+from collections import defaultdict
+
 from flask import Blueprint, request, current_app
 from models.house_model import HouseInfo  # , SessionLocal # 如果不使用Flask-SQLAlchemy
 from utils.response_utils import success_response, error_response, Code
@@ -6,11 +8,11 @@ from sqlalchemy.exc import SQLAlchemyError
 import datetime
 # 如果使用 Flask-SQLAlchemy
 from exts import db
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from services.house_info_service import get_housenum, get_house_hot_list, get_house_new_list
 from flask_redis import FlaskRedis
 import json
-
+import re
 house_info_bp = Blueprint('houseinfo', __name__,url_prefix="/houseinfo")
 
 redis_store = FlaskRedis()
@@ -342,3 +344,56 @@ def upload_house_image(house_id):
     if file:
 
         return error_response("文件上传功能暂未完全实现，仅为示例接口", code=Code.INTERNAL_SERVER_ERROR)
+
+
+# 智能管理员统计
+#1、户型占比
+@house_info_bp.route('/piedata', methods=['GET'])
+def get_house_piedata():
+
+    result= (HouseInfo.query.with_entities(HouseInfo.rooms,func.count())
+             .group_by(HouseInfo.rooms).order_by(func.count().desc()).all())
+    data=[]
+
+    # 统计合并后的结果
+    merge_dict = defaultdict(int)
+
+    for room_name, count in result:
+        # 提取几室的信息（如“3室2厅”提取“3”）
+        match = re.match(r"(\d)室", room_name)
+        if match:
+            num = int(match.group(1))
+            if num == 1:
+                merge_dict["一居室"] += count
+            elif num == 2:
+                merge_dict["二居室"] += count
+            elif num == 3:
+                merge_dict["三居室"] += count
+            elif num == 4:
+                merge_dict["四居室"] += count
+            elif num >= 5:
+                merge_dict["五居及以上"] += count
+            else:
+                merge_dict["其他"] += count
+        else:
+            merge_dict["其他"] += count
+
+    data = [{"name": k, "value": v} for k, v in merge_dict.items()]
+
+    return success_response(data=data, message="查询成功", code=Code.GET_OK)
+
+#小区房源前20
+@house_info_bp.route('/columndata', methods=['GET'])
+def get_house_columndata():
+    result= (HouseInfo.query.with_entities(HouseInfo.community,func.count()).group_by(HouseInfo.community)
+             .order_by(func.count().desc()).all())
+    community_list = []
+    num_list = []
+    for community, count in result:
+        community_list.append(community)
+        num_list.append(count)
+    if len(num_list) > 20:
+        data={'community_list': community_list[:20], 'num_list': num_list[:20]}
+    else:
+        data={'community_list': community_list, 'num_list': num_list}
+    return success_response(data=data, message="查询成功", code=Code.GET_OK)

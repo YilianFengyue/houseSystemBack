@@ -82,6 +82,7 @@ def get_house_detail_by_house_id(house_info_id):
     try:
         # detail = session.query(HouseDetail).filter_by(house_info_id=house_info_id).first()
         detail = get_house_detail_by_house_info_id(house_info_id)
+
         print(detail)
         if detail:
             return success_response(data=detail.to_dict(), message="获取成功", code=Code.GET_OK)

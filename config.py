@@ -1,7 +1,7 @@
 # config.py
 
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost:3306/flaskhousesystem'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1234@localhost:3306/flaskhousesystem'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     #生成随机的密钥会更好
     SECRET_KEY = 'random_key'
@@ -9,4 +9,4 @@ class Config:
     STRICT_SLASH = False  # 禁止路由自动重定向
 
     # redis配置
-    REDIS_URL = 'redis://:luyue@localhost:6379/0'
+    REDIS_URL = 'redis://localhost:6379/0'
