@@ -29,3 +29,9 @@ def create_contracts(data):
     db.session.add(contract)
     db.session.commit()
     return contract
+
+def get_contract_by_landlordId(landlord_id):
+    return db.session.query(Contract).filter_by(landlordId=landlord_id).one()
+
+def get_contract_by_landlordId_and_tenant(landlord_id, tenantName):
+    return db.session.query(Contract).filter_by(landlordId=landlord_id, tenantName=tenantName).one()

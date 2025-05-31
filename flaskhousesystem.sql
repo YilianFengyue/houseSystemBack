@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 30/05/2025 22:23:17
+ Date: 31/05/2025 17:08:05
 */
 
 SET NAMES utf8mb4;
@@ -224,7 +224,7 @@ CREATE TABLE `contract`  (
   `formattedRent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `currentDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contract
@@ -242,6 +242,12 @@ INSERT INTO `contract` VALUES (10, '3200', '居住', '2025-05-08 16:00:00', '202
 INSERT INTO `contract` VALUES (11, '3200', '居住', '2025-05-08 16:00:00', '2025-05-01 16:00:00', '丁先生', NULL, '15612340015', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-29 00:00:00');
 INSERT INTO `contract` VALUES (12, '3200', '居住', '2025-05-08 16:00:00', '2025-05-29 16:00:00', '张先生', NULL, '13800001234', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-29 00:00:00');
 INSERT INTO `contract` VALUES (13, '3200', '居住', '2025-05-09 16:00:00', '2025-05-23 16:00:00', '刘先生', NULL, '13612340005', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-30 00:00:00');
+INSERT INTO `contract` VALUES (14, '3200', '居住', '2025-06-30 16:00:00', '2025-07-30 16:00:00', '陈先生', NULL, '18712340025', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
+INSERT INTO `contract` VALUES (15, '3200', '居住', '2025-06-30 16:00:00', '2025-07-30 16:00:00', '陈先生', NULL, '18712340025', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
+INSERT INTO `contract` VALUES (16, '3200', '居住', '2025-06-30 16:00:00', '2025-07-30 16:00:00', '陈先生', NULL, '18712340025', '', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
+INSERT INTO `contract` VALUES (18, '3200', '居住', '2025-06-30 16:00:00', '2025-07-30 16:00:00', '陈先生', 1, '18712340025', 'Ylfmoonn', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
+INSERT INTO `contract` VALUES (19, '3200', '办公', '2025-06-30 16:00:00', '2025-07-30 16:00:00', '张女士', 2, '18212340021', 'Ylfmoonn', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
+INSERT INTO `contract` VALUES (20, '3200', '居住', '2025-07-31 16:00:00', '2025-08-30 16:00:00', '刘先生', 3, '13612340005', 'Ylfmoonn', NULL, '', '叁仟贰佰零拾零元整', '2025-05-31 00:00:00');
 
 -- ----------------------------
 -- Table structure for house_detail
@@ -350,7 +356,7 @@ CREATE TABLE `log_entries`  (
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `traceback` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 262 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of log_entries
@@ -459,6 +465,163 @@ INSERT INTO `log_entries` VALUES (101, '2025-05-30 14:19:35', 'INFO', '_internal
 INSERT INTO `log_entries` VALUES (102, '2025-05-30 14:21:40', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
 INSERT INTO `log_entries` VALUES (103, '2025-05-30 14:21:41', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
 INSERT INTO `log_entries` VALUES (104, '2025-05-30 14:21:41', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (105, '2025-05-30 14:24:00', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack1\\\\exts\\\\cors.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (106, '2025-05-30 14:24:00', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (107, '2025-05-30 14:24:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (108, '2025-05-30 14:24:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (109, '2025-05-30 14:35:58', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (110, '2025-05-30 14:35:59', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (111, '2025-05-30 14:35:59', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (112, '2025-05-31 04:18:03', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (113, '2025-05-31 04:18:05', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (114, '2025-05-31 04:18:05', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (115, '2025-05-31 04:21:13', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (116, '2025-05-31 04:21:15', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (117, '2025-05-31 04:21:15', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (118, '2025-05-31 04:27:52', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (119, '2025-05-31 04:27:53', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (120, '2025-05-31 04:27:53', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (121, '2025-05-31 04:28:00', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (122, '2025-05-31 04:28:01', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (123, '2025-05-31 04:28:01', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (124, '2025-05-31 04:32:23', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (125, '2025-05-31 04:32:24', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (126, '2025-05-31 04:32:24', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (127, '2025-05-31 04:36:37', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\services\\\\rental_service.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (128, '2025-05-31 04:36:37', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (129, '2025-05-31 04:36:38', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (130, '2025-05-31 04:36:38', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (131, '2025-05-31 04:37:40', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\models\\\\models.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (132, '2025-05-31 04:37:40', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (133, '2025-05-31 04:37:41', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (134, '2025-05-31 04:37:41', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (135, '2025-05-31 04:38:44', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (136, '2025-05-31 04:38:45', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (137, '2025-05-31 04:38:45', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (138, '2025-05-31 04:42:13', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (139, '2025-05-31 04:42:14', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (140, '2025-05-31 04:42:14', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (141, '2025-05-31 04:52:27', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (142, '2025-05-31 04:52:29', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (143, '2025-05-31 04:52:29', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (144, '2025-05-31 07:00:10', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (145, '2025-05-31 07:00:11', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (146, '2025-05-31 07:00:11', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (147, '2025-05-31 07:02:05', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (148, '2025-05-31 07:02:06', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (149, '2025-05-31 07:02:06', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (150, '2025-05-31 07:07:43', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\services\\\\house_info_service.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (151, '2025-05-31 07:07:43', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (152, '2025-05-31 07:07:44', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (153, '2025-05-31 07:07:44', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (154, '2025-05-31 07:19:03', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (155, '2025-05-31 07:19:04', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (156, '2025-05-31 07:19:04', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (157, '2025-05-31 07:52:21', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (158, '2025-05-31 07:52:22', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (159, '2025-05-31 07:52:22', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (160, '2025-05-31 07:53:21', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (161, '2025-05-31 07:53:21', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (162, '2025-05-31 07:53:22', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (163, '2025-05-31 07:53:22', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (164, '2025-05-31 07:54:43', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (165, '2025-05-31 07:54:44', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (166, '2025-05-31 07:54:44', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (167, '2025-05-31 07:55:11', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (168, '2025-05-31 07:55:12', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (169, '2025-05-31 07:55:12', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (170, '2025-05-31 07:56:01', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (171, '2025-05-31 07:56:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (172, '2025-05-31 07:56:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (173, '2025-05-31 07:56:17', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (174, '2025-05-31 07:56:18', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (175, '2025-05-31 07:56:18', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (176, '2025-05-31 07:57:39', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (177, '2025-05-31 07:57:40', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (178, '2025-05-31 07:57:40', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (179, '2025-05-31 07:58:11', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (180, '2025-05-31 07:58:12', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (181, '2025-05-31 07:58:12', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (182, '2025-05-31 07:58:52', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (183, '2025-05-31 07:58:53', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (184, '2025-05-31 07:58:53', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (185, '2025-05-31 07:59:52', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (186, '2025-05-31 07:59:53', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (187, '2025-05-31 07:59:53', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (188, '2025-05-31 08:00:11', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (189, '2025-05-31 08:00:12', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (190, '2025-05-31 08:00:12', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (191, '2025-05-31 08:01:18', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (192, '2025-05-31 08:01:18', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (193, '2025-05-31 08:01:20', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (194, '2025-05-31 08:01:20', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (195, '2025-05-31 08:02:30', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (196, '2025-05-31 08:02:30', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (197, '2025-05-31 08:03:01', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (198, '2025-05-31 08:03:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (199, '2025-05-31 08:03:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (200, '2025-05-31 08:03:45', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (201, '2025-05-31 08:03:46', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (202, '2025-05-31 08:03:46', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (203, '2025-05-31 08:04:48', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (204, '2025-05-31 08:04:49', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (205, '2025-05-31 08:04:49', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (206, '2025-05-31 08:05:06', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (207, '2025-05-31 08:05:07', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (208, '2025-05-31 08:05:07', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (209, '2025-05-31 08:05:43', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (210, '2025-05-31 08:05:43', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (211, '2025-05-31 08:06:50', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (212, '2025-05-31 08:06:51', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (213, '2025-05-31 08:06:51', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (214, '2025-05-31 08:08:19', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (215, '2025-05-31 08:08:19', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (216, '2025-05-31 08:08:21', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (217, '2025-05-31 08:08:21', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (218, '2025-05-31 08:08:37', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (219, '2025-05-31 08:08:38', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (220, '2025-05-31 08:08:38', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (221, '2025-05-31 08:09:22', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (222, '2025-05-31 08:09:23', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (223, '2025-05-31 08:09:24', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (224, '2025-05-31 08:09:24', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (225, '2025-05-31 08:32:51', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\services\\\\contract_service.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (226, '2025-05-31 08:32:51', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (227, '2025-05-31 08:37:44', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (228, '2025-05-31 08:37:45', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (229, '2025-05-31 08:37:45', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (230, '2025-05-31 08:38:52', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (231, '2025-05-31 08:38:53', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (232, '2025-05-31 08:38:53', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (233, '2025-05-31 08:44:00', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (234, '2025-05-31 08:44:01', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (235, '2025-05-31 08:44:01', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (236, '2025-05-31 08:44:27', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (237, '2025-05-31 08:44:28', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (238, '2025-05-31 08:44:28', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (239, '2025-05-31 08:48:18', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (240, '2025-05-31 08:48:19', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (241, '2025-05-31 08:48:19', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (242, '2025-05-31 08:50:35', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\contract.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (243, '2025-05-31 08:50:35', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (244, '2025-05-31 08:50:36', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (245, '2025-05-31 08:50:36', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (246, '2025-05-31 08:51:04', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (247, '2025-05-31 08:51:05', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (248, '2025-05-31 08:51:05', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (249, '2025-05-31 08:53:00', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (250, '2025-05-31 08:53:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (251, '2025-05-31 08:53:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (252, '2025-05-31 08:53:24', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (253, '2025-05-31 08:53:25', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (254, '2025-05-31 08:53:25', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (255, '2025-05-31 08:53:33', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (256, '2025-05-31 08:53:34', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (257, '2025-05-31 08:53:34', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (258, '2025-05-31 09:01:45', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\rental.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (259, '2025-05-31 09:01:45', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (260, '2025-05-31 09:01:47', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (261, '2025-05-31 09:01:47', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
 
 -- ----------------------------
 -- Table structure for message
@@ -512,6 +675,26 @@ INSERT INTO `news` VALUES (27, '重磅消息', '中共二十大决定，坚定�
 INSERT INTO `news` VALUES (28, 'yess', '你是一个一个一个...', '2025-05-30 00:00:00');
 
 -- ----------------------------
+-- Table structure for rental
+-- ----------------------------
+DROP TABLE IF EXISTS `rental`;
+CREATE TABLE `rental`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tenant_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `landlord_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `house_id` int NULL DEFAULT NULL,
+  `currentDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of rental
+-- ----------------------------
+INSERT INTO `rental` VALUES (1, 'Ylfmoonn', '陈先生', 1, '2025-05-31 00:00:00');
+INSERT INTO `rental` VALUES (2, 'Ylfmoonn', '张女士', 2, '2025-05-31 00:00:00');
+INSERT INTO `rental` VALUES (3, 'Ylfmoonn', '刘先生', 3, '2025-05-31 00:00:00');
+
+-- ----------------------------
 -- Table structure for repair_complaint
 -- ----------------------------
 DROP TABLE IF EXISTS `repair_complaint`;
@@ -527,7 +710,7 @@ CREATE TABLE `repair_complaint`  (
   `create_at` datetime NULL DEFAULT NULL,
   `handle` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of repair_complaint
@@ -561,6 +744,7 @@ INSERT INTO `repair_complaint` VALUES (26, 'complaint', '', NULL, ' ', 'haodihen
 INSERT INTO `repair_complaint` VALUES (27, 'repair', 'eds', '设备维修', ' ', ' ', '', 1, '2025-05-26 14:52:58', NULL);
 INSERT INTO `repair_complaint` VALUES (28, 'complaint', '', NULL, ' ', '啊啊啊啊啊', '8', 1, '2025-05-26 15:21:52', NULL);
 INSERT INTO `repair_complaint` VALUES (29, 'complaint', '', NULL, ' ', '整合修bug\noss都怪你', '7', 1, '2025-05-26 16:15:49', NULL);
+INSERT INTO `repair_complaint` VALUES (30, 'complaint', '', NULL, ' ', '333333', '8', 1, '2025-05-30 22:36:26', NULL);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -584,12 +768,12 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 'aaaa', '12345', '2779902707@qq.com', '16608188853', '校本部', '0', '0', '11111111111111111111111111', 1, NULL);
+INSERT INTO `user_info` VALUES (1, 'aaaa', '12345', '2779902707@qq.com', '16608188854', '校本部', '0', '0', '11111111111111111111111111', 1, NULL);
 INSERT INTO `user_info` VALUES (3, 'Ylfmoonn', '$2b$12$.qbllCaHCKG8g9xTP29S4eVM3VReNMzzgLSNb/KNAQDoCCPORGhuS', 'lapu2023@outlook.com', '19511053623', '岳麓区', '1', '2', '41132511451411', 1, NULL);
 INSERT INTO `user_info` VALUES (4, 'Lappand', '$2b$12$bA1jsIhsQi/qTGAilYyLF.EV0v3EHkl5qcpBGxBmWJRH/LPHsUchq', NULL, '19511053624', '校本部1111', NULL, NULL, NULL, NULL, 'https://i.pinimg.com/736x/54/0a/89/540a89862811d8bffc763caf6829699d.jpg');
 INSERT INTO `user_info` VALUES (5, NULL, '$2b$12$BKQ4MnXq8qnvz4SownzK3uoBCdmRktRdr2BX4FlzjT/7xBjGXzyqS', NULL, '15274896231', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (6, NULL, '$2b$12$ChX6QeErNGea10kbGHpLSeOlJVX4iW2t/OxGthi3.F38IhQzBitl2', NULL, '195110536232', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user_info` VALUES (7, '陆岳', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
+INSERT INTO `user_info` VALUES (7, '陆岳', '12345', NULL, '16608188853', NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (8, '胡琪', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (9, '梅姨', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (10, NULL, '$2b$12$N/yOiQTDtKMI.gzO00VoBeZjHUwI.5hZ/KzaEoLJPGEsl3CM4KLCS', NULL, '15083377951', NULL, NULL, NULL, NULL, NULL, NULL);

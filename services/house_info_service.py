@@ -9,3 +9,6 @@ def get_house_hot_list():
 
 def get_house_new_list():
     return db.session.query(HouseInfo).order_by(HouseInfo.publish_time.desc()).limit(6).all()
+
+def get_house_by_id(house_id):
+    return db.session.query(HouseInfo).filter(HouseInfo.id == house_id).one()

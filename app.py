@@ -13,6 +13,7 @@ from blueprints.message import message_bp
 from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
 from blueprints.log_management import log_bp
+from blueprints.rental import rental_bp
 from socketio_init import socketio  # 修改导入语句
 from exts.redis import redis_store
 
@@ -56,6 +57,7 @@ app.register_blueprint(news_bp)
 app.register_blueprint(housedetail_bp)
 #日志
 app.register_blueprint(log_bp)
+app.register_blueprint(rental_bp)
 
 # 初始化socketio
 socketio.init_app(app)
