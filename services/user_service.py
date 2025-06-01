@@ -1,9 +1,9 @@
 from models.user_model import UserModel
 from exts.db import db
 
-def get_user_by_username(username):
+def get_user_by_name(name):
     """根据用户名查找用户(兼容别名)"""
-    return get_user_by_name(username)
+    return db.session.query(UserModel).filter_by(name=name).first()
 
 def create_user(username=None, password=None, identification=None, phone=None, name=None, email=None, addr=None, identityCard=None):
     """创建新用户"""

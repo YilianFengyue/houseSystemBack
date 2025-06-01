@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 31/05/2025 17:08:05
+ Date: 01/06/2025 20:07:09
 */
 
 SET NAMES utf8mb4;
@@ -356,7 +356,7 @@ CREATE TABLE `log_entries`  (
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `traceback` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 262 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 352 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of log_entries
@@ -622,6 +622,96 @@ INSERT INTO `log_entries` VALUES (258, '2025-05-31 09:01:45', 'INFO', '_internal
 INSERT INTO `log_entries` VALUES (259, '2025-05-31 09:01:45', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
 INSERT INTO `log_entries` VALUES (260, '2025-05-31 09:01:47', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
 INSERT INTO `log_entries` VALUES (261, '2025-05-31 09:01:47', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (262, '2025-06-01 07:27:53', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (263, '2025-06-01 07:27:54', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (264, '2025-06-01 07:27:54', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (265, '2025-06-01 08:04:52', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (266, '2025-06-01 08:04:54', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (267, '2025-06-01 08:04:54', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (268, '2025-06-01 08:07:47', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (269, '2025-06-01 08:07:48', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (270, '2025-06-01 08:07:48', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (271, '2025-06-01 08:10:14', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (272, '2025-06-01 08:10:15', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (273, '2025-06-01 08:10:15', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (274, '2025-06-01 08:12:55', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (275, '2025-06-01 08:12:56', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (276, '2025-06-01 08:12:56', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (277, '2025-06-01 08:13:19', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (278, '2025-06-01 08:13:20', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (279, '2025-06-01 08:13:20', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (280, '2025-06-01 08:14:07', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\user.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (281, '2025-06-01 08:14:07', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (282, '2025-06-01 08:14:08', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (283, '2025-06-01 08:14:08', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (284, '2025-06-01 08:16:50', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (285, '2025-06-01 08:16:51', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (286, '2025-06-01 08:16:51', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (287, '2025-06-01 08:50:25', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (288, '2025-06-01 08:50:27', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (289, '2025-06-01 08:50:27', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (290, '2025-06-01 08:50:55', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (291, '2025-06-01 08:50:56', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (292, '2025-06-01 08:50:56', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (293, '2025-06-01 09:00:49', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (294, '2025-06-01 09:00:50', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (295, '2025-06-01 09:00:50', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (296, '2025-06-01 09:05:41', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (297, '2025-06-01 09:05:42', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (298, '2025-06-01 09:05:42', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (299, '2025-06-01 09:06:53', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (300, '2025-06-01 09:06:54', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (301, '2025-06-01 09:06:54', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (302, '2025-06-01 09:07:41', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (303, '2025-06-01 09:07:43', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (304, '2025-06-01 09:07:43', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (305, '2025-06-01 09:09:26', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\app.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (306, '2025-06-01 09:09:26', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (307, '2025-06-01 09:09:28', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (308, '2025-06-01 09:09:28', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (309, '2025-06-01 09:12:58', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (310, '2025-06-01 09:13:00', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (311, '2025-06-01 09:13:00', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (312, '2025-06-01 09:20:13', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (313, '2025-06-01 09:20:15', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (314, '2025-06-01 09:20:15', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (315, '2025-06-01 09:23:50', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\celery_test.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (316, '2025-06-01 09:23:53', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (317, '2025-06-01 09:23:54', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (318, '2025-06-01 09:23:54', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (319, '2025-06-01 09:24:35', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\celery_test.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (320, '2025-06-01 09:24:35', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (321, '2025-06-01 09:24:36', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (322, '2025-06-01 09:24:36', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (323, '2025-06-01 09:38:51', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (324, '2025-06-01 09:38:53', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (325, '2025-06-01 09:38:53', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (326, '2025-06-01 11:22:46', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (327, '2025-06-01 11:22:48', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (328, '2025-06-01 11:22:48', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (329, '2025-06-01 11:24:01', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\exts\\\\celery.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (330, '2025-06-01 11:24:02', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (331, '2025-06-01 11:26:49', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (332, '2025-06-01 11:26:51', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (333, '2025-06-01 11:26:51', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (334, '2025-06-01 11:34:58', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (335, '2025-06-01 11:35:01', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (336, '2025-06-01 11:35:01', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (337, '2025-06-01 11:35:40', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (338, '2025-06-01 11:35:42', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (339, '2025-06-01 11:35:42', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (340, '2025-06-01 11:53:31', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (341, '2025-06-01 11:53:33', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (342, '2025-06-01 11:53:33', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (343, '2025-06-01 11:54:08', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (344, '2025-06-01 11:54:10', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (345, '2025-06-01 11:54:10', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (346, '2025-06-01 11:59:03', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (347, '2025-06-01 11:59:05', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (348, '2025-06-01 11:59:05', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (349, '2025-06-01 11:59:57', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (350, '2025-06-01 11:59:59', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (351, '2025-06-01 11:59:59', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
 
 -- ----------------------------
 -- Table structure for message
@@ -710,7 +800,7 @@ CREATE TABLE `repair_complaint`  (
   `create_at` datetime NULL DEFAULT NULL,
   `handle` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of repair_complaint
@@ -745,6 +835,7 @@ INSERT INTO `repair_complaint` VALUES (27, 'repair', 'eds', '设备维修', ' ',
 INSERT INTO `repair_complaint` VALUES (28, 'complaint', '', NULL, ' ', '啊啊啊啊啊', '8', 1, '2025-05-26 15:21:52', NULL);
 INSERT INTO `repair_complaint` VALUES (29, 'complaint', '', NULL, ' ', '整合修bug\noss都怪你', '7', 1, '2025-05-26 16:15:49', NULL);
 INSERT INTO `repair_complaint` VALUES (30, 'complaint', '', NULL, ' ', '333333', '8', 1, '2025-05-30 22:36:26', NULL);
+INSERT INTO `repair_complaint` VALUES (31, 'complaint', '', NULL, ' ', '433', '7', 1, '2025-06-01 19:36:19', NULL);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -768,7 +859,7 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 'aaaa', '12345', '2779902707@qq.com', '16608188854', '校本部', '0', '0', '11111111111111111111111111', 1, NULL);
+INSERT INTO `user_info` VALUES (1, 'aaaa', '$2b$12$IQmUsGOK8okL9as/abcU7e2ZfZThnoIEquL9SB0vhyaTNELEjb0Le', '114514@qq.com', '1145141919', '123456', '0', '0', '', 1, NULL);
 INSERT INTO `user_info` VALUES (3, 'Ylfmoonn', '$2b$12$.qbllCaHCKG8g9xTP29S4eVM3VReNMzzgLSNb/KNAQDoCCPORGhuS', 'lapu2023@outlook.com', '19511053623', '岳麓区', '1', '2', '41132511451411', 1, NULL);
 INSERT INTO `user_info` VALUES (4, 'Lappand', '$2b$12$bA1jsIhsQi/qTGAilYyLF.EV0v3EHkl5qcpBGxBmWJRH/LPHsUchq', NULL, '19511053624', '校本部1111', NULL, NULL, NULL, NULL, 'https://i.pinimg.com/736x/54/0a/89/540a89862811d8bffc763caf6829699d.jpg');
 INSERT INTO `user_info` VALUES (5, NULL, '$2b$12$BKQ4MnXq8qnvz4SownzK3uoBCdmRktRdr2BX4FlzjT/7xBjGXzyqS', NULL, '15274896231', NULL, NULL, NULL, NULL, NULL, NULL);

@@ -11,3 +11,12 @@ class Config:
     # redis配置
     # REDIS_URL = 'redis://:luyue@localhost:6379/0'
     REDIS_URL = 'redis://@localhost:6379/0'  # 设置密码有误，重启后失效
+
+    # Celery 配置,使用不同数据库
+    CELERY_BROKER_URL = 'redis://@localhost:6379/1'
+    CELERY_RESULT_BACKEND = 'redis://@localhost:6379/1'
+    CELERY_ACCEPT_CONTENT = ['application/json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_TIMEZONE = 'Asia/Shanghai'
+    CELERY_WORKER_AUTOSCALE = (5,1)

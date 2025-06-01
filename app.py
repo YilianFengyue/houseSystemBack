@@ -14,8 +14,10 @@ from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
 from blueprints.log_management import log_bp
 from blueprints.rental import rental_bp
+from blueprints.celery import celery_bp
 from socketio_init import socketio  # 修改导入语句
 from exts.redis import redis_store
+from exts.celery import make_celery
 
 #日志处理
 import logging
@@ -58,9 +60,13 @@ app.register_blueprint(housedetail_bp)
 #日志
 app.register_blueprint(log_bp)
 app.register_blueprint(rental_bp)
+app.register_blueprint(celery_bp)
 
 # 初始化socketio
 socketio.init_app(app)
+# 初始化celery
+celery = make_celery(app)
+
 @app.route('/')
 def index():
     try:
