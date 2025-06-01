@@ -16,18 +16,24 @@ user = Blueprint("user", __name__, url_prefix="/user")
 def register():
     phone = request.form.get('phone')
     password = request.form.get('password')
+    email = request.form.get('email')
 
     if not phone or not password:
         # 修正点：使用 message 参数，并传入正确的 Code
         return error_response(code=Code.BAD_REQUEST, message="手机号和密码不能为空")
+    if not email:
+        return error_response(code=Code.BAD_REQUEST, message="邮箱不能为空")
 
     if UserModel.query.filter_by(phone=phone).first():
         # 修正点：使用 message 参数
         return error_response(code=Code.GET_ERR, message="注册失败，该手机号已被注册")
+    if UserModel.query.filter_by(email=email).first():
+        return error_response(code=Code.GET_ERR, message="注册失败，该邮箱已被注册")
 
     try:
         new_user = UserModel(phone=phone)
         new_user.set_password(password)
+        new_user.email = email
         db.session.add(new_user)
         db.session.commit()
         # 修正点：使用 message 参数
@@ -84,47 +90,16 @@ def get_user_by_username(name):
 
     return success_response(code=Code.GET_OK, data=user.to_dict(), message="获取成功")
 
-# 用户信息修改接口
-@user.route("/userinfo", methods=["PUT"])
-@token_required
-def userinfo_update():
-    data = request.json
-    if not data:
-        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
-
-    current_user = get_user_by_name(data['name'])
-
-    # 定义允许修改的字段
-    allowed_fields = ['name', 'addr', 'email', 'identityCard', 'phone']
-
-    try:
-        # 遍历请求数据中的键值对
-        for key, value in data.items():
-            if key in allowed_fields and hasattr(current_user, key):
-                setattr(current_user, key, value)
-
-        # 提交数据库更改
-        db.session.commit()
-        return success_response(code=Code.UPDATE_OK, data=current_user.to_dict(), message="用户信息更新成功")
-
-    except IntegrityError:
-        db.session.rollback()
-        return error_response(code=Code.UPDATE_ERR, message="数据库唯一性约束冲突，更新失败")
-    except Exception as e:
-        db.session.rollback()
-        current_app.logger.error(f"Update user info error: {e}")
-        return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
-
-# 用户密码修改接口
+# 用户密码修改接口,通过id修改
 @user.route("/userinfo/password", methods=["PUT"])
-@token_required
+# @token_required
 def userinfo_password():
     data = request.json
     if not data:
         return error_response(code=Code.BAD_REQUEST, message="密码不能为空")
-    password = data.get('password')
 
-    current_user = get_user_by_name(data['name'])
+    password = data.get('password')
+    current_user = get_user_by_id(data['id'])
 
     try:
         # 设置新密码
@@ -157,21 +132,23 @@ def userinfo_phone():
     return success_response(code=Code.GET_OK, data=current_user.to_dict(), message="返回成功")
 
 # 用户信息修改接口，修改部分内容
-@user.route("/userinfos", methods=["PUT"])
+@user.route("/userinfo", methods=["PUT"])
 # @token_required
-def userinfo_update_new():
+def userinfo_update():
     data = request.json
     if not data:
         return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
 
-    current_user = get_user_by_name(data['name'])
+    current_user = get_user_by_id(data['id'])
 
-    # 修改内容，根据用户名查询是否填写过身份证号, 或检查填写的身份证号长度
     user = current_user.to_dict()
-    if user["identityCard"]:
+    # 先验证身份证号相关逻辑（使用数据库中现有值）
+    if user['identityCard'] is not None:
         return error_response(code=Code.UPDATE_ERR, message="您已填写过身份证号，不可更改")
-    elif len(user["identityCard"]) != 18:
-        return error_response(code=Code.UPDATE_ERR, message="身份证号长度出错")
+
+    # 检查请求中的身份证号长度（如果提供了）
+    if 'identityCard' in data and len(data['identityCard']) != 18:
+        return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
 
     # 定义允许修改的字段
     allowed_fields = ['name', 'addr', 'email', 'identityCard', 'phone']
@@ -193,3 +170,16 @@ def userinfo_update_new():
         db.session.rollback()
         current_app.logger.error(f"Update user info error: {e}")
         return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
+
+# 身份选择，管理员或房东
+@user.route("/userinfo/usertype", methods=["PUT"])
+# @token_required
+def userinfo_usertype_update():
+    data = request.json
+
+    if not data:
+        return error_response(code=Code.BAD_REQUEST, message="<UNK>")
+
+    return success_response(code=Code.UPDATE_OK, message="<UNK>")
+
+# github第三方登录接口
