@@ -28,4 +28,4 @@ class Config:
     GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
     GITHUB_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
     GITHUB_API_BASE_URL = 'https://api.github.com/'
-    GITHUB_CALLBACK_URL = 'http://127.0.0.1:5000/github/authorized'
+    GITHUB_CALLBACK_URL = 'http://127.0.0.1:5000/github/callback'
