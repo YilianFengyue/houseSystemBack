@@ -33,7 +33,7 @@ class HouseInfo(db.Model): # <--- 修改这里，继承自 db.Model
     tag_new: Mapped[Optional[int]] = mapped_column(TINYINT(1), server_default=text("'0'"), comment='是否新上')
     image_url: Mapped[Optional[str]] = mapped_column(VARCHAR(255), comment='房源图片URL') # 之前模型中是 '房源图片'
     publish_time: Mapped[Optional[datetime.date]] = mapped_column(Date, comment='发布时间') # 之前模型中是 '发布时间，如：2天前'
-    page_views: Mapped[Optional[str]] = mapped_column(VARCHAR(255), comment='浏览量') # 考虑是否应该是 Integer 类型
+    page_views: Mapped[int] = mapped_column(VARCHAR(255), comment='浏览量') # 考虑是否应该是 Integer 类型
     landlord: Mapped[Optional[str]] = mapped_column(VARCHAR(255), comment='房东')
     phone_num: Mapped[Optional[str]] = mapped_column(VARCHAR(100), comment='房东电话')
     house_num: Mapped[Optional[int]] = mapped_column(SQLAlchemyInteger, comment='房源编号') # sqlalchemy.Integer

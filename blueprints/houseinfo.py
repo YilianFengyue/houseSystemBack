@@ -8,7 +8,9 @@ import datetime
 # 如果使用 Flask-SQLAlchemy
 from exts import db
 from sqlalchemy import or_, func
-from services.house_info_service import get_housenum, get_house_hot_list, get_house_new_list
+from services.house_info_service import (get_housenum, get_house_by_views,
+                                         get_house_hot_list, get_house_new_list,
+                                         add_views_by_id)
 from exts.redis import redis_store
 import json
 import re
@@ -441,3 +443,21 @@ def get_house_columndata():
     else:
         data={'community_list': community_list, 'num_list': num_list}
     return success_response(data=data, message="查询成功", code=Code.GET_OK)
+
+# 获取浏览量最高的房源
+@house_info_bp.route('/views', methods=['GET'])
+def get_house_info_views():
+    house = get_house_by_views()
+    if not house:
+        return error_response("获取失败", code=Code.NOT_FOUND)
+
+    return success_response(data=house.to_dict(), message="获取成功", code=Code.GET_OK)
+
+# 增加浏览次数
+@house_info_bp.route('/views', methods=['POST'])
+def add_house_info_views():
+    data = request.get_json()
+    if add_views_by_id(data):
+        return success_response(message="增加成功", code=Code.GET_OK)
+    else:
+        return error_response(message="不存在该房源", code=Code.NOT_FOUND)

@@ -15,6 +15,7 @@ from blueprints.housedetail import housedetail_bp
 from blueprints.log_management import log_bp
 from blueprints.rental import rental_bp
 from blueprints.celery import celery_bp
+from blueprints.github import create_github_bp
 from socketio_init import socketio  # 修改导入语句
 from exts.redis import redis_store
 from exts.celery import make_celery
@@ -61,6 +62,10 @@ app.register_blueprint(housedetail_bp)
 app.register_blueprint(log_bp)
 app.register_blueprint(rental_bp)
 app.register_blueprint(celery_bp)
+
+# 在 app 初始化之后再创建 github_bp
+github_bp = create_github_bp(app)
+app.register_blueprint(github_bp)
 
 # 初始化socketio
 socketio.init_app(app)

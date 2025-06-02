@@ -21,9 +21,9 @@ def create_user(username=None, password=None, identification=None, phone=None, n
     db.session.commit()
     return user
 
-def get_user_by_name(name):
-    """根据用户名查找用户"""
-    return db.session.query(UserModel).filter_by(name=name).first()
+def get_user_by_email(email):
+    """根据邮箱查找用户"""
+    return db.session.query(UserModel).filter_by(email=email).first()
 
 def get_user_by_id(user_id):
     """根据ID查找用户"""

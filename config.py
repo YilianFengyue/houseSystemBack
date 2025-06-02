@@ -1,5 +1,5 @@
 # config.py
-
+import os
 class Config:
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost:3306/flaskhousesystem'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -20,3 +20,12 @@ class Config:
     CELERY_RESULT_SERIALIZER = 'json'
     CELERY_TIMEZONE = 'Asia/Shanghai'
     CELERY_WORKER_AUTOSCALE = (5,1)
+
+    # GitHub OAuth 配置
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+    GITHUB_CLIENT_ID = 'Ov23liAecgp8eQEFj3xG'
+    GITHUB_CLIENT_SECRET = '8f4267ce6a9e38442d5ef5e1e7658021e0528145'
+    GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
+    GITHUB_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
+    GITHUB_API_BASE_URL = 'https://api.github.com/'
+    GITHUB_CALLBACK_URL = 'http://127.0.0.1:5000/github/authorized'
