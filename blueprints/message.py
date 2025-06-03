@@ -98,18 +98,9 @@ def post_message():
 
     # 广播消息给所有连接的客户端
     socketio = current_app.extensions['socketio']
-    socketio.emit('new_message', new_message.to_dict())
+    socketio.emit('new_message', new_message.to_dict(), include_self=True)
 
     return success_response(data={"message": new_message.to_dict()}, code=201)
-
-
-# @message_bp.route("/messages/andy", methods=["GET"])
-# @handle_errors
-# def get_andy_messages():
-#     """专门获取Andy发送的消息接口"""
-#     messages = get_messages_by_sender("Andy")
-#
-#     return success_response(data={"messages": [msg.to_dict() for msg in messages]})
 
 # 根据发送者用户名获取聊天记录
 @message_bp.route("/messages/<string:sender_username>", methods=["GET"])

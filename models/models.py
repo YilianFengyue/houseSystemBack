@@ -143,7 +143,7 @@ class Message(Base):
     content: Mapped[str] = mapped_column(String(500), comment='消息内容')
     sender_username: Mapped[str] = mapped_column(String(50), comment='发送者用户名')
     receiver_username: Mapped[str] = mapped_column(String(50), comment='接收者用户名')
-    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), comment='消息时间戳')
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, comment='消息时间戳')
     channel_id: Mapped[int] = mapped_column(Integer)
 
     def to_dict(self):
@@ -152,7 +152,7 @@ class Message(Base):
             "content": self.content,
             "sender_username": self.sender_username,
             "receiver_username": self.receiver_username,
-            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": self.timestamp.isoformat() + "Z",  # e.g., 2025-06-03T12:54:00Z
             "channel_id": self.channel_id
         }
 

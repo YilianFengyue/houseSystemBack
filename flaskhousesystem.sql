@@ -11,7 +11,7 @@
  Target Server Version : 80039 (8.0.39)
  File Encoding         : 65001
 
- Date: 02/06/2025 23:42:18
+ Date: 03/06/2025 21:06:08
 */
 
 SET NAMES utf8mb4;
@@ -53,13 +53,16 @@ CREATE TABLE `channel`  (
   `landlord_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '房东用户名',
   `timestamp` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`channel_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
 INSERT INTO `channel` VALUES (1, 'Andy', 'Lu', '2025-05-21 19:25:54');
 INSERT INTO `channel` VALUES (2, '陆岳', '陈先生', '2025-06-01 20:34:15');
+INSERT INTO `channel` VALUES (3, 'Ylfmoonn', '陆岳', '2025-06-03 20:20:15');
+INSERT INTO `channel` VALUES (4, 'Lappand', '陆岳', '2025-06-03 20:33:24');
+INSERT INTO `channel` VALUES (5, 'Lappand', '张女士', '2025-06-03 20:59:45');
 
 -- ----------------------------
 -- Table structure for comment
@@ -332,7 +335,7 @@ INSERT INTO `house_info` VALUES (33, '整租·公交金盆小区 2室2厅 南', 
 INSERT INTO `house_info` VALUES (34, '独栋·穗露公寓 润和天地印湘江 整租 越秀湘江星汇城豪装大平层 全长沙都有房源 4室2厅', NULL, NULL, NULL, 186, NULL, '4室2厅', 6600, '整租', '精装', 1, 1, 0, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-18', 1403, '穗露公寓', '15912340018', '53017');
 INSERT INTO `house_info` VALUES (35, '整租·旺德府恺悦国际 3室2厅 东', '长沙县', '月湖', '旺德府恺悦国际', 99, '东', '3室2厅', 2200, '整租', '精装', 0, 1, 0, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-17', 821, '何之家', '18012340019', '1982314656307347456');
 INSERT INTO `house_info` VALUES (36, '整租·桂芳家园 3室2厅 东南', '望城', '望城区', '桂芳家园', 110, '东南', '3室2厅', 1600, '整租', '精装', 0, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-16', 670, '王先生', '18112340020', '2033406282563584000');
-INSERT INTO `house_info` VALUES (37, '整租·世锦家和院 3室2厅 南', '长沙县', '开元路', '世锦家和院', 80, '南', '3室2厅', 1800, '整租', '精装', 1, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-17', 903, '张女士', '18212340021', '2034515051976589312');
+INSERT INTO `house_info` VALUES (37, '整租·世锦家和院 3室2厅 南', '长沙县', '开元路', '世锦家和院', 80, '南', '3室2厅', 1800, '整租', '精装', 1, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-17', 905, '张女士', '18212340021', '2034515051976589312');
 INSERT INTO `house_info` VALUES (38, '合租·保利麓谷林语D区 4居室 南卧', '岳麓', '麓谷西', '保利麓谷林语D区', 28, '南卧', '4居室', 799, '合租', '精装', 1, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-18', 455, '美美公寓', '18312340022', '2034904158825349120');
 INSERT INTO `house_info` VALUES (39, '整租·名都花园 3室2厅 南', '雨花', '赤岗冲', '名都花园', 141, '南', '3室2厅', 2700, '整租', '精装', 0, 1, 1, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-17', 1029, '刘公寓', '18512340023', '2032671830451421184');
 INSERT INTO `house_info` VALUES (40, '合租·博林金谷 4居室 南卧', '天心', '新开铺', '博林金谷', 28, '南卧', '4居室', 1150, '合租', '精装', 1, 1, 0, 'https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=202503271205116ae', '2025-05-16', 723, '快聚租公寓', '18612340024', '2026514311534346240');
@@ -357,7 +360,7 @@ CREATE TABLE `log_entries`  (
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `traceback` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 776 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 840 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of log_entries
@@ -1137,6 +1140,70 @@ INSERT INTO `log_entries` VALUES (772, '2025-06-02 15:41:08', 'INFO', '_internal
 INSERT INTO `log_entries` VALUES (773, '2025-06-02 15:41:08', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
 INSERT INTO `log_entries` VALUES (774, '2025-06-02 15:41:10', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
 INSERT INTO `log_entries` VALUES (775, '2025-06-02 15:41:10', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (776, '2025-06-02 15:49:14', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (777, '2025-06-02 15:49:16', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (778, '2025-06-02 15:49:16', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (779, '2025-06-03 11:43:01', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (780, '2025-06-03 11:43:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (781, '2025-06-03 11:43:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (782, '2025-06-03 11:49:00', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (783, '2025-06-03 11:49:02', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (784, '2025-06-03 11:49:02', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (785, '2025-06-03 12:00:26', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (786, '2025-06-03 12:00:27', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (787, '2025-06-03 12:00:27', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (788, '2025-06-03 12:05:24', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (789, '2025-06-03 12:05:25', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (790, '2025-06-03 12:05:25', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (791, '2025-06-03 12:06:25', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (792, '2025-06-03 12:06:27', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (793, '2025-06-03 12:06:27', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (794, '2025-06-03 12:06:33', 'INFO', 'trace', 'info', 128, 'Task blueprints.celery.github_login_task[0806a064-6df3-449d-8465-e0ae27e5531d] succeeded in 1.6160060999973211s: {\'token\': \'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZW1haWwiOiIyNzc5OTAyNzA3QHFxLmNvbSIsImV4cCI6MTc0OTAzODc5Mn0.NbOgv968586j0IHJAPzvFkbKCz1Z3PkqIVbzGyuAwFQ\'}', NULL);
+INSERT INTO `log_entries` VALUES (795, '2025-06-03 12:07:04', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\github.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (796, '2025-06-03 12:07:04', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (797, '2025-06-03 12:07:06', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (798, '2025-06-03 12:07:06', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (799, '2025-06-03 12:10:42', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\github.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (800, '2025-06-03 12:10:42', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (801, '2025-06-03 12:10:44', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (802, '2025-06-03 12:10:44', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (803, '2025-06-03 12:11:23', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\github.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (804, '2025-06-03 12:11:23', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (805, '2025-06-03 12:11:25', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (806, '2025-06-03 12:11:25', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (807, '2025-06-03 12:11:35', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\github.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (808, '2025-06-03 12:11:35', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (809, '2025-06-03 12:11:36', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (810, '2025-06-03 12:11:36', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (811, '2025-06-03 12:12:05', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (812, '2025-06-03 12:12:06', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (813, '2025-06-03 12:12:06', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (814, '2025-06-03 12:12:17', 'INFO', 'trace', 'info', 128, 'Task blueprints.celery.fetch_github_user_data[d06ab586-76a5-4e71-b284-865ba2809999] succeeded in 1.7119680999894626s: {\'email\': \'2779902707@qq.com\'}', NULL);
+INSERT INTO `log_entries` VALUES (815, '2025-06-03 12:18:58', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (816, '2025-06-03 12:18:59', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (817, '2025-06-03 12:18:59', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (818, '2025-06-03 12:20:47', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (819, '2025-06-03 12:20:49', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (820, '2025-06-03 12:20:49', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (821, '2025-06-03 12:25:59', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\message.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (822, '2025-06-03 12:25:59', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (823, '2025-06-03 12:26:01', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (824, '2025-06-03 12:26:01', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (825, '2025-06-03 12:32:37', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\blueprints\\\\message.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (826, '2025-06-03 12:32:37', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (827, '2025-06-03 12:32:38', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (828, '2025-06-03 12:32:38', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (829, '2025-06-03 12:51:14', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (830, '2025-06-03 12:51:15', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (831, '2025-06-03 12:51:15', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (832, '2025-06-03 12:55:28', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\models\\\\models.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (833, '2025-06-03 12:55:29', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (834, '2025-06-03 12:55:30', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (835, '2025-06-03 12:55:30', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
+INSERT INTO `log_entries` VALUES (836, '2025-06-03 12:57:22', 'INFO', '_internal', '_log', 97, ' * Detected change in \'D:\\\\PycharmProjects\\\\houseSystemBack\\\\models\\\\models.py\', reloading', NULL);
+INSERT INTO `log_entries` VALUES (837, '2025-06-03 12:57:22', 'INFO', '_internal', '_log', 97, ' * Restarting with stat', NULL);
+INSERT INTO `log_entries` VALUES (838, '2025-06-03 12:57:23', 'WARNING', '_internal', '_log', 97, ' * Debugger is active!', NULL);
+INSERT INTO `log_entries` VALUES (839, '2025-06-03 12:57:23', 'INFO', '_internal', '_log', 97, ' * Debugger PIN: 144-990-485', NULL);
 
 -- ----------------------------
 -- Table structure for message
@@ -1150,7 +1217,7 @@ CREATE TABLE `message`  (
   `timestamp` datetime NULL DEFAULT NULL COMMENT '消息时间戳',
   `channel_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`message_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -1169,7 +1236,13 @@ INSERT INTO `message` VALUES (11, '我会喷火，你会吗', 'Andy', 'LU', '202
 INSERT INTO `message` VALUES (12, 'woc', 'Andy', 'LU', '2025-05-21 20:48:06', 1);
 INSERT INTO `message` VALUES (13, 'bin', 'Andy', 'LU', '2025-05-21 21:01:37', 1);
 INSERT INTO `message` VALUES (14, '你好', 'Andy', 'LU', '2025-05-23 22:42:10', 1);
-INSERT INTO `message` VALUES (15, 'manba', '陆岳', '陈先生', '2025-06-01 20:32:03', 2);
+INSERT INTO `message` VALUES (32, '你好', 'Lappand', '陆岳', '2025-06-02 20:41:17', 4);
+INSERT INTO `message` VALUES (40, '你好', 'Lappand', '张女士', '2025-06-03 12:59:45', 5);
+INSERT INTO `message` VALUES (41, '你好', '陆岳', 'Lappand', '2025-06-03 13:02:17', 4);
+INSERT INTO `message` VALUES (42, '你是谁', 'Lappand', '陆岳', '2025-06-03 13:02:26', 4);
+INSERT INTO `message` VALUES (43, '我是乃龙', '陆岳', 'Lappand', '2025-06-03 13:02:36', 4);
+INSERT INTO `message` VALUES (44, '真的吗', 'Lappand', '陆岳', '2025-06-03 13:02:49', 4);
+INSERT INTO `message` VALUES (45, '真的哦', '陆岳', 'Lappand', '2025-06-03 13:02:55', 4);
 
 -- ----------------------------
 -- Table structure for news
@@ -1280,7 +1353,7 @@ CREATE TABLE `user_info`  (
   `userType` int NULL DEFAULT NULL,
   `avatarUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_info
@@ -1290,9 +1363,10 @@ INSERT INTO `user_info` VALUES (3, 'Ylfmoonn', '$2b$12$.qbllCaHCKG8g9xTP29S4eVM3
 INSERT INTO `user_info` VALUES (4, 'Lappand', '$2b$12$bA1jsIhsQi/qTGAilYyLF.EV0v3EHkl5qcpBGxBmWJRH/LPHsUchq', NULL, '19511053624', '校本部1111', NULL, NULL, NULL, NULL, 'https://i.pinimg.com/736x/54/0a/89/540a89862811d8bffc763caf6829699d.jpg');
 INSERT INTO `user_info` VALUES (5, NULL, '$2b$12$BKQ4MnXq8qnvz4SownzK3uoBCdmRktRdr2BX4FlzjT/7xBjGXzyqS', NULL, '15274896231', NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (6, NULL, '$2b$12$ChX6QeErNGea10kbGHpLSeOlJVX4iW2t/OxGthi3.F38IhQzBitl2', NULL, '195110536232', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `user_info` VALUES (7, '陆岳', '$2b$12$Sxpz3EUvmc4YzE2PctOh1OYYMhkHK5fLQf7d6HLQ0sZ0kCCF7hJa.', '2779902707@qq.com', '16608188853', '校本部', NULL, NULL, '111111111111111111', 2, NULL);
+INSERT INTO `user_info` VALUES (7, '陆岳', '$2b$12$Sxpz3EUvmc4YzE2PctOh1OYYMhkHK5fLQf7d6HLQ0sZ0kCCF7hJa.', '2779902708@qq.com', '16608188853', '校本部', NULL, NULL, '111111111111111111', 2, NULL);
 INSERT INTO `user_info` VALUES (8, '胡琪', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (9, '梅姨', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL);
 INSERT INTO `user_info` VALUES (10, NULL, '$2b$12$N/yOiQTDtKMI.gzO00VoBeZjHUwI.5hZ/KzaEoLJPGEsl3CM4KLCS', NULL, '15083377951', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_info` VALUES (13, 'luyue', '$2b$12$vZr38uHcThP2Xg.88ewEO.NLsi4RfPYiUWeZENCWJ.MYIIuoHoJsy', '2779902707@qq.com', '1342585678', '525', NULL, NULL, '111111111111111111', NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
