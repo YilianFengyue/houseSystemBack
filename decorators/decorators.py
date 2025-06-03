@@ -23,7 +23,7 @@ def token_required(f):
                 token = auth_header # 直接就是token
 
         if not token:
-            return error_response(code=Code.UNAUTHORIZED, msg='Token is missing!')
+            return error_response(code=Code.UNAUTHORIZED, message='Token is missing!')
 
         try:
             # 使用在 app 中配置的 SECRET_KEY 来解码

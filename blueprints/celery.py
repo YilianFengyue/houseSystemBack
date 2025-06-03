@@ -1,10 +1,6 @@
 from flask import Blueprint, current_app
 from exts.celery import celery
-import requests
-from exts.db import db
-from models.user_model import UserModel
-import jwt
-import datetime
+import socket, ssl, base64, time
 celery_bp = Blueprint("celery", __name__)
 
 @celery.task
@@ -73,3 +69,77 @@ def fetch_github_user_data(code):
 
     except Exception as e:
         return {"error": str(e)}
+
+def send_email_smtp(email, verification_code):
+    sender_email = '2298786941@qq.com'
+    authorization_code = 'iymnhrycsgredhib'
+    subject = '密码重置邮件'
+    text_content = f'你好，这是您的验证码 {verification_code}, 请在2分钟以内填写验证码'
+
+    msg = (
+        f"From: {sender_email}\r\n"
+        f"To: {email}\r\n"
+        f"Subject: {subject}\r\n"
+        "MIME-Version: 1.0\r\n"
+        "Content-Type: multipart/mixed; boundary=boundary\r\n"
+        "\r\n"
+        "--boundary\r\n"
+        "Content-Type: text/plain; charset=UTF-8\r\n"
+        "\r\n"
+        f"{text_content}\r\n"
+        "--boundary\r\n"
+    )
+    endmsg = "\r\n.\r\n"
+    mailServer = ("smtp.qq.com", 587)
+
+    try:
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        clientSocket.connect(mailServer)
+        recv = clientSocket.recv(1024).decode()
+        if recv[:3] != '220':
+            raise Exception("220 reply not received from server.")
+
+        clientSocket.send(b'HELO Alice\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(b'STARTTLS\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        context = ssl.create_default_context()
+        clientSocket = context.wrap_socket(clientSocket, server_hostname='smtp.qq.com')
+
+        clientSocket.send(b'HELO Alice\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(b'AUTH LOGIN\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(base64.b64encode(sender_email.encode()) + b'\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(base64.b64encode(authorization_code.encode()) + b'\r\n')
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(f"MAIL FROM:<{sender_email}>\r\n".encode())
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(f"RCPT TO:<{email}>\r\n".encode())
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(b"DATA\r\n")
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(msg.encode())
+        clientSocket.send(endmsg.encode())
+        recv = clientSocket.recv(1024).decode()
+
+        clientSocket.send(b'QUIT\r\n')
+        time.sleep(1)
+        clientSocket.recv(1024)
+
+    finally:
+        clientSocket.close()
+
+@celery.task
+def send_verification_email(email, code):
+    send_email_smtp(email, code)
