@@ -13,7 +13,8 @@ def create_message(content, sender_username, receiver_username, channel_id):
             content=content,
             sender_username=sender_username,
             receiver_username=receiver_username,
-            channel_id=channel_id
+            channel_id=channel_id,
+            timestamp=datetime.now()
         )
         db.session.add(message)
         db.session.commit()

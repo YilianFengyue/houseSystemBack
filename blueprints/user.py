@@ -10,11 +10,6 @@ from utils.response_utils import success_response, error_response, Code
 from decorators.decorators import token_required
 import random
 from exts.redis import redis_store
-from socket import *
-import base64
-import ssl
-import os
-import time
 from blueprints.celery import send_verification_email
 
 user = Blueprint("user", __name__, url_prefix="/user")
@@ -69,6 +64,7 @@ def login():
         token_payload = {
             'user_id': user_model.id,
             'phone': user_model.phone,
+            'type': user_model.userType,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
         }
         token = jwt.encode(token_payload, current_app.config['SECRET_KEY'], algorithm="HS256")
@@ -140,7 +136,6 @@ def userinfo_phone():
 
 # 用户信息修改接口，修改部分内容
 @user.route("/userinfo", methods=["PUT"])
-# @token_required
 def userinfo_update():
     data = request.json
     if not data:
@@ -180,7 +175,6 @@ def userinfo_update():
 
 # 身份选择，管理员或房东
 @user.route("/userinfo/usertype", methods=["PUT"])
-# @token_required
 def userinfo_usertype_update():
     data = request.json
 
@@ -361,7 +355,6 @@ def userinfo_usertype_update():
 
 # 修改，使用celery异步实现发送邮件验证码
 @user.route("/userinfo/password", methods=["POST"])
-# @token_required
 def password_reset():
     data = request.json
     if not data:
