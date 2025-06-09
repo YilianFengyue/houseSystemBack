@@ -11,7 +11,7 @@ from sqlalchemy import or_, func
 from services.house_info_service import (get_housenum, get_house_by_views,
                                          get_house_hot_list, get_house_new_list,
                                          add_views_by_id)
-from exts.redis import redis_store
+from exts.redis import  RedisCache
 import json
 import re
 house_info_bp = Blueprint('houseinfo', __name__,url_prefix="/houseinfo")
@@ -31,19 +31,19 @@ def get_hotlists():
     # 构建缓存键
     cache_key = 'house_hot_lists'
 
-    # 检查 Redis 中是否存在缓存数据
-    cached_data = redis_store.get(cache_key)
+    # 检查缓存
+    cached_data = RedisCache.get_cache(cache_key)
     if cached_data:
-        data = json.loads(cached_data)
-        return success_response(data)
+        return success_response(cached_data)
 
     # 不显示，证明返回了缓存中的数据
     print("hotlists无缓存")
 
     house_hot_List=HouseInfo.query.order_by(HouseInfo.page_views.desc()).limit(4).all()
     data = [a.to_dict() for a in house_hot_List]
+
     # 将查询结果存入 Redis 缓存
-    redis_store.set(cache_key, json.dumps(data))
+    RedisCache.set_cache(cache_key, data)
     return success_response( [a.to_dict() for a in house_hot_List])
 
 #1.3最新房源
@@ -52,11 +52,10 @@ def get_newlists():
     # 构建缓存键
     cache_key = 'house_new_lists'
 
-    # 检查 Redis 中是否存在缓存数据
-    cached_data = redis_store.get(cache_key)
+    # 检查缓存
+    cached_data = RedisCache.get_cache(cache_key)
     if cached_data:
-        data = json.loads(cached_data)
-        return success_response(data)
+        return success_response(cached_data)
 
     # 不显示，证明返回了缓存中的数据
     print("newlists无缓存")
@@ -65,8 +64,9 @@ def get_newlists():
     #获取前六条数据
     house_new_list=HouseInfo.query.order_by(HouseInfo.publish_time.desc()).limit(4).all()
     data = [a.to_dict() for a in house_new_list]
-    # 将查询结果存入 Redis 缓存
-    redis_store.set(cache_key, json.dumps(data))
+
+    # 将查询结果存入缓存
+    RedisCache.set_cache(cache_key, data)
     return success_response([a.to_dict() for a in house_new_list])
 
 # 1. 新增房源信息 (对应房东发布房源)
@@ -131,11 +131,10 @@ def get_all_house_infos():
             if key not in ['page', 'per_page']:
                 cache_key += f':{key}:{request.args[key]}'
 
-        # 检查 Redis 中是否存在缓存数据
-        cached_data = redis_store.get(cache_key)
-        if cached_data:
-            data = json.loads(cached_data)
-            return success_response(data, message="查询成功", code=Code.GET_OK)
+                # 检查缓存
+                cached_data = RedisCache.get_cache(cache_key)
+                if cached_data:
+                    return success_response(cached_data, message="查询成功", code=Code.GET_OK)
 
         # 不显示，证明返回了缓存中的数据
         print("houseinfo获取单页所有房源无缓存")
@@ -268,8 +267,8 @@ def get_all_house_infos():
             "pages": paginated_houses.pages
         }
 
-        # 将查询结果存入 Redis 缓存
-        redis_store.set(cache_key, json.dumps(response_data))
+        # 将查询结果存入缓存
+        RedisCache.set_cache(cache_key, response_data)
 
         if not house_list and page == 1:  # 如果第一页就没有数据
             return success_response(data=response_data, message="暂无房源信息", code=Code.GET_OK)  # 仍然是成功，只是数据为空
@@ -365,6 +364,11 @@ def delete_house_info(house_id):
     try:
         session.delete(house)
         session.commit()
+
+        # 删除相关缓存,保证一致性
+        cache_key = f'house_info:{house_id}'
+        RedisCache.delete_cache(cache_key)
+
         return success_response(message="房源信息删除成功", code=Code.DELETE_OK)  # 或者返回204, data=None
     except SQLAlchemyError as e:
         session.rollback()
@@ -388,7 +392,6 @@ def upload_house_image(house_id):
         return error_response("未选择文件", code=Code.BAD_REQUEST)
 
     if file:
-
         return error_response("文件上传功能暂未完全实现，仅为示例接口", code=Code.INTERNAL_SERVER_ERROR)
 
 

@@ -6,7 +6,7 @@ from models.house_model import HouseInfo
 from exts import db
 from utils.response_utils import success_response, error_response, Code
 from services.housedetil_service import get_house_detail_by_house_info_id
-from exts.redis import redis_store
+from exts.redis import RedisCache
 import json
 # End Placeholder
 
@@ -64,9 +64,9 @@ def add_house_detail():
         session.commit()
         session.refresh(new_detail)
 
-        # 清除缓存
+        # 清除相关缓存
         cache_key = f'house_info:{house_info_id}'
-        redis_store.delete(cache_key)
+        RedisCache.delete_cache(cache_key)
 
         return success_response(data=new_detail.to_dict(), message="房源详细信息添加成功", code=Code.SAVE_OK)
     except IntegrityError as e:  # Catches UNIQUE constraint violation if pre-check fails or is racy
@@ -90,11 +90,10 @@ def get_house_detail_by_house_id(house_info_id):
         # 构建缓存键
         cache_key = f'house_info:{house_info_id}'
 
-        # 检查 Redis 中是否存在缓存数据
-        cached_data = redis_store.get(cache_key)
+        # 检查缓存
+        cached_data = RedisCache.get_cache(cache_key)
         if cached_data:
-            data = json.loads(cached_data)
-            return success_response(data=data, message="查询成功", code=Code.GET_OK)
+            return success_response(data=cached_data, message="查询成功", code=Code.GET_OK)
 
         # 不显示，证明返回了缓存中的数据
         print("housedetail查询无缓存")
@@ -105,10 +104,10 @@ def get_house_detail_by_house_id(house_info_id):
         print(detail)
         if detail:
             data = detail.to_dict()
-            # 将查询结果存入 Redis 缓存
-            redis_store.set(cache_key, json.dumps(data))
+
+            # 将查询结果存入缓存
+            RedisCache.set_cache(cache_key, data)
             return success_response(data=data, message="获取成功", code=Code.GET_OK)
-            # return success_response(data=detail.to_dict(), message="获取成功", code=Code.GET_OK)
         else:
             return error_response("未找到该房源的详细信息", code=Code.NOT_FOUND)
     except SQLAlchemyError as e:
