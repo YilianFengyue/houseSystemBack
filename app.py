@@ -16,7 +16,7 @@ from blueprints.log_management import log_bp
 from blueprints.rental import rental_bp
 from blueprints.celery import celery_bp
 from blueprints.sms import sms_bp  # 添加短信蓝图导入
-# from blueprints.github import github_bp  # 注释掉 GitHub 导入
+from blueprints.alipay import alipay_bp  # 重新添加支付宝蓝图导入
 from socketio_init import socketio  # 修改导入语句
 from exts.redis import redis_store
 from exts.celery import make_celery
@@ -64,7 +64,7 @@ app.register_blueprint(log_bp)
 app.register_blueprint(rental_bp)
 app.register_blueprint(celery_bp)
 app.register_blueprint(sms_bp)  # 添加短信蓝图注册
-# app.register_blueprint(github_bp)  # 注释掉 GitHub 蓝图注册
+app.register_blueprint(alipay_bp)  # 重新添加支付宝蓝图注册
 
 # 初始化socketio
 socketio.init_app(app)
