@@ -1,7 +1,8 @@
 # config.py
 import os
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost:3306/flaskhousesystem'
+    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost:3306/flaskhousesystem'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ssy123@localhost:3306/flaskhousesystem'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     #生成随机的密钥会更好
     SECRET_KEY = 'random_key'
@@ -29,3 +30,10 @@ class Config:
     GITHUB_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
     GITHUB_API_BASE_URL = 'https://api.github.com/'
     GITHUB_CALLBACK_URL = 'http://127.0.0.1:5000/github/callback'
+
+    # 阿里云短信服务配置
+    ALIYUN_ACCESS_KEY_ID = 'your_access_key_id'  # 请替换为您的AccessKey ID
+    ALIYUN_ACCESS_KEY_SECRET = 'your_access_key_secret'  # 请替换为您的AccessKey Secret
+    ALIYUN_SMS_REGION = 'cn-hangzhou'  # 阿里云短信服务地域
+    ALIYUN_SMS_SIGN_NAME = 'your_sign_name'  # 请替换为您的短信签名
+    ALIYUN_SMS_TEMPLATE_CODE = 'SMS_123456789'  # 请替换为您的短信模板ID
