@@ -18,6 +18,7 @@ class UserModel(db.Model):
     collect_id: Mapped[Optional[str]] = mapped_column(VARCHAR(255), nullable=True, comment='收藏ID')
     identityCard: Mapped[Optional[str]] = mapped_column(VARCHAR(255), nullable=True, comment='身份证号')
     userType: Mapped[Optional[int]] = mapped_column(MYSQL_INTEGER, nullable=True, comment='用户类型')
+    avatarUrl: Mapped[Optional[str]] = mapped_column(VARCHAR(255), nullable=True, comment='用户头像')
 
     # 新增：设置密码的方法，自动进行哈希加密
     def set_password(self, password_text):
@@ -39,5 +40,6 @@ class UserModel(db.Model):
             "seen_id": self.seen_id,
             "collect_id": self.collect_id,
             "identityCard": self.identityCard,
-            "userType": self.userType
+            "userType": self.userType,
+            "avatarUrl": self.avatarUrl,
         }

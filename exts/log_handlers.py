@@ -23,7 +23,11 @@ class DatabaseLogHandler(logging.Handler):
 
         traceback_info = None
         if record.exc_info:
-            traceback_info = self.formatException(record.exc_info)
+            if self.formatter:
+                traceback_info = self.formatter.formatException(record.exc_info)
+            else:
+                import traceback
+                traceback_info = ''.join(traceback.format_exception(*record.exc_info))
 
         log_entry = LogEntry(
             level=record.levelname,

@@ -1,6 +1,6 @@
 import jwt
 import datetime
-from flask import Blueprint, request, current_app, g # 引入 g
+from flask import Blueprint, request, current_app, g, send_from_directory # 引入 g
 from sqlalchemy.exc import IntegrityError
 from services.user_service import (get_user_by_email, get_user_by_name, get_all_users,
                                    get_user_by_id, get_user_by_phone)
@@ -10,7 +10,10 @@ from utils.response_utils import success_response, error_response, Code
 from decorators.decorators import token_required
 import random
 from exts.redis import redis_store
-from blueprints.celery import send_verification_email
+from blueprints.celery_bp import send_verification_email, send_verification_email_up
+import os
+from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
 
 user = Blueprint("user", __name__, url_prefix="/user")
 
@@ -65,7 +68,7 @@ def login():
             'user_id': user_model.id,
             'phone': user_model.phone,
             'type': user_model.userType,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+            'exp': datetime.utcnow() + timedelta(hours=24)
         }
         token = jwt.encode(token_payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
@@ -172,16 +175,6 @@ def userinfo_update():
         db.session.rollback()
         current_app.logger.error(f"Update user info error: {e}")
         return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
-
-# 身份选择，管理员或房东
-@user.route("/userinfo/usertype", methods=["PUT"])
-def userinfo_usertype_update():
-    data = request.json
-
-    if not data:
-        return error_response(code=Code.BAD_REQUEST, message="<UNK>")
-
-    return success_response(code=Code.UPDATE_OK, message="<UNK>")
 
 # 新接口，根据用户邮箱发验证码，以重置密码
 # @user.route("/userinfo/password", methods=["POST"])
@@ -374,6 +367,27 @@ def password_reset():
 
     return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
 
+# 成为房东的验证码
+@user.route("/userinfo/tolanlord", methods=["POST"])
+def tolanlord():
+    data = request.json
+    if not data:
+        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
+
+    email = data.get('email')
+    newuser = get_user_by_email(email)
+    if newuser is None:
+        return error_response(code=Code.GET_ERR, message="不存在该用户")
+
+    verification_code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+    redis_key = f'verification_code:{email}'
+    redis_store.set(redis_key, verification_code, ex=120)
+
+    # 异步调用
+    send_verification_email_up.delay(email, verification_code)
+
+    return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
+
 # 根据邮箱改密码
 @user.route('/userinfo/password_e', methods=['PUT'])
 def userinfo_password_e():
@@ -399,3 +413,87 @@ def userinfo_password_e():
         db.session.rollback()
         current_app.logger.error(f"Update user password error: {e}")
         return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
+
+
+# 改变userType
+@user.route("/userinfo/usertype", methods=["PUT"])
+def to_landlord():
+    data = request.json
+    if not data:
+        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
+
+    email = data.get('email')
+    newuser = get_user_by_email(email)
+
+    if newuser is None:
+        return error_response(code=Code.GET_ERR, message="不存在该用户")
+
+    user = newuser.to_dict()
+    if user['userType'] == 1:
+        newuser.userType = 2
+        db.session.add(newuser)
+        db.session.commit()
+        return success_response(data=newuser.to_dict(), message="已成为房东", code=200)
+    else:
+        db.rollback()
+        return error_response(code=Code.UPDATE_ERR, message="修改错误")
+
+# 获取avatarUrl
+@user.route("/userinfo/avatar", methods=["GET"])
+def get_avatar():
+    data = request.json
+    if not data:
+        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
+
+    id = data.get('id')
+    user = get_user_by_id(id)
+
+    if user is None:
+        return error_response(code=Code.GET_ERR, message="不存在该用户")
+
+    user1 = user.to_dict()
+
+    if user1['avatarUrl'] is None:
+        return error_response(code=Code.GET_ERR, message="该用户无头像")
+    else:
+        return success_response(data=user1, message="获取成功", code=200)
+
+# 保存用户上传头像，并处理成url
+@user.route("/userinfo/avatarurl", methods=["POST"])
+def add_avatar():
+    user_id = request.form.get("userId")  # 注意这里是 userId 而不是 id
+    file = request.files.get("avatar")
+
+    if not user_id or not file:
+        return error_response(code=400, message="缺少用户ID或头像文件")
+
+    user = get_user_by_id(user_id)
+    if not user:
+        return error_response(code=404, message="用户不存在")
+
+    # 设定 images 目录路径（项目根目录下）
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    images_folder = os.path.join(project_root, '..', 'images')
+    os.makedirs(images_folder, exist_ok=True)
+
+    # 构造唯一文件名
+    ext = os.path.splitext(file.filename)[1]
+    filename = secure_filename(f"{user_id}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}{ext}")
+    filepath = os.path.join(images_folder, filename)
+    file.save(filepath)
+
+    # 构造相对 URL，用于前端显示
+    avatar_url = f"http://localhost:5000/images/{filename}"
+
+    # 保存到数据库
+    user.avatarUrl = avatar_url
+    db.session.commit()
+
+    return success_response(data={"avatarUrl": avatar_url}, message="头像上传成功", code=200)
+
+# 提供images目录下的静态访问
+@user.route('/images/<filename>')
+def serve_image(filename):
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    images_folder = os.path.join(project_root, '..', 'images')
+    return send_from_directory(images_folder, filename)
