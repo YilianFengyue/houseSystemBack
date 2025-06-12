@@ -388,6 +388,27 @@ def tolanlord():
 
     return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
 
+# 成为房东的验证码
+@user.route("/userinfo/tolanlord", methods=["POST"])
+def tolanlord():
+    data = request.json
+    if not data:
+        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
+
+    email = data.get('email')
+    newuser = get_user_by_email(email)
+    if newuser is None:
+        return error_response(code=Code.GET_ERR, message="不存在该用户")
+
+    verification_code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+    redis_key = f'verification_code:{email}'
+    redis_store.set(redis_key, verification_code, ex=120)
+
+    # 异步调用
+    send_verification_email_up.delay(email, verification_code)
+
+    return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
+
 # 根据邮箱改密码
 @user.route('/userinfo/password_e', methods=['PUT'])
 def userinfo_password_e():
