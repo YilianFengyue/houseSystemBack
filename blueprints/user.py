@@ -483,7 +483,7 @@ def add_avatar():
     file.save(filepath)
 
     # 构造相对 URL，用于前端显示
-    avatar_url = f"http://localhost:5000/images/{filename}"
+    avatar_url = f"http://localhost:5000/user/images/{filename}"
 
     # 保存到数据库
     user.avatarUrl = avatar_url
