@@ -2,7 +2,7 @@ import jwt
 import datetime
 from flask import Blueprint, request, current_app, g, send_from_directory # 引入 g
 from sqlalchemy.exc import IntegrityError
-from services.user_service import (get_user_by_email, get_user_by_name, get_all_users,
+from services.user_service import (get_user_by_email, get_user_by_name,
                                    get_user_by_id, get_user_by_phone)
 from models.user_model import UserModel
 from exts import db
@@ -39,6 +39,7 @@ def register():
         new_user = UserModel(phone=phone)
         new_user.set_password(password)
         new_user.email = email
+        new_user.userType = 1
         db.session.add(new_user)
         db.session.commit()
         # 修正点：使用 message 参数
@@ -147,13 +148,19 @@ def userinfo_update():
     current_user = get_user_by_id(data['id'])
 
     user = current_user.to_dict()
+
+    identityCard1 = data['identityCard']
     # 先验证身份证号相关逻辑（使用数据库中现有值）
     if user['identityCard'] is not None:
         return error_response(code=Code.UPDATE_ERR, message="您已填写过身份证号，不可更改")
+    # elif identityCard1 is not None:
 
-    # 检查请求中的身份证号长度（如果提供了）
-    if 'identityCard' in data and len(data['identityCard']) != 18:
-        return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
+    # 只有当identityCard存在且不为None时才检查长度
+    if 'identityCard' in data and data['identityCard'] is not None:
+        if len(data['identityCard']) != 18:
+            return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
+    else:
+        return error_response(code=Code.UPDATE_ERR, message="身份证号不能为空")
 
     # 定义允许修改的字段
     allowed_fields = ['name', 'addr', 'email', 'identityCard', 'phone']
@@ -388,27 +395,6 @@ def tolanlord():
 
     return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
 
-# 成为房东的验证码
-@user.route("/userinfo/tolanlord", methods=["POST"])
-def tolanlord():
-    data = request.json
-    if not data:
-        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
-
-    email = data.get('email')
-    newuser = get_user_by_email(email)
-    if newuser is None:
-        return error_response(code=Code.GET_ERR, message="不存在该用户")
-
-    verification_code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-    redis_key = f'verification_code:{email}'
-    redis_store.set(redis_key, verification_code, ex=120)
-
-    # 异步调用
-    send_verification_email_up.delay(email, verification_code)
-
-    return success_response(data=verification_code, message="验证码发送中，请查收邮件", code=200)
-
 # 根据邮箱改密码
 @user.route('/userinfo/password_e', methods=['PUT'])
 def userinfo_password_e():
@@ -462,11 +448,10 @@ def to_landlord():
 # 获取avatarUrl
 @user.route("/userinfo/avatar", methods=["GET"])
 def get_avatar():
-    data = request.json
-    if not data:
-        return error_response(code=Code.BAD_REQUEST, message="请求数据不能为空")
+    id = request.args.get('id')  # 改为获取查询参数
+    if not id:
+        return error_response(code=Code.BAD_REQUEST, message="用户ID不能为空")
 
-    id = data.get('id')
     user = get_user_by_id(id)
 
     if user is None:
