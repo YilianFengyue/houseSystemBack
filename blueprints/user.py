@@ -1,8 +1,8 @@
 import jwt
 import datetime
-from flask import Blueprint, request, current_app, g # 引入 g
+from flask import Blueprint, request, current_app, g, send_from_directory # 引入 g
 from sqlalchemy.exc import IntegrityError
-from services.user_service import (get_user_by_email, get_user_by_name, get_all_users,
+from services.user_service import (get_user_by_email, get_user_by_name,
                                    get_user_by_id, get_user_by_phone)
 from models.user_model import UserModel
 from exts import db
@@ -10,7 +10,10 @@ from utils.response_utils import success_response, error_response, Code
 from decorators.decorators import token_required
 import random
 from exts.redis import redis_store
-from blueprints.celery import send_verification_email, send_verification_email_up
+from blueprints.celery_bp import send_verification_email, send_verification_email_up
+import os
+from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
 
 user = Blueprint("user", __name__, url_prefix="/user")
 
@@ -36,6 +39,7 @@ def register():
         new_user = UserModel(phone=phone)
         new_user.set_password(password)
         new_user.email = email
+        new_user.userType = 1
         db.session.add(new_user)
         db.session.commit()
         # 修正点：使用 message 参数
@@ -65,7 +69,7 @@ def login():
             'user_id': user_model.id,
             'phone': user_model.phone,
             'type': user_model.userType,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+            'exp': datetime.utcnow() + timedelta(hours=24)
         }
         token = jwt.encode(token_payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
@@ -144,13 +148,19 @@ def userinfo_update():
     current_user = get_user_by_id(data['id'])
 
     user = current_user.to_dict()
+
+    identityCard1 = data['identityCard']
     # 先验证身份证号相关逻辑（使用数据库中现有值）
     if user['identityCard'] is not None:
         return error_response(code=Code.UPDATE_ERR, message="您已填写过身份证号，不可更改")
+    # elif identityCard1 is not None:
 
-    # 检查请求中的身份证号长度（如果提供了）
-    if 'identityCard' in data and len(data['identityCard']) != 18:
-        return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
+    # 只有当identityCard存在且不为None时才检查长度
+    if 'identityCard' in data and data['identityCard'] is not None:
+        if len(data['identityCard']) != 18:
+            return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
+    else:
+        return error_response(code=Code.UPDATE_ERR, message="身份证号不能为空")
 
     # 定义允许修改的字段
     allowed_fields = ['name', 'addr', 'email', 'identityCard', 'phone']
@@ -434,3 +444,62 @@ def to_landlord():
     else:
         db.rollback()
         return error_response(code=Code.UPDATE_ERR, message="修改错误")
+
+# 获取avatarUrl
+@user.route("/userinfo/avatar", methods=["GET"])
+def get_avatar():
+    id = request.args.get('id')  # 改为获取查询参数
+    if not id:
+        return error_response(code=Code.BAD_REQUEST, message="用户ID不能为空")
+
+    user = get_user_by_id(id)
+
+    if user is None:
+        return error_response(code=Code.GET_ERR, message="不存在该用户")
+
+    user1 = user.to_dict()
+
+    if user1['avatarUrl'] is None:
+        return error_response(code=Code.GET_ERR, message="该用户无头像")
+    else:
+        return success_response(data=user1, message="获取成功", code=200)
+
+# 保存用户上传头像，并处理成url
+@user.route("/userinfo/avatarurl", methods=["POST"])
+def add_avatar():
+    user_id = request.form.get("userId")  # 注意这里是 userId 而不是 id
+    file = request.files.get("avatar")
+
+    if not user_id or not file:
+        return error_response(code=400, message="缺少用户ID或头像文件")
+
+    user = get_user_by_id(user_id)
+    if not user:
+        return error_response(code=404, message="用户不存在")
+
+    # 设定 images 目录路径（项目根目录下）
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    images_folder = os.path.join(project_root, '..', 'images')
+    os.makedirs(images_folder, exist_ok=True)
+
+    # 构造唯一文件名
+    ext = os.path.splitext(file.filename)[1]
+    filename = secure_filename(f"{user_id}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}{ext}")
+    filepath = os.path.join(images_folder, filename)
+    file.save(filepath)
+
+    # 构造相对 URL，用于前端显示
+    avatar_url = f"http://localhost:5000/user/images/{filename}"
+
+    # 保存到数据库
+    user.avatarUrl = avatar_url
+    db.session.commit()
+
+    return success_response(data={"avatarUrl": avatar_url}, message="头像上传成功", code=200)
+
+# 提供images目录下的静态访问
+@user.route('/images/<filename>')
+def serve_image(filename):
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    images_folder = os.path.join(project_root, '..', 'images')
+    return send_from_directory(images_folder, filename)

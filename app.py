@@ -14,7 +14,7 @@ from blueprints.news import news_bp
 from blueprints.housedetail import housedetail_bp
 from blueprints.log_management import log_bp
 from blueprints.rental import rental_bp
-from blueprints.celery import celery_bp
+from blueprints.celery_bp import celery_bp
 from blueprints.sms import sms_bp  # 添加短信蓝图导入
 from blueprints.alipay import alipay_bp  # 重新添加支付宝蓝图导入
 from blueprints.chat_ai import chat_ai_bp  # 添加聊天AI蓝图导入

@@ -27,7 +27,7 @@ def get_user_by_email(email):
 
 def get_user_by_id(user_id):
     """根据ID查找用户"""
-    return db.session.get(UserModel, user_id)
+    return db.session.query(UserModel).filter_by(id=user_id).first()
 
 def get_all_users():
     """获取所有用户"""
