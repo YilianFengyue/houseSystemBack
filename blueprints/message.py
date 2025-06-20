@@ -9,7 +9,7 @@ from services.message_service import (
 from services.channel_service import get_channel
 import logging
 from functools import wraps
-from utils.response_utils import success_response, error_response
+from utils.response_utils import success_response, error_response, Code
 from flask import current_app
 from socketio_init import socketio
 
@@ -48,6 +48,13 @@ def get_messages():
     user1 = request.args.get('user1')
     user2 = request.args.get('user2')
     receiver = request.args.get('receiver')
+
+    # 判断是否发送者和接收者是同一个人
+    if sender and receiver and sender == receiver:
+        return error_response(code=Code.GET_ERR, message="发送者和接收者不能是同一个人")
+
+    if user1 and user2 and user1 == user2:
+        return error_response(code=Code.GET_ERR, message="不能与自己进行对话")
 
     if sender:
         messages = get_messages_by_sender(sender)

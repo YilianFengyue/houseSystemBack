@@ -10,7 +10,7 @@ from exts import db
 from sqlalchemy import or_, func
 from services.house_info_service import (get_housenum, get_house_by_views,
                                          get_house_hot_list, get_house_new_list,
-                                         add_views_by_id)
+                                         add_views_by_id, get_house_by_landlord)
 from exts.redis import  RedisCache
 import json
 import re
@@ -292,7 +292,7 @@ def get_house_info_by_id(house_id):
         cache_key = f'house_info:{house_id}'
 
         # 检查 Redis 中是否存在缓存数据
-        cached_data = redis_store.get(cache_key)
+        cached_data = RedisCache.get(cache_key)
         if cached_data:
             data = json.loads(cached_data)
             return success_response(data=data, message="查询成功", code=Code.GET_OK)
@@ -308,7 +308,7 @@ def get_house_info_by_id(house_id):
             # 转换为字典格式
             house_data = house.to_dict()
             # 将查询结果存入 Redis 缓存
-            redis_store.set(cache_key, json.dumps(house_data))
+            RedisCache.set_cache(cache_key, json.dumps(house_data))
 
             return error_response("房源信息未找到", code=Code.NOT_FOUND)
     except SQLAlchemyError as e:
@@ -464,3 +464,20 @@ def add_house_info_views():
         return success_response(message="增加成功", code=Code.GET_OK)
     else:
         return error_response(message="不存在该房源", code=Code.NOT_FOUND)
+
+
+# 根据房东名字查找房源
+@house_info_bp.route('/landlord', methods=['POST'])
+def get_house_info_landlord():
+    data = request.get_json()
+
+    if data is None:
+        return error_response("请求数据为空", code=Code.NOT_FOUND)
+
+    landlord = data['username']
+
+    try:
+        houses = get_house_by_landlord(landlord)
+        return success_response([a.to_dict() for a in houses], message="获取成功", code=Code.GET_OK)
+    except KeyError:
+        return error_response("获取错误", code=Code.NOT_FOUND)

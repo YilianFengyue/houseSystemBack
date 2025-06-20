@@ -35,3 +35,6 @@ def add_views_by_id(data):
             return False
     else:
         return False
+
+def get_house_by_landlord(landlord):
+    return db.session.query(HouseInfo).filter(HouseInfo.landlord==landlord).all()

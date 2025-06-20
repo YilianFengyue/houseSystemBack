@@ -4,6 +4,8 @@ from alipay.aop.api.AlipayClientConfig import AlipayClientConfig
 from alipay.aop.api.DefaultAlipayClient import DefaultAlipayClient
 from alipay.aop.api.domain.AlipayTradePagePayModel import AlipayTradePagePayModel
 from alipay.aop.api.request.AlipayTradePagePayRequest import AlipayTradePagePayRequest
+from alipay.aop.api.request.AlipaySystemOauthTokenRequest import AlipaySystemOauthTokenRequest
+from alipay.aop.api.request.AlipayUserInfoShareRequest import AlipayUserInfoShareRequest
 
 
 class AlipayClient:
@@ -35,4 +37,19 @@ class AlipayClient:
     def verify(self, data: dict, signature: str) -> bool:
         """支付宝异步/同步回传验签"""
         return self.client.verify(data, signature)
+
+    def get_auth_token(self, auth_code: str) -> dict:
+        """根据 auth_code 换取 access_token"""
+        request = AlipaySystemOauthTokenRequest()
+        request.grant_type = "authorization_code"
+        request.code = auth_code
+
+        response = self.client.execute(request)
+        return response.to_dict()
+
+    def get_user_info(self, access_token: str) -> dict:
+        """根据 access_token 获取用户信息"""
+        request = AlipayUserInfoShareRequest()
+        response = self.client.execute(request, auth_token=access_token)
+        return response.to_dict()
 
