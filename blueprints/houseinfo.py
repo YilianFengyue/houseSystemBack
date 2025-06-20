@@ -295,8 +295,7 @@ def get_house_info_by_id(house_id):
         # 检查 Redis 中是否存在缓存数据
         cached_data = RedisCache.get_cache(cache_key)
         if cached_data:
-            data = json.loads(cached_data)
-            return success_response(data=data, message="查询成功", code=Code.GET_OK)
+            return success_response(data=cached_data, message="查询成功", code=Code.GET_OK)
 
         # 不显示，证明返回了缓存中的数据
         print("houseinfo获取单个房源无缓存")
