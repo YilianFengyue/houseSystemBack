@@ -172,31 +172,31 @@ def userinfo_update():
 
     current_user = get_user_by_id(data['id'])
 
-    user = current_user.to_dict()
+    if not current_user:
+        return error_response(code=Code.NOT_FOUND, message="用户不存在")
 
-    identityCard1 = data['identityCard']
-    # 先验证身份证号相关逻辑（使用数据库中现有值）
-    if user['identityCard'] is not None:
-        return error_response(code=Code.UPDATE_ERR, message="您已填写过身份证号，不可更改")
-    # elif identityCard1 is not None:
+    # 身份证号处理逻辑
+    if 'identityCard' in data:
+        new_identity_card = data['identityCard']
+        existing_identity_card = current_user.identityCard
 
-    # 只有当identityCard存在且不为None时才检查长度
-    if 'identityCard' in data and data['identityCard'] is not None:
-        if len(data['identityCard']) != 18:
-            return error_response(code=Code.UPDATE_ERR, message="身份证号长度必须为18位")
-    else:
-        return error_response(code=Code.UPDATE_ERR, message="身份证号不能为空")
+        # 已经填写过，不能更改（除非是重复提交相同值）
+        if existing_identity_card is not None:
+            if new_identity_card != existing_identity_card:
+                return error_response(code=Code.UPDATE_ERR, message="您已填写过身份证号，不可更改")
+        else:
+            # 首次填写，校验长度
+            if not new_identity_card or len(new_identity_card) != 18:
+                return error_response(code=Code.UPDATE_ERR, message="身份证号不能为空，且长度必须为18位")
 
     # 定义允许修改的字段
     allowed_fields = ['name', 'addr', 'email', 'identityCard', 'phone']
 
     try:
-        # 遍历请求数据中的键值对
-        for key, value in data.items():
-            if key in allowed_fields and hasattr(current_user, key):
-                setattr(current_user, key, value)
+        for key in allowed_fields:
+            if key in data and hasattr(current_user, key):
+                setattr(current_user, key, data[key])
 
-        # 提交数据库更改
         db.session.commit()
         return success_response(code=Code.UPDATE_OK, data=current_user.to_dict(), message="用户信息更新成功")
 
@@ -207,6 +207,7 @@ def userinfo_update():
         db.session.rollback()
         current_app.logger.error(f"Update user info error: {e}")
         return error_response(code=Code.INTERNAL_SERVER_ERROR, message="服务器内部错误")
+
 
 # 修改，使用celery异步实现发送邮件验证码
 @user.route("/userinfo/password", methods=["POST"])
