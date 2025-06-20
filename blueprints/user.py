@@ -80,6 +80,31 @@ def login():
         return error_response(code=Code.UNAUTHORIZED, message="登录失败，手机号或密码错误")
 
 
+@user.route("/email-login", methods=["POST"])
+def email_login():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if not email or not password:
+        return error_response(code=Code.BAD_REQUEST, message="邮箱和密码不能为空")
+
+    user_model = UserModel.query.filter_by(email=email).first()
+
+    if user_model and user_model.check_password(password):
+        token_payload = {
+            'user_id': user_model.id,
+            'phone': user_model.phone,
+            'email': user_model.email,
+            'type': user_model.userType,
+            'exp': datetime.utcnow() + timedelta(hours=24)
+        }
+        token = jwt.encode(token_payload, current_app.config['SECRET_KEY'], algorithm="HS256")
+
+        return success_response(code=Code.SAVE_OK, data={"token": token}, message="邮箱登录成功")
+    else:
+        return error_response(code=Code.UNAUTHORIZED, message="登录失败，邮箱或密码错误")
+
+
 @user.route("/userinfo", methods=["GET"])
 @token_required
 def userinfo():

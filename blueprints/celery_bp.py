@@ -51,11 +51,13 @@ def fetch_github_user_data(code):
     except Exception as e:
         return {"error": str(e)}
 
-def send_email_smtp(email, verification_code):
+def send_email_smtp(email, verification_code, subject='邮箱验证码'):
     sender_email = '2298786941@qq.com'
     authorization_code = 'iymnhrycsgredhib'
-    subject = '密码重置邮件'
-    text_content = f'你好，这是您的验证码 {verification_code}, 请在2分钟以内填写验证码'
+    if subject == '邮箱验证码':
+        text_content = f'你好，这是您的登录验证码 {verification_code}, 请在5分钟以内完成验证'
+    else:
+        text_content = f'你好，这是您的验证码 {verification_code}, 请在2分钟以内填写验证码'
 
     msg = (
         f"From: {sender_email}\r\n"
