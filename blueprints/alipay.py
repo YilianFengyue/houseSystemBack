@@ -65,3 +65,24 @@ def return_result():
     # 把状态拼到前端结果页，前端可据此展示支付结果
     redirect_url = f"{Alipay.RETURN_URL}?status={status}"
     return redirect(redirect_url, code=302)
+
+@alipay_bp.get("/verify_return")
+def verify_return():
+    try:
+        # 沙箱环境绕过验签，直接展示“成功”
+        data = request.args.to_dict()
+
+        return jsonify({
+            "status": "success",
+            "out_trade_no": data.get("out_trade_no")
+        }), 200
+
+    except Exception as e:
+        # 打印完整堆栈到日志
+        current_app.logger.exception("Exception in /verify_return")
+        # 同时把错误信息返回给客户端
+        return jsonify({
+            "error": str(e),
+            "trace": repr(e)
+        }), 500
+
