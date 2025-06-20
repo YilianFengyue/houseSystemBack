@@ -1,5 +1,6 @@
 from models.house_model import HouseInfo
 from exts.db import db
+from models.models import Rental
 
 def get_housenum():
     return db.session.query(HouseInfo).count()
@@ -38,3 +39,6 @@ def add_views_by_id(data):
 
 def get_house_by_landlord(landlord):
     return db.session.query(HouseInfo).filter(HouseInfo.landlord==landlord).all()
+
+def get_house_rental(house_id):
+    return db.session.query(Rental).filter(Rental.house_id==house_id).all()

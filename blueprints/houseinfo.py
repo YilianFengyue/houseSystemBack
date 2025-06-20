@@ -10,7 +10,8 @@ from exts import db
 from sqlalchemy import or_, func
 from services.house_info_service import (get_housenum, get_house_by_views,
                                          get_house_hot_list, get_house_new_list,
-                                         add_views_by_id, get_house_by_landlord)
+                                         add_views_by_id, get_house_by_landlord,
+                                         get_house_rental)
 from exts.redis import  RedisCache
 import json
 import re
@@ -292,7 +293,7 @@ def get_house_info_by_id(house_id):
         cache_key = f'house_info:{house_id}'
 
         # 检查 Redis 中是否存在缓存数据
-        cached_data = RedisCache.get(cache_key)
+        cached_data = RedisCache.get_cache(cache_key)
         if cached_data:
             data = json.loads(cached_data)
             return success_response(data=data, message="查询成功", code=Code.GET_OK)
@@ -470,7 +471,6 @@ def add_house_info_views():
 @house_info_bp.route('/landlord', methods=['POST'])
 def get_house_info_landlord():
     data = request.get_json()
-
     if data is None:
         return error_response("请求数据为空", code=Code.NOT_FOUND)
 
@@ -478,6 +478,14 @@ def get_house_info_landlord():
 
     try:
         houses = get_house_by_landlord(landlord)
-        return success_response([a.to_dict() for a in houses], message="获取成功", code=Code.GET_OK)
+        house_list = []
+        for house in houses:
+            b = house.to_dict()
+            b['isRant'] = False
+            if get_house_rental(b['id']):
+                b['isRant'] = True
+            house_list.append(b)
+
+        return success_response(data=house_list, message="获取成功", code=Code.GET_OK)
     except KeyError:
         return error_response("获取错误", code=Code.NOT_FOUND)
